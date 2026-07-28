@@ -1,20 +1,25 @@
 <section id="hero" class="relative overflow-hidden bg-black">
 
     <!-- ================= Desktop Video ================= -->
+<video
+    id="heroVideoDesktop"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    poster="src/images/hero/hero.jpg"
+    class="absolute inset-0 hidden h-full w-full object-cover md:block">
 
-    <video
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="metadata"
-        poster="src/images/hero/hero.jpg"
-        class="absolute inset-0 hidden h-full w-full object-cover md:block">
+    <source
+        data-src="src/videos/ieee(1).webm"
+        type="video/webm">
 
-        <source src="src/videos/ieee(1).webm" type="video/webm">
+    <source
+        data-src="src/videos/ieee(1).mp4"
+        type="video/mp4">
 
-    </video>
-
+</video>
     <!-- Overlay Desktop -->
 
     <div
@@ -23,21 +28,25 @@
 
     <!-- ================= Mobile Video ================= -->
 
-    <div class="relative md:hidden">
+    <video
+    id="heroVideoMobile"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    poster="src/images/hero/hero.jpg"
+    class="h-64 w-full object-cover">
 
-        <video
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            poster="src/images/hero/hero.jpg"
-            class="h-64 w-full object-cover">
+    <source
+        data-src="src/videos/ieeeM.webm"
+        type="video/webm">
 
-            <source src="src/videos/ieeeM.webm" type="video/webm">
+    <source
+        data-src="src/videos/ieeeM.mp4"
+        type="video/mp4">
 
-        </video>
-
+</video>
         <div
             class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent">
         </div>

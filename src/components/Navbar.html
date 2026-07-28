@@ -100,45 +100,64 @@
 
     <!-- Mobile Menu -->
 
-    <div
-        id="mobile-menu"
-        class="mx-auto mt-3 hidden w-[95%] rounded-3xl border border-white/10 bg-zinc-900 p-6 backdrop-blur-xl lg:hidden">
+   <!-- ================= MOBILE SIDEBAR ================= -->
 
-        <nav class="flex flex-col gap-5 text-lg">
+<div
+    id="mobile-menu"
+    class="fixed top-0 right-0 z-[999] h-screen w-80 max-w-[85%]
+           translate-x-full bg-black/95 backdrop-blur-2xl
+           transition-transform duration-500 ease-in-out lg:hidden">
 
-            <a href="#hero">Accueil</a>
+    <div class="flex items-center justify-between border-b border-zinc-800 p-6">
 
-            <a href="#about">À propos</a>
+        <h2 class="text-xl font-bold">
+            Electro<span class="text-[#F5C400]">Sitty</span>
+        </h2>
 
-            
-
-            <a href="#packs">Packs</a>
-
-            <a href="#materiels">Matériels</a>
-
-            <a href="contact">Contact</a>
-
-         
-
-          <a
-    href="https://wa.me/21653308760"
-    target="_blank"
-    class="rounded-full border border-[#F5C400] px-6 py-3 text-white transition hover:bg-[#F5C400] hover:text-black">
-
-    WhatsApp
-
-</a>
-
-           <a
-    href="#packs"
-    class="rounded-full bg-[#F5C400] px-6 py-3 font-semibold text-black transition hover:scale-105 hover:bg-[#FFD84D]">
-
-    Réserver
-
-</a>
-
-        </nav>
+        <button id="close-menu" class="text-3xl">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
 
     </div>
+
+    <nav class="flex flex-col gap-6 p-8 text-lg">
+
+        <a href="#hero" class="mobile-link">Accueil</a>
+
+        <a href="#about" class="mobile-link">À propos</a>
+
+        <a href="#packs" class="mobile-link">Packs</a>
+
+        <a href="#materiels" class="mobile-link">Matériels</a>
+
+        <a href="#contact" class="mobile-link">Contact</a>
+
+        <a
+            href="https://wa.me/21653308760"
+            target="_blank"
+            class="mt-6 rounded-full border border-[#F5C400] px-6 py-3 text-center transition hover:bg-[#F5C400] hover:text-black">
+
+            WhatsApp
+
+        </a>
+
+        <a
+            href="#packs"
+            class="rounded-full bg-[#F5C400] px-6 py-3 text-center font-semibold text-black">
+
+            Réserver
+
+        </a>
+
+    </nav>
+
+</div>
+
+<!-- Overlay -->
+
+<div
+    id="menu-overlay"
+    class="fixed inset-0 z-[998] hidden bg-black/70 lg:hidden">
+</div>
 
 </header>

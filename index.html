@@ -183,6 +183,51 @@ LIGHTBOX
     </div>
 
 </div>
+
+<script>
+window.addEventListener("load", () => {
+
+    document.querySelectorAll("video").forEach(video => {
+
+        const sources = video.querySelectorAll("source");
+
+        sources.forEach(source => {
+
+            if (source.dataset.src) {
+                source.src = source.dataset.src;
+            }
+
+        });
+
+        video.load();
+
+        const playVideo = () => {
+
+            video.play().catch(() => {
+
+                // Retry after 500 ms
+                setTimeout(() => {
+                    video.play().catch(() => {});
+                }, 500);
+
+            });
+
+        };
+
+        if (video.readyState >= 3) {
+
+            playVideo();
+
+        } else {
+
+            video.addEventListener("canplay", playVideo, { once: true });
+
+        }
+
+    });
+
+});
+</script>
 </body>
 
 </html>
