@@ -1,0 +1,115 @@
+[
+  {
+    "id": "phoenix-enlightenment-41",
+    "type": "facebook",
+    "year": 2024,
+    "title": "Official Public Recognition",
+    "project": "Enlightenment 4.1",
+    "quote": "Best Producer: Skander Sitty",
+    "rating": 5,
+    "image": "src/images/testimonials/tem2.png",
+    "person": {
+      "name": "Feryel Ben Ammar",
+      "role": "President",
+      "company": "Phoenix Consulting - Junior Entreprise"
+    },
+    "tags": ["Facebook", "Recognition", "Event"]
+  },
+  {
+    "id": "phoenix-enlightenment-30",
+    "type": "facebook",
+    "year": 2023,
+    "title": "Official Public Recognition",
+    "project": "Enlightenment 3.0.1",
+    "quote": "Best Producer: Skander Sitty",
+    "rating": 5,
+    "image": "src/images/testimonials/JET2.png",
+    "person": {
+      "name": "Ghaith Hamdi",
+      "role": "Project Manager",
+      "company": "Phoenix Consulting - Junior Entreprise"
+    },
+    "tags": ["Facebook", "Recognition", "Event"]
+  },
+  {
+    "id": "samara-youtube",
+    "type": "youtube",
+    "year": 2023,
+    "title": "Official Music Video Credits",
+    "project": "Ma3lebeli",
+    "quote": "Camera Assistant: Skander Sitty",
+    "rating": 5,
+    "image": "src/images/testimonials/samara1.png",
+    "person": {
+      "name": "Samara",
+      "role": "Artist",
+      "company": "Red Diamond"
+    },
+    "tags": ["YouTube", "Music Video"]
+  },
+  {
+    "id": "aziz-jedidi",
+    "type": "facebook",
+    "year": 2023,
+    "title": "Crew Credits",
+    "project": "Music Video",
+    "quote": "Production Assistant: Skander Sitty",
+    "rating": 5,
+    "image": "src/images/testimonials/Production.png",
+    "person": {
+      "name": "Aziz Jedidi",
+      "role": "Director of Photography",
+      "company": "Independent"
+    },
+    "tags": ["Film", "Credits"]
+  },
+  {
+    "id": "artmasta-story",
+    "type": "instagram",
+    "year": 2025,
+    "title": "Instagram Story",
+    "project": "Mani Wldek",
+    "quote": "Shared by the official artist account.",
+    "rating": 5,
+    "image": "src/images/testimonials/artmasta.png",
+    "person": {
+      "name": "ArtMasta",
+      "role": "Artist",
+      "company": ""
+    },
+    "tags": ["Instagram", "Story"]
+  },
+  {
+    "id": "attessia-story",
+    "type": "instagram",
+    "year": 2025,
+    "title": "Behind The Scenes",
+    "project": "TV Production",
+    "quote": "Official backstage story.",
+    "rating": 5,
+    "image": "src/images/testimonials/attesia.png",
+    "person": {
+      "name": "Attessia TV",
+      "role": "TV Channel",
+      "company": ""
+    },
+    "tags": ["TV", "Instagram"]
+  },
+  
+  {
+    "id": "community-comments",
+    "type": "comments",
+    "year": 2022,
+    "title": "Community Support",
+    "project": "Portfolio",
+    "quote": "Bravo Skander 👏",
+    "rating": 5,
+    "image": "src/images/testimonials/tem1.png",
+    "person": {
+      "name": "Community",
+      "role": "Facebook Audience",
+      "company": ""
+    },
+    "tags": ["Comments", "Community"]
+  }
+]

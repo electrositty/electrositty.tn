@@ -1,86 +1,619 @@
 [
   {
-    "image": "src/images/gallery/gallery1.png",
-    "category": "Mariage",
-    "title": "Mariage",
-    "description": "Installation complète de sonorisation et d'éclairage pour une réception de mariage. Une prestation clé en main adaptée aux grands événements.",
-    "client": "Mariage"
+    "id": "samara-ma3lebeli",
+    "order": 1,
+    "featured": true,
+    "thumbnail": "src/images/gallery/samara.png",
+    "hero": "src/images/gallery/samara.png",
+    "title": "Samara – Ma3lebeli",
+    "subtitle": "Official Music Video",
+    "category": "Music Videos",
+    "client": "Samara",
+    "year": 2025,
+    "location": "Tunisia",
+    "description": "Member of the Image Team during the production of Samara's official music video.",
+    "services": [
+      "Image Team",
+      "Production Support",
+      "Technical Assistance"
+    ],
+    "tags": [
+      "Artist",
+      "Music Video",
+      "Production"
+    ],
+    "video": "src/images/gallery/TNPRODUCT.mp4",
+    "gallery": [
+      "src/images/gallery/samara.png",
+      "src/images/gallery/samara1.png",
+      "src/images/gallery/sam1.jpg",
+      "src/images/gallery/sam2.jpg"
+    ]
   },
   {
-    "image": "src/images/gallery/gallery2.png",
-    "category": "Concert",
-    "title": "Concert",
-    "description": "Prestation son, lumière et régie technique lors d'un concert. Une ambiance immersive grâce à un matériel professionnel.",
-    "client": "Concert"
+    "id": "artmasta-nordo-mani-wldek",
+    "order": 2,
+    "featured": true,
+    "thumbnail": "src/images/gallery/ARTMAS,NORDO.png",
+    "hero": "src/images/gallery/ARTMAS,NORDO.png",
+    "title": "ArtMasta ft. Nordo – Mani Wldek",
+    "subtitle": "Official Music Video",
+    "category": "Music Videos",
+    "client": "Rise Production",
+    "year": 2025,
+    "location": "Tunisia",
+    "description": "Production Assistant.",
+    "services": [
+      "Production Assistant",
+      "Film Crew"
+    ],
+    "tags": [
+      "Artist",
+      "Music Video"
+    ],
+    "video": "src/images/gallery/TNPRODUCT.mp4",
+    "gallery": [
+      "src/images/gallery/ARTMAS,NORDO.png",
+      "src/images/gallery/artmasta.png"
+    ]
   },
   {
-    "image": "src/images/gallery/gallery3.png",
-    "category": "Éclairage",
-    "title": "Éclairage",
-    "description": "Mise en lumière d'une scène avec projecteurs LED et effets lumineux pour offrir une expérience visuelle unique.",
-    "client": "Éclairage scénique"
+    "id": "dhalma-again",
+    "order": 3,
+    "featured": true,
+    "thumbnail": "src/images/gallery/dhalma.png",
+    "hero": "src/images/gallery/dhalma.png",
+    "title": "Dhalma – Again",
+    "subtitle": "Official Music Video",
+    "category": "Music Videos",
+    "client": "Dhalma",
+    "year": 2025,
+    "location": "Tunisia",
+    "description": "Technical support during production.",
+    "services": [
+      "Image Team"
+    ],
+    "tags": [
+      "Artist",
+      "Music Video"
+    ],
+    "video": "src/images/gallery/TNPRODUCT.mp4",
+    "gallery": [
+      "src/images/gallery/dhalma.png"
+    ]
   },
   {
-    "image": "src/images/gallery/gallery2.png",
-    "category": "DJ",
-    "title": "DJ",
-    "description": "Installation d'une régie DJ professionnelle et d'un système audio performant pour des événements festifs.",
-    "client": "Animation DJ"
+    "id": "jenjoon-barrani",
+    "order": 4,
+    "featured": false,
+    "thumbnail": "src/images/gallery/jenjoon.png",
+    "hero": "src/images/gallery/jenjoon.png",
+    "title": "Jenjoon – Barrani",
+    "subtitle": "Official Music Video",
+    "category": "Music Videos",
+    "client": "Rise Production",
+    "year": 2025,
+    "location": "Tunisia",
+    "description": "Production Assistant.",
+    "services": [
+      "Production"
+    ],
+    "tags": [
+      "Artist",
+      "Music Video"
+    ],
+    "video": "",
+    "gallery": [
+      "src/images/gallery/jenjoon.png"
+    ]
   },
   {
-    "image": "src/images/gallery/gallery5.png",
-    "category": "Festival",
-    "title": "Festival",
-    "description": "Accompagnement technique complet pour des festivals et événements en plein air avec installation du matériel.",
-    "client": "Festival"
+    "id": "remzi-regret-it",
+    "order": 5,
+    "featured": false,
+    "thumbnail": "src/images/gallery/Production.png",
+    "hero": "src/images/gallery/Production.png",
+    "title": "REMZI – Regret It",
+    "subtitle": "Official Music Video",
+    "category": "Music Videos",
+    "client": "REMZI",
+    "year": 2025,
+    "location": "Tunisia",
+    "description": "Production Assistant.",
+    "services": [
+      "Production"
+    ],
+    "tags": [
+      "Artist",
+      "Music Video"
+    ],
+    "video": "",
+    "gallery": [
+      "src/images/gallery/Production.png"
+    ]
   },
   {
-    "image": "src/images/gallery/gallery6.png",
-    "category": "Entreprise",
-    "title": "Événements étudiants & Associatifs",
-    "description": "Participation à plusieurs événements universitaires et associatifs, notamment JOBS 2k22 et Associa-Med LC Sousse, avec la mise en place des solutions techniques.",
-    "client": "Junior Enterprises & Associations"
+    "id": "professional-productions",
+    "order": 6,
+    "featured": false,
+    "thumbnail": "src/images/gallery/Production.png",
+    "hero": "src/images/gallery/Production.png",
+    "title": "Professional Productions",
+    "subtitle": "Behind the Scenes",
+    "category": "Behind the Scenes",
+    "client": "Production Crew",
+    "year": 2025,
+    "location": "Tunisia",
+    "description": "Behind the scenes.",
+    "services": [
+      "Backstage",
+      "Production"
+    ],
+    "tags": [
+      "Backstage"
+    ],
+    "video": "",
+    "gallery": [
+      "src/images/gallery/Production.png"
+    ]
   },
   {
-    "image": "src/images/gallery/gallery7.png",
-    "category": "Production",
-    "title": "Backstage & Production",
-    "description": "Coulisses de productions audiovisuelles, installations de scène et réalisations partagées sur les réseaux sociaux par les organisateurs.",
-    "client": "Production événementielle"
+    "id": "image-department",
+    "order": 7,
+    "featured": false,
+    "thumbnail": "src/images/gallery/samara.png",
+    "hero": "src/images/gallery/samara.png",
+    "title": "Image Department",
+    "subtitle": "Behind the Scenes",
+    "category": "Behind the Scenes",
+    "client": "Image Team",
+    "year": 2025,
+    "location": "Tunisia",
+    "description": "Working alongside cinematographers.",
+    "services": [
+      "Image Department"
+    ],
+    "tags": [
+      "Backstage"
+    ],
+    "video": "",
+    "gallery": [
+      "src/images/gallery/samara.png"
+    ]
   },
   {
-    "image": "src/images/gallery/gallery8.png",
-    "category": "Production",
-    "title": "Collaborations Artistiques",
-    "description": "Collaborations avec des artistes, créateurs et producteurs. Les retours positifs sur les réseaux témoignent de la qualité des prestations réalisées.",
-    "client": "Artistes & Créateurs"
-  },
-  {
-    "image": "src/images/gallery/gallery9.png",
-    "category": "Avis",
-    "title": "Avis Clients",
-    "description": "Messages de félicitations et commentaires publiés par les clients après les événements, soulignant le professionnalisme de l'équipe.",
-    "client": "Commentaires Facebook"
-  },
-  {
-    "image": "src/images/gallery/gallery10.png",
-    "category": "Avis",
-    "title": "Remerciements",
-    "description": "Publication officielle remerciant ElectroSitty pour sa contribution technique à l'organisation d'un événement d'envergure.",
-    "client": "Phoenix Consulting - Junior Enterprise"
-  },
-  {
-    "image": "src/images/gallery/gallery11.png",
-    "category": "Entreprise",
-    "title": "IEEE Tunisie",
-    "description": "Participation à un événement IEEE avec installation audiovisuelle, sonorisation et accompagnement technique sur site.",
-    "client": "IEEE TSYP Tunisia"
-  },
-  {
-    "image": "src/images/gallery/gallery78.png",
-    "category": "Production",
-    "title": "Productions & Clips",
-    "description": "Participation à des clips musicaux, tournages et productions artistiques nécessitant des solutions audiovisuelles professionnelles.",
-    "client": "Productions artistiques"
+    "id": "enlightenment-4-1",
+    "order": 8,
+    "featured": true,
+    "thumbnail": "src/images/gallery/jet.png",
+    "hero": "src/images/gallery/jet.png",
+    "title": "Enlightenment 4.1",
+    "subtitle": "University Event",
+    "category": "Universities",
+    "client": "Phoenix Consulting Junior Enterprise",
+    "year": 2024,
+    "location": "Tunisia",
+    "description": "Best Producer Award.",
+    "services": [
+      "Technical Production"
+    ],
+    "tags": [
+      "University",
+      "Award"
+    ],
+    "video": "",
+    "gallery": [
+      "src/images/gallery/jet.png",
+      "src/images/gallery/JET2.png"
+    ]
   }
+  ,
+{
+  "id": "jet-national-congress",
+  "order": 9,
+  "featured": true,
+  "thumbnail": "src/images/gallery/JET2.png",
+  "hero": "src/images/gallery/JET2.png",
+  "title": "JET National Congress",
+  "subtitle": "National Congress",
+  "category": "Universities",
+  "client": "Junior Enterprises of Tunisia",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "DJ performance and audiovisual production during the JET National Congress.",
+  "services": [
+    "DJ",
+    "Sound",
+    "Lighting"
+  ],
+  "tags": [
+    "Congress",
+    "University",
+    "DJ"
+  ],
+  "video": "src/images/gallery/TNPRODUCT2.mp4",
+  "gallery": [
+    "src/images/gallery/JET2.png",
+    "src/images/gallery/jet.png"
+  ]
+},
+{
+  "id": "ieee-tsyp-tunisia",
+  "order": 10,
+  "featured": true,
+  "thumbnail": "src/images/gallery/ieee.png",
+  "hero": "src/images/gallery/ieee.png",
+  "title": "IEEE TSYP Tunisia",
+  "subtitle": "Congress",
+  "category": "Universities",
+  "client": "IEEE Tunisia",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "Complete audiovisual production for IEEE TSYP.",
+  "services": [
+    "Sound",
+    "Lighting",
+    "Technical Assistance"
+  ],
+  "tags": [
+    "IEEE",
+    "Congress",
+    "Technology"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/ieee.png"
+  ]
+},
+{
+  "id": "universite-centrale-integration-day",
+  "order": 11,
+  "featured": true,
+  "thumbnail": "src/images/gallery/Enactus-UnivCentrale.png",
+  "hero": "src/images/gallery/Enactus-UnivCentrale.png",
+  "title": "Université Centrale Integration Day",
+  "subtitle": "Student Event",
+  "category": "Universities",
+  "client": "Université Centrale",
+  "year": 2025,
+  "location": "Tunis",
+  "description": "DJ performance during the integration day.",
+  "services": [
+    "DJ",
+    "Entertainment"
+  ],
+  "tags": [
+    "University",
+    "Student",
+    "DJ"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/Enactus-UnivCentrale.png"
+  ]
+},
+{
+  "id": "gomycode-community-event",
+  "order": 12,
+  "featured": false,
+  "thumbnail": "src/images/gallery/GoMycode .png",
+  "hero": "src/images/gallery/GoMycode .png",
+  "title": "GoMyCode Community Event",
+  "subtitle": "Community Event",
+  "category": "Universities",
+  "client": "GoMyCode",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "Technical support and event production.",
+  "services": [
+    "Technical Support"
+  ],
+  "tags": [
+    "Community",
+    "Education",
+    "Technology"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/GoMycode .png"
+  ]
+},
+{
+  "id": "code-in-the-dark-tunisia",
+  "order": 13,
+  "featured": false,
+  "thumbnail": "src/images/gallery/GoMycode .png",
+  "hero": "src/images/gallery/GoMycode .png",
+  "title": "Code in the Dark Tunisia",
+  "subtitle": "Tech Competition",
+  "category": "Universities",
+  "client": "SUP'COM",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "Technical production for Code in the Dark.",
+  "services": [
+    "Technical Production"
+  ],
+  "tags": [
+    "Coding",
+    "Competition",
+    "Technology"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/GoMycode .png"
+  ]
+},
+{
+  "id": "cinephilia-live-dj",
+  "order": 14,
+  "featured": false,
+  "thumbnail": "src/images/gallery/lpn.png",
+  "hero": "src/images/gallery/lpn.png",
+  "title": "Cinéphilia",
+  "subtitle": "Live DJ",
+  "category": "DJ Shows",
+  "client": "LPN Young Leaders",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "Official live DJ performance.",
+  "services": [
+    "DJ"
+  ],
+  "tags": [
+    "DJ",
+    "Live",
+    "Entertainment"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/lpn.png",
+    "src/images/gallery/logolpn.jpg"
+  ]
+},
+{
+  "id": "tobe-afterwork",
+  "order": 15,
+  "featured": false,
+  "thumbnail": "src/images/gallery/TOBE.jpg",
+  "hero": "src/images/gallery/TOBE.jpg",
+  "title": "TOBE Afterwork",
+  "subtitle": "Guest DJ",
+  "category": "DJ Shows",
+  "client": "TOBE",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "Guest DJ performance.",
+  "services": [
+    "DJ"
+  ],
+  "tags": [
+    "Afterwork",
+    "DJ",
+    "Music"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/TOBE.jpg"
+  ]
+},
+{
+  "id": "masquerade-ball-night",
+  "order": 16,
+  "featured": false,
+  "thumbnail": "src/images/gallery/Enactus-UnivCentrale.png",
+  "hero": "src/images/gallery/Enactus-UnivCentrale.png",
+  "title": "Masquerade Ball Night",
+  "subtitle": "Live DJ",
+  "category": "DJ Shows",
+  "client": "Enactus Université Centrale",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "Official DJ and lighting performance.",
+  "services": [
+    "DJ",
+    "Lighting"
+  ],
+  "tags": [
+    "DJ",
+    "University",
+    "Night Event"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/Enactus-UnivCentrale.png"
+  ]
+}
+,
+{
+  "id": "wedding-production",
+  "order": 17,
+  "featured": false,
+  "thumbnail": "src/images/gallery/mariage.png",
+  "hero": "src/images/gallery/mariage1.png",
+  "title": "Wedding Production",
+  "subtitle": "Premium Wedding",
+  "category": "Weddings",
+  "client": "Private Clients",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "Complete wedding production including DJ, sound system, lighting and event coordination.",
+  "services": [
+    "DJ",
+    "Sound",
+    "Lighting"
+  ],
+  "tags": [
+    "Wedding",
+    "Luxury",
+    "Event"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/mariage.png",
+    "src/images/gallery/mariage1.png"
+  ]
+},
+{
+  "id": "lighting-design",
+  "order": 18,
+  "featured": false,
+  "thumbnail": "src/images/gallery/eclairage.png",
+  "hero": "src/images/gallery/eclairage.png",
+  "title": "Lighting Design",
+  "subtitle": "Stage Lighting",
+  "category": "Lighting Design",
+  "client": "Event Organizer",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "Professional lighting installation and stage lighting design.",
+  "services": [
+    "Lighting"
+  ],
+  "tags": [
+    "Lighting",
+    "Stage",
+    "Design"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/eclairage.png"
+  ]
+},
+{
+  "id": "concert-production",
+  "order": 19,
+  "featured": false,
+  "thumbnail": "src/images/gallery/Production.png",
+  "hero": "src/images/gallery/Production.png",
+  "title": "Concert Production",
+  "subtitle": "Live Concert",
+  "category": "Live Events",
+  "client": "Event Organizers",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "Complete concert production including sound, lighting and stage management.",
+  "services": [
+    "Sound",
+    "Lighting"
+  ],
+  "tags": [
+    "Concert",
+    "Live",
+    "Production"
+  ],
+  "video": "src/images/gallery/TNPRODUCT2.mp4",
+  "gallery": [
+    "src/images/gallery/Production.png",
+    "src/images/gallery/attesia.png"
+  ]
+},
+{
+  "id": "festival-experience",
+  "order": 20,
+  "featured": false,
+  "thumbnail": "src/images/gallery/attesia.png",
+  "hero": "src/images/gallery/attesia.png",
+  "title": "Festival Experience",
+  "subtitle": "Festival",
+  "category": "Live Events",
+  "client": "Festival Organizers",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "Outdoor festival production with stage, lighting and professional sound systems.",
+  "services": [
+    "Stage",
+    "Lighting",
+    "Sound"
+  ],
+  "tags": [
+    "Festival",
+    "Outdoor",
+    "Production"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/attesia.png",
+    "src/images/gallery/Production.png"
+  ]
+},
+{
+  "id": "best-producer-recognition",
+  "order": 21,
+  "featured": false,
+  "thumbnail": "src/images/gallery/Samy Chaffai.png",
+  "hero": "src/images/gallery/Samy Chaffai.png",
+  "title": "Best Producer Recognition",
+  "subtitle": "Award",
+  "category": "Awards & Recognition",
+  "client": "Phoenix Consulting",
+  "year": 2024,
+  "location": "Tunisia",
+  "description": "Official recognition awarded for excellence in event production.",
+  "services": [
+    "Award"
+  ],
+  "tags": [
+    "Award",
+    "Recognition",
+    "Achievement"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/Samy Chaffai.png"
+  ]
+},
+{
+  "id": "client-testimonials",
+  "order": 22,
+  "featured": false,
+  "thumbnail": "src/images/gallery/tem1.png",
+  "hero": "src/images/gallery/tem1.png",
+  "title": "Client Testimonials",
+  "subtitle": "Testimonials",
+  "category": "Awards & Recognition",
+  "client": "Clients & Partners",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "Feedback and testimonials from artists and partners.",
+  "services": [
+    "Testimonials"
+  ],
+  "tags": [
+    "Clients",
+    "Reviews",
+    "Partners"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/tem1.png",
+    "src/images/gallery/tem2.png"
+  ]
+},
+{
+  "id": "professional-recommendations",
+  "order": 23,
+  "featured": false,
+  "thumbnail": "src/images/gallery/tem2.png",
+  "hero": "src/images/gallery/tem2.png",
+  "title": "Professional Recommendations",
+  "subtitle": "Recommendations",
+  "category": "Awards & Recognition",
+  "client": "Production Teams",
+  "year": 2025,
+  "location": "Tunisia",
+  "description": "Professional recommendations and acknowledgements from collaborators.",
+  "services": [
+    "Recommendations"
+  ],
+  "tags": [
+    "Recommendations",
+    "Professional",
+    "Recognition"
+  ],
+  "video": "",
+  "gallery": [
+    "src/images/gallery/tem2.png"
+  ]
+}
 ]

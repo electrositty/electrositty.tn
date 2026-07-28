@@ -1,5 +1,5 @@
 let materiels = [];
-let currentCategory = "Tous";
+let currentMatCategory = "Tous";
 
 const container = document.getElementById("materiels-container");
 const searchInput = document.getElementById("search-material");
@@ -25,8 +25,8 @@ function displayMateriels() {
     const filtered = materiels.filter(item => {
 
         const matchCategory =
-            currentCategory === "Tous" ||
-            item.category === currentCategory;
+            currentMatCategory === "Tous" ||
+            item.category === currentMatCategory;
 
         const matchSearch =
             item.name.toLowerCase().includes(keyword);
@@ -39,9 +39,9 @@ function displayMateriels() {
         `${filtered.length} matériel${filtered.length > 1 ? "s" : ""}`;
 
     categoryTitle.textContent =
-        currentCategory === "Tous"
+        currentMatCategory === "Tous"
             ? "Tous les matériels"
-            : currentCategory;
+            : currentMatCategory;
 
     if (filtered.length === 0) {
 
@@ -213,7 +213,7 @@ document.addEventListener("click", e => {
         "text-black"
     );
 
-    currentCategory = btn.dataset.category;
+    currentMatCategory = btn.dataset.category;
 
     displayMateriels();
 

@@ -1,0 +1,66 @@
+[
+  {
+    "id": "samara",
+    "title": "SAMARA",
+    "subtitle": "Official Music Video",
+    "badge": "Production",
+    "color": "#F5C400",
+    "image": "src/images/featured/samara.png",
+    "page": "samara"
+  },
+  {
+    "id": "code-dark",
+    "title": "Code in the Dark",
+    "subtitle": "GoMyCode × SUP'COM",
+    "badge": "University Clubs",
+    "color": "#3B82F6",
+    "image": "src/images/featured/GoMyCode.png",
+    "page": "code-dark"
+  },
+  {
+    "id": "lotfi-riahi",
+    "title": "Lotfi Riahi",
+    "subtitle": "Folklore Tunisien",
+    "badge": "Artist Collaboration",
+    "color": "#9333EA",
+    "image": "src/images/featured/lotfi.png",
+    "page": "lotfi-riahi"
+  },
+  {
+    "id": "samy-cheffai",
+    "title": "Samy Cheffai",
+    "subtitle": "Movie Production",
+    "badge": "Movie Production",
+    "color": "#EF4444",
+    "image": "src/images/featured/sam1.jpg",
+    "page": "samy-cheffai"
+  },
+
+  {
+    "id": "artmasta-nordo",
+    "title": "ArtMasta ft. Nordo",
+    "subtitle": "Mani Wldek • Official Music Video",
+    "badge": "Film crew",
+    "color": "#F59E0B",
+    "image": "src/images/featured/ARTMAS,NORDO.png",
+    "page": "artmasta-nordo"
+  },
+  {
+    "id": "dhalma-again",
+    "title": "Dhalma",
+    "subtitle": "Again • Official Music Video",
+    "badge": "Image team",
+    "color": "#10B981",
+    "image": "src/images/featured/dhalma.png",
+    "page": "dhalma-again"
+  },
+  {
+    "id": "jenjoon-barrani",
+    "title": "Jenjoon",
+    "subtitle": "Barrani • Official Music Video",
+    "badge": "Production",
+    "color": "#EC4899",
+    "image": "src/images/featured/jenjoon.png",
+    "page": "jenjoon-barrani"
+  }
+]

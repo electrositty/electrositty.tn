@@ -1,0 +1,60 @@
+[
+      {
+  "id": "iset-rades-graduation-2026",
+  "title": "Cérémonie de remise des diplômes – ISET Radès",
+  "date": "30 Jun 2026",
+  "image": "src/images/events/ceremonie.png",
+  "category": "Graduation"
+},
+  {
+    "id": "ipdays-gits-2025",
+    "title": "IPDAYS × GITS 2025",
+    "date": "13 Nov 2025",
+    "image": "src/images/events/ipdays-gits.png",
+    "category": "Conference"
+  },
+
+  {
+    "id": "tuned-2024",
+    "title": "TunED 7.0",
+    "date": "16 Nov 2024",
+    "image": "src/images/events/tuned.png",
+    "category": "University"
+  },
+  {
+    "id": "enlightenment-41",
+    "title": "Enlightenment 4.1",
+    "date": "20 Apr 2024",
+    "image": "src/images/events/enlightenment.png",
+    "category": "Festival"
+  },
+  {
+    "id": "neapolis-seminar",
+    "title": "Neapolis Seminar",
+    "date": "2 Dec 2023",
+    "image": "src/images/events/neapolis.png",
+    "category": "Conference"
+  },
+  {
+    "id": "labess-yuka",
+    "title": "LABESS @ Yüka Tunis",
+    "date": "2 Aug 2023",
+    "image": "src/images/events/labess.png",
+    "category": "Concert"
+  },
+    {
+    "id": "fifak-2022",
+    "title": "Festival International du Film Amateur de Kélibia (FIFAK)",
+    "date": "13 Aug 2022",
+    "image": "src/images/events/fifak.png",
+    "category": "Festival"
+  },
+  {
+    "id": "kolsch-kuskus-2022",
+    "title": "Première : Kölsch oder Kuskus",
+    "date": "5 Dec 2022",
+    "image": "src/images/events/kolsch-kuskus.png",
+    "category": "Premiere"
+  }
+  
+]
