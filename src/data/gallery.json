@@ -296,8 +296,8 @@
   "id": "gomycode-community-event",
   "order": 12,
   "featured": false,
-  "thumbnail": "src/images/gallery/GoMycode .png",
-  "hero": "src/images/gallery/GoMycode .png",
+  "thumbnail": "src/images/gallery/",
+  "hero": "src/images/gallery/GoMycode.png",
   "title": "GoMyCode Community Event",
   "subtitle": "Community Event",
   "category": "Universities",
@@ -315,15 +315,15 @@
   ],
   "video": "",
   "gallery": [
-    "src/images/gallery/GoMycode .png"
+    "src/images/gallery/GoMycode.png"
   ]
 },
 {
   "id": "code-in-the-dark-tunisia",
   "order": 13,
   "featured": false,
-  "thumbnail": "src/images/gallery/GoMycode .png",
-  "hero": "src/images/gallery/GoMycode .png",
+  "thumbnail": "src/images/gallery/GoMycode.png",
+  "hero": "src/images/gallery/GoMycode.png",
   "title": "Code in the Dark Tunisia",
   "subtitle": "Tech Competition",
   "category": "Universities",
@@ -341,7 +341,7 @@
   ],
   "video": "",
   "gallery": [
-    "src/images/gallery/GoMycode .png"
+    "src/images/gallery/GoMycode.png"
   ]
 },
 {
