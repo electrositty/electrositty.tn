@@ -2,6 +2,7 @@
   {
     "name": "Satellite 15\" avec trépied",
     "category": "Son",
+    "environment": "Tous",
     "description": "Enceinte professionnelle idéale pour les mariages, conférences et soirées.",
     "price": "80 DT / jour",
     "badge": "Le plus demandé",
@@ -11,6 +12,7 @@
   {
     "name": "Caisson de basse",
     "category": "Son",
+    "environment": "Tous",
     "description": "Renforce les basses pour une sonorisation puissante et immersive.",
     "price": "100 DT / jour",
     "badge": "Professionnel",
@@ -20,6 +22,7 @@
   {
     "name": "Micro avec câble",
     "category": "Son",
+    "environment": "Tous",
     "description": "Microphone filaire adapté aux discours, conférences et animations.",
     "price": "25 DT / jour",
     "badge": "Économique",
@@ -29,6 +32,7 @@
   {
     "name": "Micro sans fil",
     "category": "Son",
+    "environment": "Tous",
     "description": "Micro HF offrant une grande liberté de mouvement sur scène.",
     "price": "60 DT / jour",
     "badge": "Le plus demandé",
@@ -38,6 +42,7 @@
   {
     "name": "PAR LED",
     "category": "Lumière",
+    "environment": "Tous",
     "description": "Projecteur LED parfait pour créer des ambiances lumineuses colorées.",
     "price": "30 DT / pièce / jour",
     "badge": "Populaire",
@@ -47,6 +52,7 @@
   {
     "name": "Beam / Moving Head",
     "category": "Lumière",
+    "environment": "Tous",
     "description": "Projecteur motorisé pour spectacles, concerts et événements premium.",
     "price": "90 DT / pièce / jour",
     "badge": "Professionnel",
@@ -56,6 +62,7 @@
   {
     "name": "Projecteur Découpe",
     "category": "Lumière",
+    "environment": "Indoor",
     "description": "Éclairage précis pour mettre en valeur une scène ou un intervenant.",
     "price": "80 DT / jour",
     "badge": "Scène",
@@ -65,6 +72,7 @@
   {
     "name": "Machine à fumée",
     "category": "Lumière",
+    "environment": "Tous",
     "description": "Crée un effet de fumée pour sublimer les jeux de lumière.",
     "price": "50 DT / jour",
     "badge": "Effets spéciaux",
@@ -74,6 +82,7 @@
   {
     "name": "Écran LED NT V2 Indoor",
     "category": "LED",
+    "environment": "Indoor",
     "description": "Écran LED haute définition pour les événements en intérieur.",
     "price": "120 DT / m² / jour",
     "badge": "HD",
@@ -83,6 +92,7 @@
   {
     "name": "Écran LED NT V2 Outdoor",
     "category": "LED",
+    "environment": "Outdoor",
     "description": "Écran LED résistant aux conditions extérieures pour les grands événements.",
     "price": "150 DT / m² / jour",
     "badge": "Outdoor",
@@ -92,6 +102,7 @@
   {
     "name": "Régie Pioneer 2000 + NXS2",
     "category": "DJ",
+    "environment": "Tous",
     "description": "Console DJ professionnelle utilisée dans les clubs et festivals.",
     "price": "290 DT / jour",
     "badge": "Premium",
@@ -101,6 +112,7 @@
   {
     "name": "Régie Pioneer 2000 + Xone 92",
     "category": "DJ",
+    "environment": "Tous",
     "description": "Configuration DJ haut de gamme offrant un mixage précis et performant.",
     "price": "290 DT / jour",
     "badge": "Premium",

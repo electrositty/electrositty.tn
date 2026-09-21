@@ -1,92 +1,224 @@
-<section id="packs" class="bg-black py-24">
+<section id="packs" class="bg-black py-12 md:py-20 lg:py-24 border-t border-zinc-900">
 
-    <div class="mx-auto max-w-7xl px-6">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         <!-- Header -->
-
-        <div class="text-center mb-16">
-
-            <span
-                class="inline-flex rounded-full border border-[#F5C400]/20 bg-[#F5C400]/10 px-5 py-2 text-sm font-semibold text-[#F5C400]">
-
-                NOS PACKS
-
+        <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+            <span class="inline-flex rounded-full border border-[#F5C400]/30 bg-[#F5C400]/10 px-4 py-1.5 text-xs font-semibold text-[#F5C400] uppercase tracking-wider">
+                Nos Packs Événements
             </span>
 
-            <h2 class="mt-6 text-4xl md:text-5xl font-black text-white">
-
-                Choisissez le pack idéal
-
+            <h2 class="mt-3 sm:mt-5 text-2xl sm:text-4xl font-black text-white">
+                Des solutions complètes, <span class="text-[#F5C400]">sans mauvaise surprise</span>
             </h2>
 
-            <p class="mt-5 max-w-2xl mx-auto text-lg text-zinc-400">
-
-                Sélectionnez votre type d'événement et découvrez uniquement les packs qui vous correspondent.
-
+            <p class="mt-2.5 sm:mt-4 text-xs sm:text-base text-zinc-400">
+                Du simple renfort acoustique jusqu'à la production scénique clé en main.
             </p>
+        </div>
+
+        <!-- Slider Mobile (Swipe) / Grille Desktop 4 colonnes -->
+        <div class="flex gap-4 overflow-x-auto pb-4 pt-2 snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:pb-0">
+
+            <!-- PACK 1 : SONO PRO -->
+            <div class="min-w-[270px] sm:min-w-[300px] lg:min-w-0 flex-1 flex flex-col justify-between snap-center rounded-2xl border border-zinc-800 bg-zinc-900/60 overflow-hidden backdrop-blur-sm transition-all hover:border-zinc-700">
+                <div>
+                    <!-- Image Pack -->
+                    <div class="relative h-36 w-full overflow-hidden">
+                        <img src="src/images/gallery/dj.png" alt="Pack Sono Pro" class="h-full w-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-black/40"></div>
+                        <span class="absolute top-3 left-3 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-zinc-300 backdrop-blur-sm">
+                            Pack 01
+                        </span>
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-white">Sono Pro</h3>
+                        <p class="mt-1 text-xs text-zinc-400">Conférences, réceptions & musique d'ambiance.</p>
+
+                        <div class="my-4 h-px bg-zinc-800"></div>
+
+                        <ul class="space-y-2 text-xs text-zinc-300">
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                2 à 4 Enceintes actives RCF/FBT
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Micros sans fil HF (Shure)
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Table de mixage numérique + Bluetooth
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Câblage & pieds ajustables
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0">
+                    <a href="#contact" class="block w-full rounded-xl border border-zinc-700 bg-zinc-800/80 py-2.5 text-center text-xs font-semibold text-white transition hover:bg-zinc-700">
+                        Demander ce pack
+                    </a>
+                </div>
+            </div>
+
+            <!-- PACK 2 : LIGHT SHOW -->
+            <div class="min-w-[270px] sm:min-w-[300px] lg:min-w-0 flex-1 flex flex-col justify-between snap-center rounded-2xl border border-zinc-800 bg-zinc-900/60 overflow-hidden backdrop-blur-sm transition-all hover:border-zinc-700">
+                <div>
+                    <!-- Image Pack -->
+                    <div class="relative h-36 w-full overflow-hidden">
+                        <img src="src/images/gallery/eclairage.png" alt="Pack Light Show" class="h-full w-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-black/40"></div>
+                        <span class="absolute top-3 left-3 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-zinc-300 backdrop-blur-sm">
+                            Pack 02
+                        </span>
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-white">Light Show</h3>
+                        <p class="mt-1 text-xs text-zinc-400">Mise en lumière architecturale et fête de nuit.</p>
+
+                        <div class="my-4 h-px bg-zinc-800"></div>
+
+                        <ul class="space-y-2 text-xs text-zinc-300">
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Projecteurs PAR LED RGBW (ambiance)
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Lyres Beam/Spot robotisées
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Machine à brouillard / étincelles
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Pupitre DMX synchronisé
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0">
+                    <a href="#contact" class="block w-full rounded-xl border border-zinc-700 bg-zinc-800/80 py-2.5 text-center text-xs font-semibold text-white transition hover:bg-zinc-700">
+                        Demander ce pack
+                    </a>
+                </div>
+            </div>
+
+            <!-- PACK 3 : SONO & LIGHT (Populaire) -->
+            <div class="relative min-w-[270px] sm:min-w-[300px] lg:min-w-0 flex-1 flex flex-col justify-between snap-center rounded-2xl border-2 border-[#F5C400] bg-zinc-900/90 overflow-hidden shadow-xl shadow-yellow-500/10">
+                <!-- Badge Populaire -->
+                <span class="absolute top-3 right-3 z-10 rounded-full bg-[#F5C400] px-3 py-0.5 text-[10px] font-black uppercase tracking-wider text-black shadow-md">
+                    Populaire
+                </span>
+
+                <div>
+                    <!-- Image Pack -->
+                    <div class="relative h-36 w-full overflow-hidden">
+                        <img src="src/images/gallery/mariage1.png" alt="Pack Sono et Lumière" class="h-full w-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-black/40"></div>
+                        <span class="absolute top-3 left-3 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#F5C400] backdrop-blur-sm">
+                            Pack 03
+                        </span>
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-white">Sono & Light</h3>
+                        <p class="mt-1 text-xs text-zinc-400">Mariages, soirées privées, DJ sets & galas.</p>
+
+                        <div class="my-4 h-px bg-zinc-800"></div>
+
+                        <ul class="space-y-2 text-xs text-zinc-300">
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Système Son 3000W avec Caissons
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Kit 8 Projecteurs + 4 Lyres asservies
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Micros HF pro + Effets visuels & fumée
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Installation & régie complète
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0">
+                    <a href="#contact" class="block w-full rounded-xl bg-[#F5C400] py-2.5 text-center text-xs font-black text-black transition hover:bg-yellow-400">
+                        Choisir ce pack
+                    </a>
+                </div>
+            </div>
+
+            <!-- PACK 4 : SIGNATURE 360° -->
+            <div class="min-w-[270px] sm:min-w-[300px] lg:min-w-0 flex-1 flex flex-col justify-between snap-center rounded-2xl border border-zinc-800 bg-zinc-900/60 overflow-hidden backdrop-blur-sm transition-all hover:border-zinc-700">
+                <div>
+                    <!-- Image Pack -->
+                    <div class="relative h-36 w-full overflow-hidden">
+                        <img src="src/images/gallery/ecran.png" alt="Pack Signature 360" class="h-full w-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-black/40"></div>
+                        <span class="absolute top-3 left-3 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-zinc-300 backdrop-blur-sm">
+                            Pack 04
+                        </span>
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-white">Signature 360°</h3>
+                        <p class="mt-1 text-xs text-zinc-400">Grands concerts, festivals & séminaires corporate.</p>
+
+                        <div class="my-4 h-px bg-zinc-800"></div>
+
+                        <ul class="space-y-2 text-xs text-zinc-300">
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Sonorisation Line-Array grande portée
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Écrans géants LED Indoor / Outdoor
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Ponts & structures aluminium scéniques
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                                Ingénieurs son/lumière dédiés
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="p-5 pt-0">
+                    <a href="#contact" class="block w-full rounded-xl border border-zinc-700 bg-zinc-800/80 py-2.5 text-center text-xs font-semibold text-white transition hover:bg-zinc-700">
+                        Demander ce pack
+                    </a>
+                </div>
+            </div>
 
         </div>
 
-        <!-- Layout -->
-
-        <div class="grid gap-12 lg:grid-cols-[280px_1fr]">
-
-            <!-- ================= Sidebar ================= -->
-
-            <aside
-                class="lg:sticky lg:top-28 h-fit rounded-3xl border border-zinc-800 bg-zinc-900 p-6">
-
-                <h3
-                    class="mb-6 text-xl font-bold text-white">
-
-                    Type d'événement
-
-                </h3>
-
-                <div
-                    id="event-sidebar"
-                    class="space-y-3">
-
-                </div>
-
-            </aside>
-
-            <!-- ================= Packs ================= -->
-
-            <div>
-
-                <!-- titre dynamique -->
-
-                <div class="mb-10">
-
-                    <h3
-                        id="selected-event-title"
-                        class="text-3xl font-black text-white">
-
-                        Tous les packs
-
-                    </h3>
-
-                    <p
-                        id="selected-event-description"
-                        class="mt-2 text-zinc-400">
-
-                        Découvrez toutes nos solutions de sonorisation et d'éclairage.
-
-                    </p>
-
-                </div>
-
-                <!-- packs -->
-
-                <div
-                    id="packs-grid"
-                    class="grid gap-8 md:grid-cols-2">
-
-                </div>
-
-            </div>
-
+        <!-- Indicateur mobile swipe -->
+        <div class="mt-3 flex items-center justify-center gap-1.5 lg:hidden text-zinc-500 text-[11px]">
+            <span>Glissez pour voir tous les packs</span>
+            <span>→</span>
         </div>
 
     </div>

@@ -18,6 +18,7 @@ async function init() {
     loadComponent("packs", "src/components/Packs.html"),
     loadComponent("materiels", "src/components/Materiels.html"),
     loadComponent("process", "src/components/Process.html"),
+    loadComponent("contact", "src/components/contact.html"),
     loadComponent("whychooseus", "src/components/WhyChooseUs.html"),
 ]);
   

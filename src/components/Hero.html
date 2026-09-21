@@ -1,159 +1,260 @@
-<section id="hero" class="relative overflow-hidden bg-black">
+<!-- Import de la typographie arabe moderne Cairo -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
 
-    <!-- ================= Desktop Video ================= -->
-<!-- Desktop -->
-<video
-    id="heroVideoDesktop"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="auto"
-    poster="src/images/hero/hero.png"
-    class="absolute inset-0 hidden h-full w-full object-cover md:block">
+<style>
+    /* Défilement de Droite à Gauche */
+    @keyframes marqueeLeft {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(-50%); }
+    }
+    /* Défilement de Gauche à Droite */
+    @keyframes marqueeRight {
+        0% { transform: translateX(-50%); }
+        100% { transform: translateX(0%); }
+    }
+    .animate-marquee-left {
+        display: flex;
+        width: max-content;
+        animation: marqueeLeft 32s linear infinite;
+    }
+    .animate-marquee-right {
+        display: flex;
+        width: max-content;
+        animation: marqueeRight 32s linear infinite;
+    }
+    .animate-marquee-left:hover,
+    .animate-marquee-right:hover {
+        animation-play-state: paused;
+    }
+</style>
 
-    <source
-        src="src/videos/ieee.webm"
-        type="video/webm">
+<!-- 1. SECTION HERO (Inchangée) -->
+<section id="hero" class="relative min-h-[75vh] md:min-h-[85vh] w-full overflow-hidden bg-black flex items-center justify-center text-center px-4 py-12 md:py-16">
 
-</video>
-    <!-- Overlay Desktop -->
+    <!-- Vidéos d'arrière-plan -->
+    <video
+        id="heroVideoMobile"
+        autoplay muted loop playsinline preload="auto"
+        poster="src/images/hero/hero.png"
+        class="absolute inset-0 h-full w-full object-cover object-center md:hidden">
+        <source src="src/videos/introv.mp4" type="video/mp4">
+    </video>
 
-    <div
-        class="absolute inset-0 hidden bg-gradient-to-r from-black/90 via-black/60 to-black/40 md:block">
-    </div>
+    <video
+        id="heroVideoDesktop"
+        autoplay muted loop playsinline preload="auto"
+        poster="src/images/hero/hero.png"
+        class="absolute inset-0 hidden h-full w-full object-cover md:block">
+        <source src="src/videos/introv.mp4" type="video/mp4">
+    </video>
 
-    <!-- ================= Mobile Video ================= -->
+    <!-- Voile sombre cinéma contrasté -->
+    <div class="absolute inset-0 bg-black/65 md:bg-black/50"></div>
 
-<!-- Mobile -->
-<video
-    id="heroVideoMobile"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="auto"
-    poster="src/images/hero/hero.png"
-    class="h-64 w-full object-cover">
+    <!-- Conteneur centré avec espacement vertical équilibré -->
+    <div class="relative z-10 w-full max-w-3xl mx-auto flex flex-col items-center justify-center gap-4 sm:gap-6">
+        
+        <!-- Surtitre doré avec pastille -->
+        <div class="inline-flex items-center gap-2 rounded-full border border-[#F5C400]/30 bg-black/40 px-3.5 py-1 backdrop-blur-md">
+            <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+            <span class="text-[11px] sm:text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-[#F5C400]">
+                Location de Matériel Événementiel
+            </span>
+        </div>
 
-    <source
-        src="src/videos/ieeeM.webm"
-        type="video/webm">
+        <!-- Titre en arabe -->
+        <h1 class="leading-tight max-w-xl md:max-w-none" style="font-family: 'Cairo', sans-serif;">
+            <span class="block text-xl sm:text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg">
+                علاش تكسير الرّاس مع كثرة الفورنيسورات؟
+            </span>
+            <span class="block mt-1 sm:mt-2 text-xl sm:text-3xl md:text-5xl font-black text-[#F5C400] drop-shadow-lg">
+                كلّ شي في بلاصة وحدة وبالك مرتاح
+            </span>
+        </h1>
 
-</video>
-        <div
-            class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent">
+        <!-- Badges Équipements Clés -->
+        <div class="mt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm text-zinc-200">
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/50 px-3.5 py-1.5 font-medium backdrop-blur-md shadow-sm">
+                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                Sonorisation pro
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/50 px-3.5 py-1.5 font-medium backdrop-blur-md shadow-sm">
+                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                Éclairage scénique
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/50 px-3.5 py-1.5 font-medium backdrop-blur-md shadow-sm">
+                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                Écrans LED
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/50 px-3.5 py-1.5 font-medium backdrop-blur-md shadow-sm">
+                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
+                Structures aluminium
+            </span>
         </div>
 
     </div>
 
-    <!-- ================= Hero Content ================= -->
+    <!-- Indicateur Scroll -->
+    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-70">
+        <span class="text-[9px] tracking-widest uppercase text-zinc-400">Scroll</span>
+        <div class="h-5 w-3 rounded-full border border-zinc-500 flex justify-center p-0.5">
+            <div class="h-1.5 w-1 rounded-full bg-[#F5C400] animate-bounce"></div>
+        </div>
+    </div>
 
-    <div class="relative z-10">
+</section>
 
-        <div
-            class="mx-auto max-w-7xl px-6 py-10 md:flex md:min-h-screen md:items-center md:px-10 md:py-24">
+<!-- 2. SECTION PRÉSENTATION + CARROUSEL LOGOS SUR 2 LIGNES BIDIRECTIONNELLES -->
+<section class="bg-black border-t border-zinc-900 pt-12 pb-16 px-4 text-center overflow-hidden">
+    <div class="max-w-3xl mx-auto flex flex-col items-center">
 
-            <div class="max-w-4xl">
+        <!-- Signature Établissement -->
+        <div class="flex items-center justify-center gap-3">
+            <span class="h-px w-8 sm:w-12 bg-zinc-800"></span>
+            <span class="text-xs uppercase tracking-[0.25em] text-zinc-400 font-medium">
+                Depuis 1983 • Sté Electro Setti
+            </span>
+            <span class="h-px w-8 sm:w-12 bg-zinc-800"></span>
+        </div>
 
-                <!-- Badge -->
+        <!-- Paragraphe Émotionnel Sérénité -->
+        <p class="mt-5 text-sm sm:text-base text-zinc-300 font-light leading-relaxed">
+            Nous ne livrons pas seulement du matériel : nous créons ce sentiment de soulagement quand tout est prêt à l'heure, parfaitement synchronisé, et que votre événement prend vie sous vos yeux.
+        </p>
 
-                <div
-                    class="inline-flex items-center rounded-full border border-zinc-700 bg-zinc-900/80 px-4 py-2 text-sm text-zinc-300 backdrop-blur">
+    </div>
 
-                    Depuis 1983 • Leader de l'événementiel
+    <!-- CARROUSEL DES PARTENAIRES (2 Lignes opposées) -->
+    <div class="mt-12 w-full max-w-6xl mx-auto">
+        
+        <p class="text-[11px] sm:text-xs uppercase tracking-[0.3em] text-[#F5C400] font-semibold mb-6">
+            Ils nous font confiance
+        </p>
 
-                </div>
-
-                <!-- Title -->
-
-                <h1
-                    class="mt-8 text-4xl font-black leading-tight text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
-
-                    Location de
-
-                    <span class="text-[#F5C400]">
-
-                        matériel
-
-                    </span>
-
-                    <br>
-
-                    événementiel
-
-                </h1>
-
-                <!-- Description -->
-
-                <p
-                    class="mt-8 max-w-2xl text-base leading-8 text-zinc-400 sm:text-lg">
-
-                    Sonorisation professionnelle,
-                    éclairage,
-                    écrans LED,
-                    structures aluminium,
-                    et installation complète
-                    partout en Tunisie.
-
-                </p>
-
-                <!-- Buttons -->
-
-                <div
-                    class="mt-10 flex flex-col gap-4 sm:flex-row">
-
-                    <!-- CTA -->
-
-                    <a
-                        href="#packs"
-                        class="rounded-full bg-[#F5C400] px-8 py-4 text-center font-semibold text-black shadow-lg shadow-yellow-500/20 transition duration-300 hover:-translate-y-1 hover:bg-[#FFD84D]">
-
-                        Découvrir nos Packs
-
-                    </a>
-
-                    <!-- WhatsApp -->
-
-                    <a
-                        href="https://wa.me/21653308760"
-                        target="_blank"
-                        class="rounded-full border border-zinc-700 bg-zinc-900/70 px-8 py-4 text-center text-white backdrop-blur transition duration-300 hover:border-[#F5C400] hover:bg-zinc-800">
-
-                        <i
-                            class="fa-brands fa-whatsapp mr-2 text-[#F5C400]">
-                        </i>
-
-                        WhatsApp
-
-                    </a>
-
-                </div>
-                                <!-- ================= Statistics ================= -->
-
+        <!-- Conteneur global avec masquage dégradé sur les bords -->
+        <div class="relative w-full overflow-hidden flex flex-col gap-4">
             
+            <!-- Dégradés latéraux -->
+            <div class="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
+
+            <!-- ================= LIGNE 1 : Droite -> Gauche ================= -->
+            <div class="animate-marquee-left flex items-center gap-4 sm:gap-6 py-1">
+                
+                <!-- Bloc A : Série 1 -->
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/sheraton.png" alt="Sheraton Tunis Hotel" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Sheraton Tunis</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/sotetel.png" alt="Sotetel" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Sotetel</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/clubleo.png" alt="Club Léo" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Club Léo</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/carthageland.png" alt="Carthage Land" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Carthage Land</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/attessia.png" alt="Attessia TV" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Attessia TV</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/jetrades.png" alt="Jet Rades" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Iset Rades</span>
+                </div>
+
+                <!-- Bloc A : Duplicata exact (Continuité) -->
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/sheraton.png" alt="Sheraton Tunis Hotel" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Sheraton Tunis</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/sotetel.png" alt="Sotetel" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Sotetel</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/clubleo.png" alt="Club Léo" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Club Léo</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/carthageland.png" alt="Carthage Land" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Carthage Land</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/attessia.png" alt="Attessia TV" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Attessia TV</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/jetrades.png" alt="Jet Rades" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Jet Rades</span>
+                </div>
+
+            </div>
+
+            <!-- ================= LIGNE 2 : Gauche -> Droite ================= -->
+            <div class="animate-marquee-right flex items-center gap-4 sm:gap-6 py-1">
+                
+                <!-- Bloc B : Série 2 -->
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/ieee.png" alt="IEEE" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">IEEE</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/radisson.png" alt="Radisson Blu" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Radisson Blu</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/regency.png" alt="Regency Tunis" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Regency Tunis</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/lakeclub.png" alt="Lake Club" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Lake Club</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/tbs.png" alt="Tunis Business School" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">TBS</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/tawa.png" alt="TAWA Digital Talents" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">TAWA</span>
+                </div>
+
+                <!-- Bloc B : Duplicata exact (Continuité) -->
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/ieee.png" alt="IEEE" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">IEEE</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/radisson.png" alt="Radisson Blu" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Radisson Blu</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/regency.png" alt="Regency Tunis" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Regency Tunis</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/lakeclub.png" alt="Lake Club" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">Lake Club</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/tbs.png" alt="Tunis Business School" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">TBS</span>
+                </div>
+                <div class="flex items-center gap-3 rounded-full border border-zinc-800/80 bg-zinc-900/60 px-4 py-2 backdrop-blur-sm">
+                    <img src="src/images/partners/tawa.png" alt="TAWA Digital Talents" class="h-7 sm:h-8 w-auto object-contain max-w-[80px]">
+                    <span class="text-xs sm:text-sm font-semibold text-zinc-200 whitespace-nowrap">TAWA</span>
+                </div>
 
             </div>
 
         </div>
 
     </div>
-
-    <!-- ================= Scroll Indicator ================= -->
-
-    <div
-        class="absolute bottom-8 left-1/2 hidden -translate-x-1/2 lg:flex">
-
-        <div
-            class="flex h-14 w-8 justify-center rounded-full border border-zinc-600">
-
-            <div
-                class="mt-2 h-3 w-1 animate-bounce rounded-full bg-[#F5C400]">
-
-            </div>
-
-        </div>
-
-    </div>
-
 </section>

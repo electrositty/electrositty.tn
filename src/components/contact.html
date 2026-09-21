@@ -1,0 +1,135 @@
+<section id="contact" class="bg-black py-10 md:py-16 lg:py-20 border-t border-zinc-900">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+
+        <div class="rounded-2xl sm:rounded-3xl border border-zinc-800/90 bg-gradient-to-br from-zinc-950 via-zinc-900/60 to-black p-6 sm:p-10 lg:p-12 shadow-2xl backdrop-blur-md">
+            
+            <div class="grid gap-8 lg:grid-cols-12 lg:gap-12 items-center">
+                
+                <!-- Colonne Gauche : Présentation & Coordonnées -->
+                <div class="lg:col-span-5 flex flex-col justify-between h-full">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#F5C400]">
+                                ⚡ DÉMARRONS VOTRE PROJET
+                            </span>
+                        </div>
+
+                        <h2 class="mt-3 text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-white leading-tight">
+                            Prêts à faire vibrer <br class="hidden sm:inline">
+                            <span class="text-[#F5C400]">votre événement ?</span>
+                        </h2>
+
+                        <p class="mt-3 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                            Partagez-nous votre vision. Nous orchestrons la sonorisation, les jeux de lumière, la régie DJ et les écrans LED pour marquer les esprits de votre public partout en Tunisie.
+                        </p>
+                    </div>
+
+                    <!-- Coordonnées & Réseaux Sociaux -->
+                    <div class="mt-6 sm:mt-10 space-y-3 pt-4 border-t border-zinc-800/80 text-xs sm:text-sm">
+                        <div class="flex items-center gap-3 text-zinc-300">
+                            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-900 text-[#F5C400]">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                            <span>Tunis & Grand Tunis, Tunisie (Déplacement 24/7)</span>
+                        </div>
+
+                        <a href="https://www.instagram.com/sittymusik" target="_blank" class="flex items-center gap-3 text-zinc-300 transition hover:text-[#F5C400]">
+                            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-900 text-[#F5C400]">
+                                <i class="fa-brands fa-instagram"></i>
+                            </span>
+                            <span>@sittymusik</span>
+                        </a>
+
+                        <a href="https://www.facebook.com/skandar.setti/" target="_blank" class="flex items-center gap-3 text-zinc-300 transition hover:text-[#F5C400]">
+                            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-900 text-[#F5C400]">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </span>
+                            <span>Electro Setti</span>
+                        </a>
+
+                        <a href="tel:+21653308760" class="flex items-center gap-3 text-zinc-300 transition hover:text-[#F5C400]">
+                            <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-900 text-[#F5C400]">
+                                <i class="fa-solid fa-phone"></i>
+                            </span>
+                            <span>+216 53 308 760</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Colonne Droite : Formulaire interactif -->
+                <div class="lg:col-span-7">
+                    <form id="contact-form" class="space-y-4">
+                        
+                        <!-- Nom / Entreprise -->
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
+                                Nom / Entreprise ou Organisateur
+                            </label>
+                            <input 
+                                type="text" 
+                                id="form-name" 
+                                required
+                                placeholder="Ex. Karim Ben Salem"
+                                class="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white placeholder-zinc-500 outline-none transition focus:border-[#F5C400] focus:ring-1 focus:ring-[#F5C400]">
+                        </div>
+
+                        <!-- Téléphone / WhatsApp -->
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
+                                Téléphone / WhatsApp
+                            </label>
+                            <input 
+                                type="tel" 
+                                id="form-phone" 
+                                required
+                                placeholder="+216 -- --- ---"
+                                class="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white placeholder-zinc-500 outline-none transition focus:border-[#F5C400] focus:ring-1 focus:ring-[#F5C400]">
+                        </div>
+
+                        <!-- Type de prestation -->
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
+                                Type de prestation
+                            </label>
+                            <select 
+                                id="form-type"
+                                class="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white outline-none transition focus:border-[#F5C400] focus:ring-1 focus:ring-[#F5C400]">
+                                <option value="Mariage & Fête privée">Mariage & Fête privée</option>
+                                <option value="Concert & Festival Live">Concert & Festival Live</option>
+                                <option value="Séminaire & Conférence Corporate">Séminaire & Conférence Corporate</option>
+                                <option value="Soirée Club & DJ Set">Soirée Club & DJ Set</option>
+                                <option value="Éclairage architectural & Écran LED">Éclairage architectural & Écran LED</option>
+                                <option value="Autre demande sur mesure">Autre demande sur mesure</option>
+                            </select>
+                        </div>
+
+                        <!-- Détails du projet -->
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
+                                Détails du projet
+                            </label>
+                            <textarea 
+                                id="form-details" 
+                                rows="3"
+                                placeholder="Date prévue, lieu, envergure et besoins techniques spécifiques..."
+                                class="w-full resize-none rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white placeholder-zinc-500 outline-none transition focus:border-[#F5C400] focus:ring-1 focus:ring-[#F5C400]"></textarea>
+                        </div>
+
+                        <!-- Bouton WhatsApp -->
+                        <button 
+                            type="button" 
+                            id="btn-whatsapp-send"
+                            class="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] py-3 sm:py-3.5 px-6 font-bold text-black uppercase tracking-wider text-xs sm:text-sm transition duration-200 shadow-lg shadow-green-500/20 active:scale-[0.98]">
+                            <span>ENVOYER DIRECTEMENT VIA WHATSAPP</span>
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                        </button>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>

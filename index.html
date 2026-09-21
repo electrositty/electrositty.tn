@@ -2,188 +2,327 @@
 <html lang="fr">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>ElectroSitty | Location de Matériel Événementiel</title>
 
-    <!-- Tailwind -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
 
-    <!-- Google Font -->
+    <!-- Google Fonts (Poppins) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <style>
-        html{
-            scroll-behavior:smooth;
+        html {
+            scroll-behavior: smooth;
         }
 
-        body{
-            font-family:'Poppins',sans-serif;
-            background:#000;
-            color:#fff;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #000;
+            color: #fff;
         }
+
+        /* Marquee Animation */
         @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
 
-    0% {
-        transform: translateX(0);
-    }
+        .animate-marquee {
+            width: max-content;
+            animation: marquee 30s linear infinite;
+        }
 
-    100% {
-        transform: translateX(-50%);
-    }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
 
-}
+        .active-event {
+            background: #F5C400;
+            color: #000;
+            border-color: #F5C400;
+        }
 
-.animate-marquee {
+        .event-btn {
+            transition: .25s ease;
+        }
 
-    width: max-content;
+        .event-btn:hover {
+            transform: translateX(6px);
+            border-color: #F5C400;
+        }
 
-    animation: marquee 30s linear infinite;
+        /* Masquage barre de scroll horizontal mobile */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
-}
+        /* =======================================================
+           FLOATING WHATSAPP ACTION CTA & RADAR PULSE
+        ======================================================= */
+        .whatsapp-cta-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-.animate-marquee:hover {
+        /* Classe activée lors du scroll */
+        .whatsapp-cta-container.scrolling {
+            opacity: 0;
+            transform: translateY(24px);
+            pointer-events: none;
+        }
 
-    animation-play-state: paused;
+        .whatsapp-cta-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(18, 18, 18, 0.95);
+            border: 1px solid rgba(245, 196, 0, 0.25);
+            padding: 8px 14px;
+            border-radius: 9999px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            text-decoration: none;
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
 
-}
+        .whatsapp-cta-badge:hover {
+            transform: translateX(-4px);
+            border-color: #F5C400;
+        }
 
-.active-event{
+        .cta-online-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background-color: #25D366;
+            box-shadow: 0 0 8px #25D366;
+            animation: blinkDot 1.6s infinite ease-in-out;
+            flex-shrink: 0;
+        }
 
-    background:#F5C400;
+        @keyframes blinkDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
 
-    color:#000;
+        .cta-text-group {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.25;
+        }
 
-    border-color:#F5C400;
+        .cta-title {
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+        }
 
-}
+        .cta-sub {
+            color: #a1a1aa;
+            font-size: 10px;
+        }
 
-.event-btn{
+        /* Bouton Circulaire Principal avec Ondes Radar */
+        .whatsapp-float {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background-color: #25D366;
+            color: #fff;
+            font-size: 32px;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            text-decoration: none;
+            flex-shrink: 0;
+            transition: transform 0.25s ease;
+            z-index: 10;
+        }
 
-    transition:.25s;
+        .whatsapp-float:hover {
+            transform: scale(1.08);
+        }
 
-}
+        /* Onde Radar 1 */
+        .whatsapp-float::before {
+            content: "";
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px solid #25D366;
+            animation: radarWave 2s infinite ease-out;
+            pointer-events: none;
+            z-index: -1;
+        }
 
-.event-btn:hover{
+        /* Onde Radar 2 */
+        .whatsapp-float::after {
+            content: "";
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px solid #25D366;
+            animation: radarWave 2s infinite ease-out 0.8s;
+            pointer-events: none;
+            z-index: -1;
+        }
 
-    transform:translateX(6px);
+        @keyframes radarWave {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.9;
+            }
+            100% {
+                transform: scale(1.65);
+                opacity: 0;
+            }
+        }
 
-    border-color:#F5C400;
-
-}
-@keyframes whatsappPulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-    }
-    70% {
-        transform: scale(1.08);
-        box-shadow: 0 0 0 18px rgba(37, 211, 102, 0);
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-    }
-}
-
-.whatsapp-float {
-    animation: whatsappPulse 2s infinite;
-}
+        @media (max-width: 640px) {
+            .whatsapp-cta-container {
+                bottom: 16px;
+                right: 16px;
+                gap: 8px;
+            }
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 26px;
+            }
+        }
     </style>
-
 </head>
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
-
-   
-
-    <!-- ================= HERO (Full Width) ================= -->
-
- 
-
     <!-- ================= CONTENT ================= -->
-
-    <main
-       class="mx-auto w-full max-w-[1440px] px-4 lg:px-6 xl:px-8">
-
+    <main class="mx-auto w-full max-w-[1440px] px-4 lg:px-6 xl:px-8">
         <div class="space-y-8 lg:space-y-12">
- <div id="navbar"></div>
-               <div id="hero"></div>
-
+            <div id="navbar"></div>
+            <div id="hero"></div>
             <div id="about"></div>
-
             <div id="services"></div>
-             <div id="whychooseus"></div>
-
-
+            <div id="whychooseus"></div>
             <div id="process"></div>
-
             <div id="packs"></div>
-
             <div id="materiels"></div>
-
-           
-           
-
             <div id="contact"></div>
-
         </div>
-
     </main>
 
-    <!-- ================= JS ================= -->
+    <!-- ================= FLOATING WHATSAPP ACTION CTA ================= -->
+    <div id="whatsapp-container" class="whatsapp-cta-container">
+        <!-- Bulle Call-To-Action interactive -->
+        <a href="https://wa.me/21653308760?text=Bonjour%20Electro%20Setti,%20je%20souhaite%20un%20devis%20pour%20un%20%C3%A9v%C3%A9nement." 
+           class="whatsapp-cta-badge" 
+           target="_blank" 
+           rel="noopener noreferrer">
+            <span class="cta-online-dot"></span>
+            <div class="cta-text-group">
+                <strong class="cta-title">Besoin d'un devis direct ?</strong>
+                <span class="cta-sub">Réponse rapide sur WhatsApp</span>
+            </div>
+        </a>
 
-    <script src="src/js/app.js"></script>
-
-    <!-- Bouton WhatsApp Flottant -->
-<a href="https://wa.me/216153308760"
-   target="_blank"
-   class="whatsapp-float fixed bottom-6 right-6 z-50 w-16 h-16 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-lg transition duration-300 hover:scale-110">
-    <i class="fab fa-whatsapp text-white text-4xl"></i>
-</a>
-<!-- =======================================================
-LIGHTBOX
-======================================================= -->
-
-<div
-    id="lightbox"
-    class="fixed inset-0 z-[9999] hidden bg-black/95 overflow-y-auto">
-
-    <div class="max-w-6xl mx-auto px-6 py-12">
-
-        <div class="flex justify-end mb-8">
-
-            <button
-                id="closeLightbox"
-                class="w-12 h-12 rounded-full bg-white text-black text-2xl font-bold hover:bg-[#F5C400] transition">
-
-                ×
-
-            </button>
-
-        </div>
-
-        <div id="lightboxContent"></div>
-
+        <!-- Bouton Circulaire Principal avec Radar -->
+        <a href="https://wa.me/21653308760?text=Bonjour%20Electro%20Setti,%20je%20souhaite%20un%20devis%20pour%20un%20%C3%A9v%C3%A9nement." 
+           class="whatsapp-float" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="Discuter sur WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
     </div>
 
-</div>
+    <!-- ================= LIGHTBOX ================= -->
+    <div id="lightbox" class="fixed inset-0 z-[9999] hidden overflow-y-auto bg-black/95">
+        <div class="mx-auto max-w-6xl px-6 py-12">
+            <div class="mb-8 flex justify-end">
+                <button id="closeLightbox" class="h-12 w-12 rounded-full bg-white text-2xl font-bold text-black transition hover:bg-[#F5C400]">
+                    ×
+                </button>
+            </div>
+            <div id="lightboxContent"></div>
+        </div>
+    </div>
+
+    <!-- ================= APPLICATION SCRIPTS ================= -->
+    <script src="src/js/app.js"></script>
+
+    <!-- Gestion du Scroll (Hide on scroll, Show on stop) -->
+    <script>
+        const waContainer = document.getElementById("whatsapp-container");
+        let scrollTimeout;
+
+        window.addEventListener("scroll", () => {
+            if (!waContainer) return;
+
+            // Masquer pendant le mouvement
+            waContainer.classList.add("scrolling");
+
+            // Réafficher dès l'arrêt du défilement
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                waContainer.classList.remove("scrolling");
+            }, 250);
+        }, { passive: true });
+    </script>
+
+    <!-- Formulaire WhatsApp : Délégation d'événement -->
+    <script>
+        document.addEventListener("click", (e) => {
+            const sendBtn = e.target.closest("#btn-whatsapp-send");
+            if (!sendBtn) return;
+
+            e.preventDefault();
+
+            const nameEl = document.getElementById("form-name");
+            const phoneEl = document.getElementById("form-phone");
+            const typeEl = document.getElementById("form-type");
+            const detailsEl = document.getElementById("form-details");
+
+            const name = nameEl ? nameEl.value.trim() : "";
+            const phone = phoneEl ? phoneEl.value.trim() : "";
+            const type = typeEl ? typeEl.value : "Non précisé";
+            const details = detailsEl ? detailsEl.value.trim() : "";
+
+            if (!name || !phone) {
+                alert("Veuillez renseigner votre nom et votre numéro de téléphone / WhatsApp.");
+                return;
+            }
+
+            const message = 
+`⚡ *NOUVELLE DEMANDE DE PROJET - ELECTRO SETTI*
+👤 *Nom / Entité :* ${name}
+📞 *Téléphone / WhatsApp :* ${phone}
+🎯 *Type de prestation :* ${type}
+📝 *Détails :* ${details || "Aucun détail complémentaire"}`;
+
+            const url = `https://wa.me/21653308760?text=${encodeURIComponent(message)}`;
+            window.open(url, "_blank");
+        });
+    </script>
 
 </body>
-
 </html>

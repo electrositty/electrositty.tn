@@ -1,271 +1,119 @@
-<section id="materiels" class="bg-black py-24">
+<!-- ================= SECTION MATÉRIEL ================= -->
+<section id="materiels" class="bg-black py-8 sm:py-14 md:py-16 border-t border-zinc-900">
 
-    <div class="mx-auto max-w-[1500px] px-6">
+    <div class="mx-auto max-w-[1500px] px-3 sm:px-6">
 
-        <!-- Header -->
-
-        <div class="text-center">
-
-            <span
-                class="rounded-full bg-yellow-500/10 px-5 py-2 text-sm font-semibold uppercase tracking-wider text-[#F5C400]">
-
-                NOTRE MATÉRIEL
-
+        <!-- Header Compact -->
+        <div class="text-center max-w-xl mx-auto">
+            <span class="rounded-full bg-yellow-500/10 px-3.5 py-1 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#F5C400]">
+                Notre Matériel
             </span>
 
-            <h2
-                class="mt-6 text-4xl font-black text-white md:text-5xl">
-
+            <h2 class="mt-2 sm:mt-3 text-xl sm:text-3xl md:text-4xl font-black text-white">
                 Catalogue professionnel
-
             </h2>
 
-            <p
-                class="mx-auto mt-5 max-w-3xl text-lg text-zinc-400">
-
-                Trouvez rapidement le matériel adapté à votre événement.
-
+            <p class="mt-1 sm:mt-2 text-xs sm:text-sm text-zinc-400">
+                Trouvez rapidement le matériel adapté à votre configuration.
             </p>
-
         </div>
 
-        <!-- Search -->
+        <!-- Niveau 1 : Commutateur Environnement (Indoor / Outdoor / Tous) -->
+        <div class="mx-auto mt-5 flex max-w-sm items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-900/90 p-1 backdrop-blur-sm">
+            <button data-env="Tous" class="env-btn flex-1 rounded-xl bg-[#F5C400] py-2 text-xs font-bold text-black transition">
+                Tous
+            </button>
+            <button data-env="Indoor" class="env-btn flex-1 rounded-xl py-2 text-xs font-medium text-zinc-400 transition hover:text-white">
+                🏛️ Indoor
+            </button>
+            <button data-env="Outdoor" class="env-btn flex-1 rounded-xl py-2 text-xs font-medium text-zinc-400 transition hover:text-white">
+                🌿 Outdoor
+            </button>
+        </div>
 
-        <div class="mx-auto mt-12 max-w-3xl">
-
+        <!-- Search Réduit -->
+        <div class="mx-auto mt-4 sm:mt-5 max-w-xl">
             <div class="relative">
-
-                <i
-                    class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500">
-                </i>
-
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-zinc-500"></i>
                 <input
                     id="search-material"
                     type="text"
-                    placeholder="Rechercher un matériel..."
-                    class="w-full rounded-2xl border border-zinc-800 bg-zinc-900 py-4 pl-14 pr-5 text-white outline-none transition focus:border-[#F5C400]">
-
+                    placeholder="Rechercher un matériel (ex: RCF, Lyre, Écran...)"
+                    class="w-full rounded-xl border border-zinc-800 bg-zinc-900/90 py-2 sm:py-2.5 pl-10 pr-3 text-xs sm:text-sm text-white outline-none transition focus:border-[#F5C400]">
             </div>
-
         </div>
 
-        <!-- Layout -->
+        <!-- Niveau 2 : Sous-catégories en barre horizontale tactile pour MOBILE -->
+        <div class="mt-3 flex gap-1.5 overflow-x-auto pb-1.5 pt-1 lg:hidden no-scrollbar">
+            <button data-category="Tous" class="category-btn flex-none rounded-lg bg-[#F5C400] px-3 py-1.5 text-[11px] font-bold text-black">
+                📦 Tous
+            </button>
+            <button data-category="Son" class="category-btn flex-none rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-[11px] font-medium text-zinc-300">
+                🔊 Son
+            </button>
+            <button data-category="Lumière" class="category-btn flex-none rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-[11px] font-medium text-zinc-300">
+                💡 Lumière
+            </button>
+            <button data-category="LED" class="category-btn flex-none rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-[11px] font-medium text-zinc-300">
+                📺 Écrans LED
+            </button>
+            <button data-category="DJ" class="category-btn flex-none rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-[11px] font-medium text-zinc-300">
+                🎧 Matériel DJ
+            </button>
+            <button data-category="Structure" class="category-btn flex-none rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-[11px] font-medium text-zinc-300">
+                🏗️ Structures
+            </button>
+        </div>
 
-        <div
-            class="mt-16 grid gap-10 lg:grid-cols-[260px_1fr]">
+        <!-- Layout Desktop & Résultats -->
+        <div class="mt-4 sm:mt-8 grid gap-6 lg:grid-cols-[220px_1fr]">
 
-            <!-- Sidebar -->
+            <!-- Sidebar DESKTOP -->
+            <aside class="hidden lg:block h-fit rounded-2xl border border-zinc-800 bg-zinc-900/70 p-4 sticky top-24">
+                <h3 class="mb-3 text-xs font-bold uppercase tracking-wider text-zinc-400">Sous-catégories</h3>
 
-            <aside
-                class="h-fit rounded-3xl border border-zinc-800 bg-zinc-900 p-6 lg:sticky lg:top-28">
-
-                <h3
-                    class="mb-6 text-xl font-bold text-white">
-
-                    Catégories
-
-                </h3>
-
-                <div
-                    id="categories-sidebar"
-                    class="space-y-3">
-
-                    <button
-                        data-category="Tous"
-                        class="category-btn flex w-full items-center gap-3 rounded-xl bg-yellow-500 px-4 py-3 text-left font-semibold text-black">
-
+                <div id="categories-sidebar" class="space-y-1.5">
+                    <button data-category="Tous" class="category-btn flex w-full items-center gap-2.5 rounded-lg bg-[#F5C400] px-3 py-2 text-left text-xs font-bold text-black">
                         📦 Tous
-
                     </button>
-
-                    <button
-                        data-category="Son"
-                        class="category-btn flex w-full items-center gap-3 rounded-xl bg-zinc-800 px-4 py-3 text-left text-white transition hover:bg-zinc-700">
-
+                    <button data-category="Son" class="category-btn flex w-full items-center gap-2.5 rounded-lg bg-zinc-800/80 px-3 py-2 text-left text-xs text-white transition hover:bg-zinc-700">
                         🔊 Son
-
                     </button>
-
-                    <button
-                        data-category="Lumière"
-                        class="category-btn flex w-full items-center gap-3 rounded-xl bg-zinc-800 px-4 py-3 text-left text-white transition hover:bg-zinc-700">
-
+                    <button data-category="Lumière" class="category-btn flex w-full items-center gap-2.5 rounded-lg bg-zinc-800/80 px-3 py-2 text-left text-xs text-white transition hover:bg-zinc-700">
                         💡 Lumière
-
                     </button>
-
-                    <button
-                        data-category="LED"
-                        class="category-btn flex w-full items-center gap-3 rounded-xl bg-zinc-800 px-4 py-3 text-left text-white transition hover:bg-zinc-700">
-
-                        📺 LED
-
+                    <button data-category="LED" class="category-btn flex w-full items-center gap-2.5 rounded-lg bg-zinc-800/80 px-3 py-2 text-left text-xs text-white transition hover:bg-zinc-700">
+                        📺 Écrans LED
                     </button>
-
-                    <button
-                        data-category="DJ"
-                        class="category-btn flex w-full items-center gap-3 rounded-xl bg-zinc-800 px-4 py-3 text-left text-white transition hover:bg-zinc-700">
-
-                        🎧 DJ
-
+                    <button data-category="DJ" class="category-btn flex w-full items-center gap-2.5 rounded-lg bg-zinc-800/80 px-3 py-2 text-left text-xs text-white transition hover:bg-zinc-700">
+                        🎧 Matériel DJ
                     </button>
-
-                 
-
+                    <button data-category="Structure" class="category-btn flex w-full items-center gap-2.5 rounded-lg bg-zinc-800/80 px-3 py-2 text-left text-xs text-white transition hover:bg-zinc-700">
+                        🏗️ Structures
+                    </button>
                 </div>
-
             </aside>
 
-            <!-- Content -->
-
+            <!-- Contenu Matériels -->
             <div>
-
-                <div
-                    class="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-center">
-
+                <div class="mb-3 flex items-center justify-between">
                     <div>
-
-                        <h3
-                            id="category-title"
-                            class="text-3xl font-black text-white">
-
+                        <h3 id="category-title" class="text-sm sm:text-lg font-black text-white">
                             Tous les matériels
-
                         </h3>
-
-                        <p
-                            id="results-count"
-                            class="mt-2 text-zinc-400">
-
-                            0 matériel
-
-                        </p>
-
+                        <span id="active-env-badge" class="text-[10px] text-[#F5C400] font-semibold">
+                            Tous environnements
+                        </span>
                     </div>
-
+                    <p id="results-count" class="text-[11px] text-zinc-400">
+                        0 matériel
+                    </p>
                 </div>
 
-                <!-- Cards -->
-
-                <div
-                    id="materiels-container"
-                    class="space-y-5">
-
+                <!-- Grille 2 colonnes Mobile, 3-4 Desktop -->
+                <div id="materiels-container" class="grid grid-cols-2 gap-2 sm:gap-3.5 lg:grid-cols-3 xl:grid-cols-4">
+                    <!-- Les cartes injectées via JS apparaîtront ici -->
                 </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-<section id="contact" class="bg-gradient-to-b from-black to-zinc-950 py-20">
-
-    <div class="mx-auto max-w-6xl px-6">
-
-        <div class="rounded-[40px] border border-[#F5C400]/20 bg-zinc-900 p-8 lg:p-14 shadow-2xl">
-
-            <!-- Header -->
-
-            <div class="text-center">
-
-                <span class="inline-flex rounded-full bg-[#F5C400]/10 px-5 py-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#F5C400]">
-                    Votre événement commence ici
-                </span>
-
-                <h2 class="mt-6 text-4xl font-black text-white lg:text-5xl">
-                    Prêt à créer un événement inoubliable ?
-                </h2>
-
-                <p class="mx-auto mt-6 max-w-3xl text-lg leading-8 text-zinc-400">
-                    Notre équipe vous accompagne de la conception jusqu'à la réalisation.
-                    Contactez-nous dès aujourd'hui pour obtenir un devis personnalisé.
-                </p>
-
-            </div>
-
-            <!-- Coordonnées -->
-
-            <div class="mt-14 grid gap-6 md:grid-cols-2">
-
-                <a href="tel:+21653308760"
-                    class="flex items-center gap-5 rounded-3xl border border-zinc-800 bg-black/40 p-6 transition hover:border-[#F5C400]">
-
-                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-[#F5C400] text-3xl">
-                        📞
-                    </div>
-
-                    <div>
-                        <p class="text-zinc-400 text-sm">
-                            Téléphone & WhatsApp
-                        </p>
-
-                        <h3 class="text-2xl font-bold text-white">
-                            +216 53 308 760
-                        </h3>
-                    </div>
-
-                </a>
-
-                <a href="mailto:electrositty@gmail.com"
-                    class="flex items-center gap-5 rounded-3xl border border-zinc-800 bg-black/40 p-6 transition hover:border-[#F5C400]">
-
-                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-[#F5C400] text-3xl">
-                        ✉️
-                    </div>
-
-                    <div>
-                        <p class="text-zinc-400 text-sm">
-                            Adresse e-mail
-                        </p>
-
-                        <h3 class="text-lg font-bold text-white break-all">
-                            electrositty@gmail.com
-                        </h3>
-                    </div>
-
-                </a>
-
-            </div>
-
-            <!-- Réseaux -->
-
-            <div class="mt-14">
-
-                <h3 class="mb-8 text-center text-2xl font-bold text-white">
-                    Suivez-nous
-                </h3>
-
-                <div class="flex flex-wrap justify-center gap-4">
-
-                    <a href="https://wa.me/21653308760"
-                        target="_blank"
-                        class="rounded-full bg-[#25D366] px-8 py-4 font-bold text-white transition hover:scale-105">
-                        WhatsApp
-                    </a>
-
-                    <a href="https://www.instagram.com/sittymusik"
-                        target="_blank"
-                        class="rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 px-8 py-4 font-bold text-white transition hover:scale-105">
-                        Instagram
-                    </a>
-
-                    <a href="https://www.facebook.com/skandar.setti/"
-                        target="_blank"
-                        class="rounded-full bg-[#1877F2] px-8 py-4 font-bold text-white transition hover:scale-105">
-                        Facebook
-                    </a>
-
-                    <a href="https://www.linkedin.com/in/eskandar-setti-809524422/"
-                        target="_blank"
-                        class="rounded-full bg-[#0A66C2] px-8 py-4 font-bold text-white transition hover:scale-105">
-                        LinkedIn
-                    </a>
-
-                </div>
-
             </div>
 
         </div>
