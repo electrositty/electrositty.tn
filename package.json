@@ -1,0 +1,16 @@
+{
+  "name": "electrositty-tn",
+  "version": "1.0.0",
+  "description": "Location de Matériel Événementiel",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'No build step required for vanilla HTML'",
+    "lint": "echo 'No linter configured'"
+  },
+  "keywords": ["event", "equipment", "rental"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1"
+  }
+}
