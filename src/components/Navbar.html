@@ -1,7 +1,7 @@
-<header class="fixed top-0 left-0 z-50 w-full">
+<header id="site-header" class="fixed top-0 left-0 z-50 w-full">
 
     <div
-        class="mx-auto mt-3 flex w-[95%] max-w-7xl items-center justify-between rounded-full border border-white/10 bg-black/60 px-5 py-3 backdrop-blur-xl md:mt-5 md:px-8 md:py-4">
+        class="nav-shell mx-auto mt-3 flex w-[95%] max-w-7xl items-center justify-between rounded-full border border-white/10 bg-black/60 px-5 py-3 backdrop-blur-xl transition-all duration-300 md:mt-5 md:px-8 md:py-4">
 
         <!-- Logo -->
 
@@ -31,33 +31,33 @@
         <!-- Navigation Desktop -->
 
         <nav
-            class="hidden items-center gap-10 text-lg font-medium lg:flex">
+            class="hidden items-center gap-8 text-base font-medium lg:flex xl:gap-10">
 
-            <a href="#hero" class="transition hover:text-[#F5C400]">
+            <a href="#hero" class="nav-link relative transition hover:text-[#F5C400]">
 
                 Accueil
 
             </a>
 
-            <a href="#about" class="transition hover:text-[#F5C400]">
+            <a href="#about" class="nav-link relative transition hover:text-[#F5C400]">
 
                 À propos
 
             </a>
 
-            <a href="#packs" class="transition hover:text-[#F5C400]">
+            <a href="#packs" class="nav-link relative transition hover:text-[#F5C400]">
 
                 Packs
 
             </a>
 
-            <a href="#materiels" class="transition hover:text-[#F5C400]">
+            <a href="#materiels" class="nav-link relative transition hover:text-[#F5C400]">
 
                 Matériels
 
             </a>
 
-            <a href="#contact" class="transition hover:text-[#F5C400]">
+            <a href="#contact" class="nav-link relative transition hover:text-[#F5C400]">
 
                 Contact
 
@@ -71,15 +71,16 @@
     <a
         href="https://wa.me/21653308760"
         target="_blank"
-        class="rounded-full border border-[#F5C400] px-6 py-3 text[#F5C400] transition hover:bg-[#F5C400] hover:text-black">
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 rounded-full border border-[#F5C400]/60 px-5 py-2.5 text-[#F5C400] transition hover:bg-[#F5C400] hover:text-black">
 
-        WhatsApp
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp
 
     </a>
 
     <a
         href="#packs"
-        class="rounded-full border border-[#F5C400] px-6 py-3 text-white transition hover:bg-[#F5C400] hover:text-black">
+        class="rounded-full bg-[#F5C400] px-6 py-2.5 font-semibold text-black shadow-[0_0_20px_rgba(245,196,0,.3)] transition hover:scale-105 hover:shadow-[0_0_30px_rgba(245,196,0,.5)]">
 
         Réserver
 
@@ -91,7 +92,7 @@
 
         <button
             id="menu-btn"
-            class="text-3xl lg:hidden">
+            class="text-2xl lg:hidden" aria-label="Ouvrir le menu">
 
             <i class="fa-solid fa-bars"></i>
 
@@ -115,7 +116,7 @@
             Electro<span class="text-[#F5C400]">Sitty</span>
         </h2>
 
-        <button id="close-menu" class="text-3xl">
+        <button id="close-menu" class="text-3xl" aria-label="Fermer le menu">
             <i class="fa-solid fa-xmark"></i>
         </button>
 
@@ -123,19 +124,20 @@
 
     <nav class="flex flex-col gap-6 p-8 text-lg">
 
-        <a href="#hero" class="mobile-link">Accueil</a>
+        <a href="#hero" class="mobile-link nav-link transition hover:text-[#F5C400]">Accueil</a>
 
-        <a href="#about" class="mobile-link">À propos</a>
+        <a href="#about" class="mobile-link nav-link transition hover:text-[#F5C400]">À propos</a>
 
-        <a href="#packs" class="mobile-link">Packs</a>
+        <a href="#packs" class="mobile-link nav-link transition hover:text-[#F5C400]">Packs</a>
 
-        <a href="#materiels" class="mobile-link">Matériels</a>
+        <a href="#materiels" class="mobile-link nav-link transition hover:text-[#F5C400]">Matériels</a>
 
-        <a href="#contact" class="mobile-link">Contact</a>
+        <a href="#contact" class="mobile-link nav-link transition hover:text-[#F5C400]">Contact</a>
 
         <a
             href="https://wa.me/21653308760"
             target="_blank"
+            rel="noopener noreferrer"
             class="mt-6 rounded-full border border-[#F5C400] px-6 py-3 text-center transition hover:bg-[#F5C400] hover:text-black">
 
             WhatsApp

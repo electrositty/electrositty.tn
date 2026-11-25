@@ -4,28 +4,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="ElectroSitty – Location de matériel événementiel : son, lumière, écrans LED, régie DJ. Mariages, concerts, conférences en Tunisie.">
     <title>ElectroSitty | Location de Matériel Événementiel</title>
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS (+ couleurs de la marque) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if (window.tailwind) tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { brand: { DEFAULT: "#F5C400", dark: "#C99F00" } },
+                    fontFamily: { sans: ["Poppins", "sans-serif"] }
+                }
+            }
+        };
+    </script>
 
-    <!-- Google Fonts (Poppins) -->
+    <!-- Google Fonts (Poppins) – 5 graisses au lieu de 7 = chargement plus léger -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <style>
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Poppins', sans-serif;
             background: #000;
             color: #fff;
+            overflow-x: hidden;
+        }
+
+        ::selection { background: #F5C400; color: #000; }
+
+        /* Scrollbar aux couleurs de la marque */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; border: 2px solid #0a0a0a; }
+        ::-webkit-scrollbar-thumb:hover { background: #F5C400; }
+        html { scrollbar-color: #2a2a2a #0a0a0a; }
+
+        /* =======================================================
+           AMBIANCE : halos lumineux "scène" + grain cinéma
+        ======================================================= */
+        .stage-glow {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .stage-glow span {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: .18;
+            animation: drift 22s ease-in-out infinite alternate;
+        }
+        .stage-glow span:nth-child(1) { width: 520px; height: 520px; background: #F5C400; top: -160px; left: -120px; }
+        .stage-glow span:nth-child(2) { width: 420px; height: 420px; background: #9333EA; bottom: -140px; right: -100px; animation-delay: -8s; opacity: .12; }
+        .stage-glow span:nth-child(3) { width: 300px; height: 300px; background: #3B82F6; top: 45%; left: 55%; animation-delay: -14s; opacity: .08; }
+
+        @keyframes drift {
+            0%   { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(80px, 60px) scale(1.15); }
+        }
+
+        .grain {
+            position: fixed;
+            inset: -50%;
+            z-index: 9998;
+            pointer-events: none;
+            opacity: .05;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            animation: grainShift 1s steps(4) infinite;
+        }
+        @keyframes grainShift {
+            0%   { transform: translate(0, 0); }
+            25%  { transform: translate(-3%, 2%); }
+            50%  { transform: translate(2%, -3%); }
+            75%  { transform: translate(-2%, -2%); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* =======================================================
+           BARRE DE PROGRESSION DU SCROLL
+        ======================================================= */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            transform-origin: 0 50%;
+            transform: scaleX(0);
+            background: linear-gradient(90deg, #F5C400, #FFE066, #F5C400);
+            box-shadow: 0 0 12px rgba(245, 196, 0, .7);
+            z-index: 10000;
+        }
+
+        /* =======================================================
+           PRELOADER (logo qui "s'allume" comme un projecteur)
+        ======================================================= */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            background: #000;
+            transition: opacity .6s ease, visibility .6s ease;
+        }
+        #preloader.hide { opacity: 0; visibility: hidden; }
+        .preloader-logo {
+            font-weight: 800;
+            font-size: clamp(28px, 6vw, 48px);
+            letter-spacing: .04em;
+            color: #222;
+            animation: lightOn 1.4s ease forwards;
+        }
+        .preloader-logo b { color: inherit; }
+        @keyframes lightOn {
+            0%   { color: #222; text-shadow: none; }
+            30%  { color: #F5C400; text-shadow: 0 0 30px rgba(245,196,0,.8); }
+            38%  { color: #333; text-shadow: none; }
+            55%  { color: #F5C400; text-shadow: 0 0 40px rgba(245,196,0,.9); }
+            100% { color: #fff; text-shadow: 0 0 24px rgba(245,196,0,.35); }
+        }
+        .preloader-bars { display: flex; gap: 5px; align-items: flex-end; height: 26px; }
+        .preloader-bars i {
+            width: 5px;
+            background: #F5C400;
+            border-radius: 3px;
+            animation: eq .9s ease-in-out infinite;
+        }
+        .preloader-bars i:nth-child(2) { animation-delay: .15s; }
+        .preloader-bars i:nth-child(3) { animation-delay: .3s; }
+        .preloader-bars i:nth-child(4) { animation-delay: .45s; }
+        .preloader-bars i:nth-child(5) { animation-delay: .6s; }
+        @keyframes eq {
+            0%, 100% { height: 6px; }
+            50%      { height: 26px; }
+        }
+
+        /* =======================================================
+           APPARITION DES SECTIONS AU SCROLL
+        ======================================================= */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Images : légère mise au point à l'apparition (images en lazy-load) */
+        img[loading="lazy"] { transition: filter .6s ease, opacity .6s ease; }
+
+        /* =======================================================
+           VIDÉOS : placeholder élégant pendant le chargement
+        ======================================================= */
+        video {
+            background: #0d0d0d radial-gradient(circle at center, rgba(245,196,0,.08), transparent 60%);
+        }
+        video.is-loading {
+            animation: videoPulse 1.6s ease-in-out infinite;
+        }
+        @keyframes videoPulse {
+            0%, 100% { filter: brightness(1); }
+            50%      { filter: brightness(1.25); }
+        }
+
+        /* =======================================================
+           NAVBAR : rétrécit au scroll + lien actif
+        ======================================================= */
+        #site-header.scrolled .nav-shell {
+            margin-top: .5rem !important;
+            padding-top: .55rem !important;
+            padding-bottom: .55rem !important;
+            background: rgba(0, 0, 0, .85) !important;
+            border-color: rgba(245, 196, 0, .25) !important;
+            box-shadow: 0 12px 30px -12px rgba(0, 0, 0, .9);
+        }
+        .nav-link.active { color: #F5C400; }
+        nav.lg\:flex .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0; right: 0; bottom: -6px;
+            height: 2px;
+            border-radius: 2px;
+            background: #F5C400;
+            transform: scaleX(0);
+            transition: transform .3s ease;
+        }
+        nav.lg\:flex .nav-link.active::after,
+        nav.lg\:flex .nav-link:hover::after { transform: scaleX(1); }
+
+        /* Formulaire mis en évidence quand on choisit un pack */
+        .form-highlight {
+            animation: formFlash 1.6s ease;
+            border-radius: 16px;
+        }
+        @keyframes formFlash {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245, 196, 0, 0); }
+            30%      { box-shadow: 0 0 0 4px rgba(245, 196, 0, .45), 0 0 40px rgba(245, 196, 0, .25); }
         }
 
         /* Marquee Animation */
@@ -33,39 +224,53 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-
         .animate-marquee {
             width: max-content;
             animation: marquee 30s linear infinite;
         }
-
-        .animate-marquee:hover {
-            animation-play-state: paused;
-        }
+        .animate-marquee:hover { animation-play-state: paused; }
 
         .active-event {
             background: #F5C400;
             color: #000;
             border-color: #F5C400;
         }
-
-        .event-btn {
-            transition: .25s ease;
-        }
-
+        .event-btn { transition: .25s ease; }
         .event-btn:hover {
             transform: translateX(6px);
             border-color: #F5C400;
         }
 
         /* Masquage barre de scroll horizontal mobile */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* =======================================================
+           TOAST (remplace les alert() natives)
+        ======================================================= */
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: 28px;
+            transform: translate(-50%, 30px);
+            opacity: 0;
+            z-index: 10002;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: calc(100vw - 32px);
+            padding: 12px 18px;
+            border-radius: 14px;
+            background: rgba(18,18,18,.96);
+            border: 1px solid rgba(245,196,0,.4);
+            box-shadow: 0 15px 35px -10px rgba(0,0,0,.8);
+            backdrop-filter: blur(8px);
+            font-size: 14px;
+            transition: opacity .3s ease, transform .3s ease;
+            pointer-events: none;
         }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        #toast.show { opacity: 1; transform: translate(-50%, 0); }
+        #toast i { color: #F5C400; }
 
         /* =======================================================
            FLOATING WHATSAPP ACTION CTA & RADAR PULSE
@@ -82,14 +287,11 @@
             opacity: 1;
             transform: translateY(0);
         }
-
-        /* Classe activée lors du scroll */
         .whatsapp-cta-container.scrolling {
             opacity: 0;
             transform: translateY(24px);
             pointer-events: none;
         }
-
         .whatsapp-cta-badge {
             display: flex;
             align-items: center;
@@ -103,12 +305,10 @@
             text-decoration: none;
             transition: transform 0.25s ease, border-color 0.25s ease;
         }
-
         .whatsapp-cta-badge:hover {
             transform: translateX(-4px);
             border-color: #F5C400;
         }
-
         .cta-online-dot {
             width: 9px;
             height: 9px;
@@ -118,30 +318,14 @@
             animation: blinkDot 1.6s infinite ease-in-out;
             flex-shrink: 0;
         }
-
         @keyframes blinkDot {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(0.85); }
         }
+        .cta-text-group { display: flex; flex-direction: column; line-height: 1.25; }
+        .cta-title { color: #fff; font-size: 12px; font-weight: 700; }
+        .cta-sub { color: #a1a1aa; font-size: 10px; }
 
-        .cta-text-group {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.25;
-        }
-
-        .cta-title {
-            color: #fff;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .cta-sub {
-            color: #a1a1aa;
-            font-size: 10px;
-        }
-
-        /* Bouton Circulaire Principal avec Ondes Radar */
         .whatsapp-float {
             position: relative;
             display: flex;
@@ -159,13 +343,9 @@
             transition: transform 0.25s ease;
             z-index: 10;
         }
-
-        .whatsapp-float:hover {
-            transform: scale(1.08);
-        }
-
-        /* Onde Radar 1 */
-        .whatsapp-float::before {
+        .whatsapp-float:hover { transform: scale(1.08); }
+        .whatsapp-float::before,
+        .whatsapp-float::after {
             content: "";
             position: absolute;
             inset: -6px;
@@ -175,68 +355,66 @@
             pointer-events: none;
             z-index: -1;
         }
-
-        /* Onde Radar 2 */
-        .whatsapp-float::after {
-            content: "";
-            position: absolute;
-            inset: -6px;
-            border-radius: 50%;
-            border: 2px solid #25D366;
-            animation: radarWave 2s infinite ease-out 0.8s;
-            pointer-events: none;
-            z-index: -1;
-        }
-
+        .whatsapp-float::after { animation-delay: .8s; }
         @keyframes radarWave {
-            0% {
-                transform: scale(0.95);
-                opacity: 0.9;
-            }
-            100% {
-                transform: scale(1.65);
-                opacity: 0;
-            }
+            0%   { transform: scale(0.95); opacity: 0.9; }
+            100% { transform: scale(1.65); opacity: 0; }
         }
 
         @media (max-width: 640px) {
-            .whatsapp-cta-container {
-                bottom: 16px;
-                right: 16px;
-                gap: 8px;
+            .whatsapp-cta-container { bottom: 16px; right: 16px; gap: 8px; }
+            /* Sur mobile, on garde seulement le bouton rond (moins encombrant) */
+            .whatsapp-cta-badge { display: none; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 26px; }
+            .stage-glow span { filter: blur(80px); }
+        }
+
+        /* Accessibilité : on coupe les animations si l'utilisateur le demande */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
             }
-            .whatsapp-float {
-                width: 50px;
-                height: 50px;
-                font-size: 26px;
-            }
+            .reveal { opacity: 1; transform: none; }
+            .grain { display: none; }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- ================= PRELOADER ================= -->
+    <div id="preloader" aria-hidden="true">
+        <div class="preloader-logo">ELECTRO<b>SITTY</b></div>
+        <div class="preloader-bars"><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+
+    <!-- ================= AMBIANCE ================= -->
+    <div id="scroll-progress"></div>
+    <div class="stage-glow" aria-hidden="true"><span></span><span></span><span></span></div>
+    <div class="grain" aria-hidden="true"></div>
+
     <!-- ================= CONTENT ================= -->
     <main class="mx-auto w-full max-w-[1440px] px-4 lg:px-6 xl:px-8">
         <div class="space-y-8 lg:space-y-12">
             <div id="navbar"></div>
             <div id="hero"></div>
-            <div id="about"></div>
-            <div id="services"></div>
-            <div id="whychooseus"></div>
-            <div id="process"></div>
-            <div id="packs"></div>
-            <div id="materiels"></div>
-            <div id="contact"></div>
+            <div id="about" data-reveal></div>
+            <div id="services" data-reveal></div>
+            <div id="whychooseus" data-reveal></div>
+            <div id="process" data-reveal></div>
+            <div id="packs" data-reveal></div>
+            <div id="materiels" data-reveal></div>
+            <div id="contact" data-reveal></div>
         </div>
     </main>
 
     <!-- ================= FLOATING WHATSAPP ACTION CTA ================= -->
     <div id="whatsapp-container" class="whatsapp-cta-container">
-        <!-- Bulle Call-To-Action interactive -->
-        <a href="https://wa.me/21653308760?text=Bonjour%20Electro%20Setti,%20je%20souhaite%20un%20devis%20pour%20un%20%C3%A9v%C3%A9nement." 
-           class="whatsapp-cta-badge" 
-           target="_blank" 
+        <a href="https://wa.me/21653308760?text=Bonjour%20Electro%20Sitty,%20je%20souhaite%20un%20devis%20pour%20un%20%C3%A9v%C3%A9nement."
+           class="whatsapp-cta-badge"
+           target="_blank"
            rel="noopener noreferrer">
             <span class="cta-online-dot"></span>
             <div class="cta-text-group">
@@ -245,15 +423,17 @@
             </div>
         </a>
 
-        <!-- Bouton Circulaire Principal avec Radar -->
-        <a href="https://wa.me/21653308760?text=Bonjour%20Electro%20Setti,%20je%20souhaite%20un%20devis%20pour%20un%20%C3%A9v%C3%A9nement." 
-           class="whatsapp-float" 
-           target="_blank" 
+        <a href="https://wa.me/21653308760?text=Bonjour%20Electro%20Sitty,%20je%20souhaite%20un%20devis%20pour%20un%20%C3%A9v%C3%A9nement."
+           class="whatsapp-float"
+           target="_blank"
            rel="noopener noreferrer"
            aria-label="Discuter sur WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
     </div>
+
+    <!-- ================= TOAST ================= -->
+    <div id="toast" role="status" aria-live="polite"><i class="fa-solid fa-circle-info"></i><span></span></div>
 
     <!-- ================= LIGHTBOX ================= -->
     <div id="lightbox" class="fixed inset-0 z-[9999] hidden overflow-y-auto bg-black/95">
@@ -267,60 +447,261 @@
         </div>
     </div>
 
+    <!-- =======================================================
+         VIDÉOS INTELLIGENTES – doit être chargé AVANT app.js
+         • aucune vidéo n'est téléchargée tant qu'elle n'est pas visible
+         • les vidéos hors écran sont mises en pause
+         • fonctionne même avec les vidéos créées par app.js
+    ======================================================== -->
+    <script>
+        (function () {
+            const saveData = navigator.connection && (navigator.connection.saveData ||
+                /2g/.test(navigator.connection.effectiveType || ""));
+
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(({ target: v, isIntersecting }) => {
+                    if (isIntersecting) {
+                        // Source différée : <video data-src="...">
+                        if (v.dataset.src && !v.getAttribute("src")) {
+                            v.src = v.dataset.src;
+                            v.load();
+                        }
+                        // Lecture auto seulement si visible (et pas en mode économie de données)
+                        if ("wantsAutoplay" in v.dataset && !saveData) {
+                            v.play().catch(() => {});
+                        }
+                    } else if (!v.paused) {
+                        v.pause();
+                    }
+                });
+            }, { rootMargin: "200px 0px", threshold: 0.15 });
+
+            function prepare(v) {
+                if (v.dataset.smart) return;
+                v.dataset.smart = "1";
+
+                if (v.autoplay) {
+                    v.dataset.wantsAutoplay = "";
+                    v.autoplay = false;
+                    v.muted = true;          // obligatoire pour l'autoplay mobile
+                }
+                v.playsInline = true;
+                v.preload = "none";          // rien n'est téléchargé avant la lecture
+
+                // Affiche un spinner discret pendant la mise en mémoire tampon
+                v.addEventListener("waiting", () => v.classList.add("is-loading"));
+                ["playing", "canplay", "pause"].forEach(ev =>
+                    v.addEventListener(ev, () => v.classList.remove("is-loading")));
+
+                io.observe(v);
+            }
+
+            function scan(root) {
+                if (root.tagName === "VIDEO") prepare(root);
+                if (root.querySelectorAll) root.querySelectorAll("video").forEach(prepare);
+            }
+
+            new MutationObserver((muts) => {
+                muts.forEach(m => m.addedNodes.forEach(n => n.nodeType === 1 && scan(n)));
+            }).observe(document.documentElement, { childList: true, subtree: true });
+
+            document.addEventListener("DOMContentLoaded", () => scan(document.body));
+
+            // Images ajoutées dynamiquement : lazy-load automatique
+            new MutationObserver((muts) => {
+                muts.forEach(m => m.addedNodes.forEach(n => {
+                    if (n.nodeType !== 1) return;
+                    const imgs = n.tagName === "IMG" ? [n] : n.querySelectorAll ? n.querySelectorAll("img") : [];
+                    imgs.forEach(img => {
+                        if (!img.hasAttribute("loading") && !img.closest("#hero, #navbar")) {
+                            img.loading = "lazy";
+                            img.decoding = "async";
+                        }
+                    });
+                }));
+            }).observe(document.documentElement, { childList: true, subtree: true });
+        })();
+    </script>
+
     <!-- ================= APPLICATION SCRIPTS ================= -->
     <script src="src/js/app.js"></script>
 
-    <!-- Gestion du Scroll (Hide on scroll, Show on stop) -->
+    <!-- ================= EFFETS & UX ================= -->
     <script>
-        const waContainer = document.getElementById("whatsapp-container");
-        let scrollTimeout;
+        /* ---------- Preloader ---------- */
+        (function () {
+            const pre = document.getElementById("preloader");
+            const hide = () => pre && pre.classList.add("hide");
+            window.addEventListener("load", () => setTimeout(hide, 400));
+            setTimeout(hide, 2500); // sécurité : jamais plus de 2,5 s
+        })();
 
-        window.addEventListener("scroll", () => {
-            if (!waContainer) return;
+        /* ---------- Toast ---------- */
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.querySelector("span").textContent = msg;
+            t.classList.add("show");
+            clearTimeout(t._timer);
+            t._timer = setTimeout(() => t.classList.remove("show"), 3500);
+        }
 
-            // Masquer pendant le mouvement
-            waContainer.classList.add("scrolling");
+        /* ---------- Apparition des sections ---------- */
+        (function () {
+            const sections = document.querySelectorAll("[data-reveal]");
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add("is-visible");
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.08 });
+            sections.forEach(s => { s.classList.add("reveal"); io.observe(s); });
+        })();
 
-            // Réafficher dès l'arrêt du défilement
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                waContainer.classList.remove("scrolling");
-            }, 250);
-        }, { passive: true });
-    </script>
+        /* ---------- Barre de progression + WhatsApp caché pendant le scroll ---------- */
+        (function () {
+            const bar = document.getElementById("scroll-progress");
+            const wa = document.getElementById("whatsapp-container");
+            let scrollTimeout, ticking = false;
 
-    <!-- Formulaire WhatsApp : Délégation d'événement -->
-    <script>
+            window.addEventListener("scroll", () => {
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        const max = document.documentElement.scrollHeight - innerHeight;
+                        bar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+                if (!wa) return;
+                wa.classList.add("scrolling");
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => wa.classList.remove("scrolling"), 250);
+            }, { passive: true });
+        })();
+
+        /* ---------- Lightbox : stoppe les vidéos à la fermeture + touche Échap ---------- */
+        (function () {
+            const lb = document.getElementById("lightbox");
+            const stopVideos = () => lb.querySelectorAll("video").forEach(v => v.pause());
+            document.getElementById("closeLightbox").addEventListener("click", stopVideos);
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && !lb.classList.contains("hidden")) {
+                    stopVideos();
+                    document.getElementById("closeLightbox").click();
+                }
+            });
+        })();
+
+        /* ---------- Navbar : rétrécit au scroll + lien de la section active ---------- */
+        (function () {
+            const ids = ["hero", "about", "packs", "materiels", "contact"];
+            let ticking = false;
+            function update() {
+                const header = document.getElementById("site-header");
+                if (header) header.classList.toggle("scrolled", scrollY > 40);
+
+                let current = "hero";
+                ids.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el && el.getBoundingClientRect().top <= 140) current = id;
+                });
+                document.querySelectorAll(".nav-link").forEach(a =>
+                    a.classList.toggle("active", a.getAttribute("href") === "#" + current));
+                ticking = false;
+            }
+            window.addEventListener("scroll", () => {
+                if (!ticking) { requestAnimationFrame(update); ticking = true; }
+            }, { passive: true });
+            window.addEventListener("load", update);
+        })();
+
+        /* ---------- Compteurs animés (ex. 40+ ans) ---------- */
+        (function () {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(({ target, isIntersecting }) => {
+                    if (!isIntersecting) return;
+                    io.unobserve(target);
+                    const end = parseInt(target.dataset.count, 10) || 0;
+                    const start = performance.now(), dur = 1600;
+                    (function tick(now) {
+                        const p = Math.min((now - start) / dur, 1);
+                        target.textContent = Math.round(end * (1 - Math.pow(1 - p, 3)));
+                        if (p < 1) requestAnimationFrame(tick);
+                    })(start);
+                });
+            }, { threshold: 0.6 });
+
+            const watch = (root) => root.querySelectorAll && root.querySelectorAll("[data-count]:not([data-counted])")
+                .forEach(el => { el.dataset.counted = "1"; io.observe(el); });
+
+            new MutationObserver(m => m.forEach(r => r.addedNodes.forEach(n => n.nodeType === 1 && watch(n))))
+                .observe(document.body, { childList: true, subtree: true });
+            watch(document);
+        })();
+
+        /* ---------- Choisir un pack → pré-remplit le formulaire ---------- */
+        let selectedPack = "";
+        document.addEventListener("click", (e) => {
+            const btn = e.target.closest("[data-pack]");
+            if (!btn) return;
+            selectedPack = btn.dataset.pack;
+
+            setTimeout(() => {
+                const form = document.getElementById("contact-form");
+                const details = document.getElementById("form-details");
+                if (details && !details.value.includes("Pack choisi")) {
+                    details.value = `Pack choisi : ${selectedPack}\n` + details.value;
+                } else if (details) {
+                    details.value = details.value.replace(/Pack choisi : .*/, `Pack choisi : ${selectedPack}`);
+                }
+                if (form) {
+                    form.classList.remove("form-highlight");
+                    void form.offsetWidth;
+                    form.classList.add("form-highlight");
+                }
+                const name = document.getElementById("form-name");
+                if (name && !name.value) name.focus({ preventScroll: true });
+                showToast(`Pack « ${selectedPack} » sélectionné ✔`);
+            }, 600);
+        });
+
+        /* ---------- Formulaire WhatsApp ---------- */
         document.addEventListener("click", (e) => {
             const sendBtn = e.target.closest("#btn-whatsapp-send");
             if (!sendBtn) return;
-
             e.preventDefault();
 
-            const nameEl = document.getElementById("form-name");
-            const phoneEl = document.getElementById("form-phone");
-            const typeEl = document.getElementById("form-type");
-            const detailsEl = document.getElementById("form-details");
-
-            const name = nameEl ? nameEl.value.trim() : "";
-            const phone = phoneEl ? phoneEl.value.trim() : "";
-            const type = typeEl ? typeEl.value : "Non précisé";
-            const details = detailsEl ? detailsEl.value.trim() : "";
+            const val = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ""; };
+            const name = val("form-name");
+            const phone = val("form-phone");
+            const type = val("form-type") || "Non précisé";
+            const location = val("form-location");
+            const details = val("form-details");
+            const rawDate = val("form-date");
+            const date = rawDate
+                ? new Date(rawDate + "T12:00").toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })
+                : "";
 
             if (!name || !phone) {
-                alert("Veuillez renseigner votre nom et votre numéro de téléphone / WhatsApp.");
+                showToast("Veuillez renseigner votre nom et votre numéro de téléphone / WhatsApp.");
+                const missing = document.getElementById(!name ? "form-name" : "form-phone");
+                if (missing) missing.focus();
                 return;
             }
 
-            const message = 
-`⚡ *NOUVELLE DEMANDE DE PROJET - ELECTRO SETTI*
-👤 *Nom / Entité :* ${name}
-📞 *Téléphone / WhatsApp :* ${phone}
-🎯 *Type de prestation :* ${type}
-📝 *Détails :* ${details || "Aucun détail complémentaire"}`;
+            const lines = [
+                "⚡ *NOUVELLE DEMANDE DE PROJET - ELECTRO SITTY*",
+                `👤 *Nom / Entité :* ${name}`,
+                `📞 *Téléphone / WhatsApp :* ${phone}`,
+                `🎯 *Type de prestation :* ${type}`,
+                date && `📅 *Date :* ${date}`,
+                location && `📍 *Lieu :* ${location}`,
+                `📝 *Détails :* ${details || "Aucun détail complémentaire"}`
+            ].filter(Boolean);
 
-            const url = `https://wa.me/21653308760?text=${encodeURIComponent(message)}`;
-            window.open(url, "_blank");
+            window.open(`https://wa.me/21653308760?text=${encodeURIComponent(lines.join("\n"))}`, "_blank");
         });
     </script>
 

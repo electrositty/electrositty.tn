@@ -6,6 +6,7 @@
 
       <!-- Colonne Gauche : Services + Carrousel Compact -->
       <div class="relative w-full overflow-hidden rounded-2xl sm:rounded-[30px] border border-zinc-800/80 bg-black/60 p-4 sm:p-6 md:p-8 shadow-xl backdrop-blur-sm">
+        <div class="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full bg-[#F5C400]/10 blur-3xl"></div>
         
         <!-- En-tête Services -->
         <div class="text-center sm:text-left flex items-center justify-between sm:block">
@@ -14,7 +15,7 @@
           </span>
           <!-- Badge 40+ Ans d'expérience intégré directement en haut sur mobile -->
           <div class="inline-flex items-center gap-2 rounded-xl bg-[#F5C400] px-3 py-1 text-black font-black text-xs sm:hidden">
-            <span>40+</span>
+            <span><span data-count="40">40</span>+</span>
             <span class="text-[9px] font-bold uppercase leading-tight">Ans d'expérience</span>
           </div>
         </div>
@@ -25,33 +26,35 @@
 
         <!-- Carrousel d'images hauteur réduite sur mobile -->
         <div class="relative mt-4 sm:mt-6 w-full overflow-hidden rounded-xl">
+          <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-black/80 to-transparent"></div>
+          <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-black/80 to-transparent"></div>
           <div class="flex animate-marquee gap-3 sm:gap-4">
 
-            <img src="src/images/gallery/mariage1.png" alt="Mariage"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none">
-            <img src="src/images/gallery/dj.png" alt="DJ"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none">
-            <img src="src/images/gallery/ecran.png" alt="Écran LED"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none">
-            <img src="src/images/gallery/eclairage.png" alt="Éclairage"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none">
+            <img loading="lazy" src="src/images/gallery/mariage1.png" alt="Mariage"
+                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
+            <img loading="lazy" src="src/images/gallery/dj.png" alt="DJ"
+                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
+            <img loading="lazy" src="src/images/gallery/ecran.png" alt="Écran LED"
+                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
+            <img loading="lazy" src="src/images/gallery/eclairage.png" alt="Éclairage"
+                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
 
             <!-- Duplicata pour boucle infinie -->
-            <img src="src/images/gallery/mariage.png" alt="Mariage"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none">
-            <img src="src/images/gallery/dj.png" alt="DJ"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none">
-            <img src="src/images/gallery/ecran.png" alt="Écran LED"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none">
-            <img src="src/images/gallery/eclairage.png" alt="Éclairage"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none">
+            <img loading="lazy" src="src/images/gallery/mariage1.png" alt="" aria-hidden="true"
+                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
+            <img loading="lazy" src="src/images/gallery/dj.png" alt="" aria-hidden="true"
+                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
+            <img loading="lazy" src="src/images/gallery/ecran.png" alt="" aria-hidden="true"
+                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
+            <img loading="lazy" src="src/images/gallery/eclairage.png" alt="" aria-hidden="true"
+                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
 
           </div>
         </div>
 
         <!-- Badge 40+ Ans d'expérience (Visible sur tablettes/desktop) -->
         <div class="mt-5 hidden sm:inline-flex items-center gap-3 rounded-2xl bg-[#F5C400] px-4 py-2.5 text-black shadow-lg">
-          <span class="text-2xl font-black">40+</span>
+          <span class="text-2xl font-black"><span data-count="40">40</span>+</span>
           <span class="text-[11px] font-bold uppercase tracking-wider leading-tight">Ans<br>d'expérience</span>
         </div>
 
@@ -65,10 +68,13 @@
         </span>
 
         <h2 class="mt-3 sm:mt-4 text-2xl sm:text-3xl lg:text-4xl font-black leading-tight text-white">
-          Votre partenaire de confiance pour tous vos événements.
+          Votre partenaire de confiance pour <span class="text-[#F5C400]">tous vos événements</span>.
         </h2>
 
-       
+        <p class="mt-3 sm:mt-4 text-sm sm:text-base leading-relaxed text-zinc-400">
+          Depuis 1983, Electro Setti accompagne mariages, concerts, conférences et festivals partout en Tunisie,
+          avec du matériel professionnel et une équipe qui reste à vos côtés jusqu'à la dernière note.
+        </p>
 
         <!-- Features : Grille 2x2 compacte sur mobile au lieu de 4 lignes géantes -->
         <div class="mt-5 sm:mt-8">
@@ -77,32 +83,32 @@
           <div class="grid grid-cols-2 gap-2.5 sm:gap-4">
 
             <!-- Item 1 -->
-            <div class="flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-2.5 sm:p-3">
-              <div class="flex h-8 w-8 sm:h-10 sm:w-10 flex-none items-center justify-center rounded-lg bg-yellow-500/10 text-xs sm:text-sm text-[#F5C400]">
+            <div class="group flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-2.5 sm:p-3 transition duration-300 hover:-translate-y-0.5 hover:border-[#F5C400]/50 hover:bg-zinc-900/80">
+              <div class="flex h-8 w-8 sm:h-10 sm:w-10 flex-none items-center justify-center rounded-lg bg-yellow-500/10 text-xs sm:text-sm text-[#F5C400] transition group-hover:bg-[#F5C400] group-hover:text-black">
                 <i class="fa-solid fa-check"></i>
               </div>
               <h4 class="text-[11px] sm:text-sm font-semibold text-white leading-tight">Installation pro</h4>
             </div>
 
             <!-- Item 2 -->
-            <div class="flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-2.5 sm:p-3">
-              <div class="flex h-8 w-8 sm:h-10 sm:w-10 flex-none items-center justify-center rounded-lg bg-yellow-500/10 text-xs sm:text-sm text-[#F5C400]">
+            <div class="group flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-2.5 sm:p-3 transition duration-300 hover:-translate-y-0.5 hover:border-[#F5C400]/50 hover:bg-zinc-900/80">
+              <div class="flex h-8 w-8 sm:h-10 sm:w-10 flex-none items-center justify-center rounded-lg bg-yellow-500/10 text-xs sm:text-sm text-[#F5C400] transition group-hover:bg-[#F5C400] group-hover:text-black">
                 <i class="fa-solid fa-truck"></i>
               </div>
               <h4 class="text-[11px] sm:text-sm font-semibold text-white leading-tight">Livraison partout</h4>
             </div>
 
             <!-- Item 3 -->
-            <div class="flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-2.5 sm:p-3">
-              <div class="flex h-8 w-8 sm:h-10 sm:w-10 flex-none items-center justify-center rounded-lg bg-yellow-500/10 text-xs sm:text-sm text-[#F5C400]">
+            <div class="group flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-2.5 sm:p-3 transition duration-300 hover:-translate-y-0.5 hover:border-[#F5C400]/50 hover:bg-zinc-900/80">
+              <div class="flex h-8 w-8 sm:h-10 sm:w-10 flex-none items-center justify-center rounded-lg bg-yellow-500/10 text-xs sm:text-sm text-[#F5C400] transition group-hover:bg-[#F5C400] group-hover:text-black">
                 <i class="fa-solid fa-headset"></i>
               </div>
               <h4 class="text-[11px] sm:text-sm font-semibold text-white leading-tight">Assistance 24/7</h4>
             </div>
 
             <!-- Item 4 -->
-            <div class="flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-2.5 sm:p-3">
-              <div class="flex h-8 w-8 sm:h-10 sm:w-10 flex-none items-center justify-center rounded-lg bg-yellow-500/10 text-xs sm:text-sm text-[#F5C400]">
+            <div class="group flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-2.5 sm:p-3 transition duration-300 hover:-translate-y-0.5 hover:border-[#F5C400]/50 hover:bg-zinc-900/80">
+              <div class="flex h-8 w-8 sm:h-10 sm:w-10 flex-none items-center justify-center rounded-lg bg-yellow-500/10 text-xs sm:text-sm text-[#F5C400] transition group-hover:bg-[#F5C400] group-hover:text-black">
                 <i class="fa-solid fa-award"></i>
               </div>
               <h4 class="text-[11px] sm:text-sm font-semibold text-white leading-tight">Matériel pro</h4>

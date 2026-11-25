@@ -1,3 +1,7 @@
+<style>
+  .process-line { transform: scaleX(0); transition: transform 1.6s cubic-bezier(.2,.7,.2,1) .3s; }
+  .is-visible .process-line { transform: scaleX(1); }
+</style>
 <section id="process" class="bg-zinc-950 py-12 md:py-20 lg:py-24 overflow-hidden">
 
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
@@ -23,62 +27,62 @@
         <div class="relative mt-20 hidden lg:block">
 
             <div class="absolute left-0 top-8 h-[3px] w-full rounded-full bg-zinc-800"></div>
-            <div class="absolute left-0 top-8 h-[3px] w-full rounded-full bg-gradient-to-r from-[#F5C400] via-[#FFD84D] to-[#F5C400]"></div>
+            <div class="process-line absolute left-0 top-8 h-[3px] w-full origin-left rounded-full bg-gradient-to-r from-[#F5C400] via-[#FFD84D] to-[#F5C400] shadow-[0_0_14px_rgba(245,196,0,.6)]"></div>
 
             <div class="grid grid-cols-6 gap-6">
 
                 <!-- STEP 1 -->
-                <div class="relative text-center">
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20">
+                <div class="group relative text-center">
+                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20 transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,196,0,.6)]">
                         <i class="fa-brands fa-whatsapp"></i>
                     </div>
                     <h3 class="mt-6 text-lg font-bold text-white">Contact</h3>
-                    <p class="mt-2 text-sm text-zinc-500">≈ 2 min</p>
+                    <p class="mt-2 text-sm text-zinc-500 transition group-hover:text-[#F5C400]">≈ 2 min</p>
                 </div>
 
                 <!-- STEP 2 -->
-                <div class="relative text-center">
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20">
+                <div class="group relative text-center">
+                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20 transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,196,0,.6)]">
                         <i class="fa-solid fa-clipboard-list"></i>
                     </div>
                     <h3 class="mt-6 text-lg font-bold text-white">Analyse</h3>
-                    <p class="mt-2 text-sm text-zinc-500">≈ 10 min</p>
+                    <p class="mt-2 text-sm text-zinc-500 transition group-hover:text-[#F5C400]">≈ 10 min</p>
                 </div>
 
                 <!-- STEP 3 -->
-                <div class="relative text-center">
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20">
+                <div class="group relative text-center">
+                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20 transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,196,0,.6)]">
                         <i class="fa-solid fa-file-invoice-dollar"></i>
                     </div>
                     <h3 class="mt-6 text-lg font-bold text-white">Devis</h3>
-                    <p class="mt-2 text-sm text-zinc-500">Sous 24 h</p>
+                    <p class="mt-2 text-sm text-zinc-500 transition group-hover:text-[#F5C400]">Sous 24 h</p>
                 </div>
 
                 <!-- STEP 4 -->
-                <div class="relative text-center">
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20">
+                <div class="group relative text-center">
+                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20 transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,196,0,.6)]">
                         <i class="fa-solid fa-file-signature"></i>
                     </div>
                     <h3 class="mt-6 text-lg font-bold text-white">Signature</h3>
-                    <p class="mt-2 text-sm text-zinc-500">En ligne</p>
+                    <p class="mt-2 text-sm text-zinc-500 transition group-hover:text-[#F5C400]">En ligne</p>
                 </div>
 
                 <!-- STEP 5 -->
-                <div class="relative text-center">
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20">
+                <div class="group relative text-center">
+                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20 transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,196,0,.6)]">
                         <i class="fa-solid fa-credit-card"></i>
                     </div>
                     <h3 class="mt-6 text-lg font-bold text-white">Acompte</h3>
-                    <p class="mt-2 text-sm text-zinc-500">Paiement sécurisé</p>
+                    <p class="mt-2 text-sm text-zinc-500 transition group-hover:text-[#F5C400]">Paiement sécurisé</p>
                 </div>
 
                 <!-- STEP 6 -->
-                <div class="relative text-center">
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20">
+                <div class="group relative text-center">
+                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20 transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,196,0,.6)]">
                         <i class="fa-solid fa-truck-fast"></i>
                     </div>
                     <h3 class="mt-6 text-lg font-bold text-white">Installation</h3>
-                    <p class="mt-2 text-sm text-zinc-500">Jour J</p>
+                    <p class="mt-2 text-sm text-zinc-500 transition group-hover:text-[#F5C400]">Jour J</p>
                 </div>
 
             </div>
@@ -91,7 +95,7 @@
             <!-- LIGNE 1 : Étape 01 -> Étape 02 -->
             <div class="flex items-center gap-2">
                 <!-- STEP 1 -->
-                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3">
+                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3 transition active:border-[#F5C400]/60">
                     <div class="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#F5C400] text-black">
                         <i class="fa-brands fa-whatsapp text-sm"></i>
                     </div>
@@ -105,7 +109,7 @@
                 <span class="flex-none text-xs font-bold text-[#F5C400]">→</span>
 
                 <!-- STEP 2 -->
-                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3">
+                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3 transition active:border-[#F5C400]/60">
                     <div class="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#F5C400] text-black">
                         <i class="fa-solid fa-clipboard-list text-sm"></i>
                     </div>
@@ -122,7 +126,7 @@
             <!-- LIGNE 2 : Étape 03 -> Étape 04 -->
             <div class="flex items-center gap-2">
                 <!-- STEP 3 -->
-                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3">
+                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3 transition active:border-[#F5C400]/60">
                     <div class="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#F5C400] text-black">
                         <i class="fa-solid fa-file-invoice-dollar text-sm"></i>
                     </div>
@@ -136,7 +140,7 @@
                 <span class="flex-none text-xs font-bold text-[#F5C400]">→</span>
 
                 <!-- STEP 4 -->
-                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3">
+                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3 transition active:border-[#F5C400]/60">
                     <div class="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#F5C400] text-black">
                         <i class="fa-solid fa-file-signature text-sm"></i>
                     </div>
@@ -153,7 +157,7 @@
             <!-- LIGNE 3 : Étape 05 -> Étape 06 -->
             <div class="flex items-center gap-2">
                 <!-- STEP 5 -->
-                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3">
+                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3 transition active:border-[#F5C400]/60">
                     <div class="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#F5C400] text-black">
                         <i class="fa-solid fa-credit-card text-sm"></i>
                     </div>
@@ -167,7 +171,7 @@
                 <span class="flex-none text-xs font-bold text-[#F5C400]">→</span>
 
                 <!-- STEP 6 -->
-                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3">
+                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3 transition active:border-[#F5C400]/60">
                     <div class="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#F5C400] text-black">
                         <i class="fa-solid fa-truck-fast text-sm"></i>
                     </div>
