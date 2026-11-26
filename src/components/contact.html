@@ -1,166 +1,267 @@
-<section id="contact" class="bg-black py-10 md:py-16 lg:py-20 border-t border-zinc-900">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+<style>
+    /* ================= TÉLÉPHONE 3D ================= */
+    .ph-stage { position: relative; display: flex; justify-content: center; perspective: 1300px; padding: 10px 0 40px; }
+    .ph-float { animation: phFloat 6s ease-in-out infinite; transform-style: preserve-3d; }
+    @keyframes phFloat { 50% { translate: 0 -14px; } }
+    .ph {
+        position: relative; width: 290px; height: 590px; border-radius: 48px; padding: 12px;
+        background: linear-gradient(145deg, #2a2a2e, #0c0c0e 60%, #1c1c20);
+        box-shadow:
+            inset 0 0 0 2px #3a3a40, inset 0 0 0 6px #111,
+            0 50px 90px -30px rgba(0, 0, 0, .95), 0 0 70px -20px rgba(37, 211, 102, .25);
+        transform: rotateY(var(--py, -16deg)) rotateX(var(--px, 6deg));
+        transition: transform .5s ease-out;
+        transform-style: preserve-3d;
+    }
+    .ph::before {          /* reflet sur la vitre */
+        content: ""; position: absolute; inset: 12px; z-index: 6; border-radius: 37px; pointer-events: none;
+        background: linear-gradient(115deg, rgba(255, 255, 255, .12) 0%, transparent 35%, transparent 70%, rgba(255, 255, 255, .05));
+    }
+    .ph-btn { position: absolute; right: -3px; top: 150px; width: 4px; height: 70px; border-radius: 3px; background: #2a2a2e; }
+    .ph-btn.l1 { left: -3px; right: auto; top: 120px; height: 34px; }
+    .ph-btn.l2 { left: -3px; right: auto; top: 170px; height: 56px; }
+    .ph-shadow {
+        position: absolute; bottom: 4px; left: 50%; width: 230px; height: 30px; transform: translateX(-50%);
+        border-radius: 50%; background: radial-gradient(ellipse, rgba(37, 211, 102, .25), transparent 70%); filter: blur(8px);
+        animation: phShadow 6s ease-in-out infinite;
+    }
+    @keyframes phShadow { 50% { transform: translateX(-50%) scale(.85); opacity: .6; } }
 
-        <div class="spotlight relative overflow-hidden rounded-2xl sm:rounded-3xl border border-zinc-800/90 bg-gradient-to-br from-zinc-950 via-zinc-900/60 to-black p-6 sm:p-10 lg:p-12 shadow-2xl backdrop-blur-md">
-            
-            <div class="pointer-events-none absolute -top-32 -left-32 h-72 w-72 rounded-full bg-[#F5C400]/10 blur-3xl"></div>
-            <div class="pointer-events-none absolute -bottom-32 -right-32 h-72 w-72 rounded-full bg-[#25D366]/10 blur-3xl"></div>
+    .ph-screen {
+        position: relative; display: flex; flex-direction: column; width: 100%; height: 100%;
+        border-radius: 37px; overflow: hidden; background: #0b141a;
+    }
+    .ph-island { position: absolute; top: 9px; left: 50%; z-index: 5; width: 96px; height: 26px; transform: translateX(-50%); border-radius: 20px; background: #000; }
+    .ph-status { display: flex; justify-content: space-between; padding: 12px 26px 4px; font-size: 11px; font-weight: 700; color: #fff; }
+    .ph-head { display: flex; align-items: center; gap: 10px; padding: 8px 12px 10px; background: #202c33; }
+    .ph-avatar {
+        display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%;
+        font-size: 12px; font-weight: 900; color: #000; background: linear-gradient(135deg, #F5C400, #ffde59);
+    }
+    .ph-name { font-size: 13px; font-weight: 700; color: #e9edef; }
+    .ph-sub { font-size: 10.5px; color: #8696a0; }
+    .ph-sub.typing { color: #25D366; }
 
-            <div class="relative grid gap-8 lg:grid-cols-12 lg:gap-12 items-center">
-                
-                <!-- Colonne Gauche : Présentation & Coordonnées -->
-                <div class="lg:col-span-5 flex flex-col justify-between h-full">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#F5C400]">
-                                ⚡ DÉMARRONS VOTRE PROJET
-                            </span>
+    .ph-chat {
+        flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 14px 10px; overflow: hidden;
+        background-color: #0b141a;
+        background-image: radial-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px);
+        background-size: 14px 14px;
+    }
+    .ph-day { align-self: center; padding: 3px 10px; border-radius: 8px; font-size: 10px; color: #8696a0; background: #182229; }
+    .bub {
+        position: relative; max-width: 88%; padding: 7px 9px 18px; border-radius: 10px;
+        font-size: 11.5px; line-height: 1.45; color: #e9edef; word-wrap: break-word;
+        animation: bubIn .4s cubic-bezier(.2, .8, .2, 1) backwards;
+    }
+    @keyframes bubIn { from { opacity: 0; transform: translateY(10px) scale(.95); } }
+    .bub.in  { align-self: flex-start; background: #202c33; border-top-left-radius: 2px; }
+    .bub.out { align-self: flex-end; background: #005c4b; border-top-right-radius: 2px; }
+    .bub-time { position: absolute; right: 8px; bottom: 4px; display: flex; align-items: center; gap: 3px; font-size: 9.5px; color: rgba(233, 237, 239, .6); }
+    .ticks { color: rgba(233, 237, 239, .6); transition: color .4s; }
+    .sent .ticks { color: #53bdeb; }
+    .bub .ln { display: block; border-radius: 4px; transition: background .3s, box-shadow .3s; }
+    .bub .ln.hl { background: rgba(245, 196, 0, .16); box-shadow: 0 0 0 2px rgba(245, 196, 0, .16); }
+    .bub .ph-empty { color: rgba(233, 237, 239, .38); font-style: italic; }
+    .bub .caret { display: inline-block; width: 1.5px; height: 12px; margin-left: 1px; vertical-align: -2px; background: #25D366; animation: caret 1s steps(1) infinite; }
+    @keyframes caret { 50% { opacity: 0; } }
+    .sent .caret { display: none; }
+    .bub.out.fly { animation: bubFly .7s cubic-bezier(.2, .8, .2, 1); }
+    @keyframes bubFly { 30% { transform: translateY(-8px) scale(1.03); box-shadow: 0 0 30px rgba(37, 211, 102, .5); } }
+
+    .ph-input { display: flex; align-items: center; gap: 8px; padding: 8px 10px 16px; background: #0b141a; }
+    .ph-input div { flex: 1; padding: 8px 12px; border-radius: 20px; font-size: 11px; color: #8696a0; background: #202c33; }
+    .ph-input span { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; color: #fff; background: #00a884; }
+    .ph-shake { animation: phShake .5s; }
+    @keyframes phShake { 20%, 60% { translate: -8px 0; } 40%, 80% { translate: 8px 0; } }
+
+    /* ================= FORMULAIRE ================= */
+    .fm-field { position: relative; }
+    .fm-input {
+        width: 100%; padding: 13px 14px 13px 42px; border-radius: 14px; font-size: 13.5px; color: #fff;
+        background: rgba(24, 24, 27, .85); border: 1px solid #27272a; outline: none;
+        transition: border-color .25s, box-shadow .25s, background .25s;
+    }
+    .fm-input::placeholder { color: #71717a; }
+    .fm-input:focus { border-color: #25D366; background: rgba(24, 24, 27, 1); box-shadow: 0 0 0 4px rgba(37, 211, 102, .12); }
+    .fm-ico { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 13px; color: #52525b; transition: color .25s; pointer-events: none; }
+    .fm-field:focus-within .fm-ico { color: #25D366; }
+    textarea.fm-input { resize: none; padding-top: 12px; }
+    .fm-field.ta .fm-ico { top: 20px; }
+    select.fm-input { appearance: none; -webkit-appearance: none; cursor: pointer; }
+    .fm-missing { animation: phShake .5s; border-color: #ef4444 !important; box-shadow: 0 0 0 4px rgba(239, 68, 68, .15) !important; }
+
+    .fm-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .fm-type {
+        display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 6px; border-radius: 14px;
+        font-size: 10.5px; font-weight: 700; line-height: 1.2; text-align: center; color: #a1a1aa;
+        background: rgba(24, 24, 27, .85); border: 1px solid #27272a; transition: all .25s;
+    }
+    .fm-type .e { font-size: 18px; transition: transform .3s; }
+    .fm-type:hover { border-color: rgba(37, 211, 102, .4); }
+    .fm-type:hover .e { transform: scale(1.2) rotate(-6deg); }
+    .fm-type.on { color: #25D366; background: rgba(37, 211, 102, .1); border-color: rgba(37, 211, 102, .6); box-shadow: 0 0 20px rgba(37, 211, 102, .15); }
+
+    .fm-send {
+        position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 10px;
+        width: 100%; padding: 15px; border-radius: 16px; font-size: 14px; font-weight: 800; color: #04140a;
+        background: linear-gradient(135deg, #25D366, #1ebe5a);
+        box-shadow: 0 12px 35px -10px rgba(37, 211, 102, .6);
+        transition: transform .2s, box-shadow .3s;
+    }
+    .fm-send:hover { transform: translateY(-2px); box-shadow: 0 18px 45px -10px rgba(37, 211, 102, .75); }
+    .fm-send:active { transform: scale(.98); }
+    .fm-send::after {
+        content: ""; position: absolute; top: 0; left: -120%; width: 50%; height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(255, 255, 255, .5), transparent); transform: skewX(-20deg);
+        animation: sendShine 3.5s ease-in-out infinite;
+    }
+    @keyframes sendShine { 0%, 60% { left: -120%; } 100% { left: 160%; } }
+
+    .confetti { position: fixed; z-index: 10003; width: 8px; height: 12px; border-radius: 2px; pointer-events: none; }
+
+    .ct-pill {
+        display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px;
+        font-size: 12px; color: #d4d4d8; background: rgba(24, 24, 27, .8); border: 1px solid #27272a;
+        transition: border-color .25s, color .25s, transform .25s;
+    }
+    a.ct-pill:hover { border-color: rgba(245, 196, 0, .5); color: #F5C400; transform: translateY(-2px); }
+    .ct-pill i { color: #F5C400; }
+
+    @media (max-width: 1023px) {
+        .ph-stage { order: 2; }
+    }
+    @media (max-width: 480px) {
+        .ph { width: 260px; height: 530px; border-radius: 44px; }
+        .ph-stage { margin: -10px 0 -20px; }
+        .fm-types { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .ph-float, .ph-shadow, .fm-send::after { animation: none; }
+    }
+</style>
+
+<section class="relative overflow-hidden border-t border-zinc-900 bg-black py-12 md:py-16 lg:py-20">
+
+    <!-- Halos -->
+    <div class="pointer-events-none absolute -left-40 top-20 h-96 w-96 rounded-full bg-[#25D366]/10 blur-3xl"></div>
+    <div class="pointer-events-none absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-[#F5C400]/10 blur-3xl"></div>
+
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6" data-contact>
+
+        <div class="grid items-center gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
+
+            <!-- ============ TÉLÉPHONE 3D : APERÇU EN DIRECT ============ -->
+            <div class="ph-stage" data-ph-stage>
+                <div class="ph-float">
+                    <div class="ph" data-ph>
+                        <span class="ph-btn"></span><span class="ph-btn l1"></span><span class="ph-btn l2"></span>
+                        <div class="ph-screen">
+                            <span class="ph-island"></span>
+                            <div class="ph-status"><span data-ph-clock>12:00</span><span><i class="fa-solid fa-signal"></i> <i class="fa-solid fa-wifi"></i> <i class="fa-solid fa-battery-three-quarters"></i></span></div>
+                            <div class="ph-head">
+                                <i class="fa-solid fa-arrow-left text-sm text-[#aebac1]"></i>
+                                <span class="ph-avatar">ES</span>
+                                <div class="min-w-0 flex-1">
+                                    <p class="ph-name">Electro Setti</p>
+                                    <p class="ph-sub" data-ph-sub>en ligne</p>
+                                </div>
+                                <i class="fa-solid fa-video text-sm text-[#aebac1]"></i>
+                                <i class="fa-solid fa-phone ml-3 text-sm text-[#aebac1]"></i>
+                            </div>
+                            <div class="ph-chat" data-ph-chat>
+                                <span class="ph-day">Aujourd'hui</span>
+                                <div class="bub in">Bonjour 👋 Décrivez-nous votre événement, on s'occupe du reste !<span class="bub-time" data-ph-t></span></div>
+                                <div class="bub out" data-ph-msg>
+                                    <div data-ph-body></div>
+                                    <span class="bub-time"><span data-ph-t></span><i class="fa-solid fa-check-double ticks"></i></span>
+                                </div>
+                            </div>
+                            <div class="ph-input">
+                                <div>Message</div>
+                                <span><i class="fa-solid fa-paper-plane text-xs"></i></span>
+                            </div>
                         </div>
-
-                        <h2 class="mt-3 text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-white leading-tight">
-                            Prêts à faire vibrer <br class="hidden sm:inline">
-                            <span class="text-[#F5C400]">votre événement ?</span>
-                        </h2>
-
-                        <p class="mt-3 text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                            Partagez-nous votre vision. Nous orchestrons la sonorisation, les jeux de lumière, la régie DJ et les écrans LED pour marquer les esprits de votre public partout en Tunisie.
-                        </p>
-                    </div>
-
-                    <!-- Coordonnées & Réseaux Sociaux -->
-                    <div class="mt-6 sm:mt-10 space-y-3 pt-4 border-t border-zinc-800/80 text-xs sm:text-sm">
-                        <div class="flex items-center gap-3 text-zinc-300">
-                            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 text-[#F5C400] ring-1 ring-zinc-800">
-                                <i class="fa-solid fa-location-dot"></i>
-                            </span>
-                            <span>Tunis & Grand Tunis, Tunisie (Déplacement 24/7)</span>
-                        </div>
-
-                        <a href="https://www.instagram.com/sittymusik" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-zinc-300 transition hover:text-[#F5C400]">
-                            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 text-[#F5C400] ring-1 ring-zinc-800">
-                                <i class="fa-brands fa-instagram"></i>
-                            </span>
-                            <span>@sittymusik</span>
-                        </a>
-
-                        <a href="https://www.facebook.com/skandar.setti/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-zinc-300 transition hover:text-[#F5C400]">
-                            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 text-[#F5C400] ring-1 ring-zinc-800">
-                                <i class="fa-brands fa-facebook-f"></i>
-                            </span>
-                            <span>Electro Setti</span>
-                        </a>
-
-                        <a href="tel:+21653308760" class="flex items-center gap-3 text-zinc-300 transition hover:text-[#F5C400]">
-                            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 text-[#F5C400] ring-1 ring-zinc-800">
-                                <i class="fa-solid fa-phone"></i>
-                            </span>
-                            <span>+216 53 308 760</span>
-                        </a>
                     </div>
                 </div>
-
-                <!-- Colonne Droite : Formulaire interactif -->
-                <div class="lg:col-span-7">
-                    <form id="contact-form" class="space-y-4">
-                        
-                        <!-- Nom / Entreprise -->
-                        <div>
-                            <label for="form-name" class="block text-[11px] font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-                                Nom / Entreprise ou Organisateur
-                            </label>
-                            <input 
-                                type="text" 
-                                id="form-name" 
-                                required
-                                placeholder="Ex. Karim Ben Salem"
-                                class="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white placeholder-zinc-500 outline-none transition focus:border-[#F5C400] focus:ring-1 focus:ring-[#F5C400]">
-                        </div>
-
-                        <!-- Téléphone / WhatsApp -->
-                        <div>
-                            <label for="form-phone" class="block text-[11px] font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-                                Téléphone / WhatsApp
-                            </label>
-                            <input 
-                                type="tel" 
-                                id="form-phone" 
-                                required
-                                placeholder="+216 -- --- ---"
-                                class="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white placeholder-zinc-500 outline-none transition focus:border-[#F5C400] focus:ring-1 focus:ring-[#F5C400]">
-                        </div>
-
-
-                        <!-- Date + Lieu -->
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label for="form-date" class="block text-[11px] font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-                                    Date de l'événement
-                                </label>
-                                <input
-                                    type="date"
-                                    id="form-date"
-                                    class="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white [color-scheme:dark] outline-none transition focus:border-[#F5C400] focus:ring-1 focus:ring-[#F5C400]">
-                            </div>
-                            <div>
-                                <label for="form-location" class="block text-[11px] font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-                                    Lieu
-                                </label>
-                                <input
-                                    type="text"
-                                    id="form-location"
-                                    placeholder="Ex. Hammamet"
-                                    class="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white placeholder-zinc-500 outline-none transition focus:border-[#F5C400] focus:ring-1 focus:ring-[#F5C400]">
-                            </div>
-                        </div>
-
-                        <!-- Type de prestation -->
-                        <div>
-                            <label for="form-type" class="block text-[11px] font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-                                Type de prestation
-                            </label>
-                            <select 
-                                id="form-type"
-                                class="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white outline-none transition focus:border-[#F5C400] focus:ring-1 focus:ring-[#F5C400]">
-                                <option value="Mariage & Fête privée">Mariage & Fête privée</option>
-                                <option value="Concert & Festival Live">Concert & Festival Live</option>
-                                <option value="Séminaire & Conférence Corporate">Séminaire & Conférence Corporate</option>
-                                <option value="Soirée Club & DJ Set">Soirée Club & DJ Set</option>
-                                <option value="Éclairage architectural & Écran LED">Éclairage architectural & Écran LED</option>
-                                <option value="Autre demande sur mesure">Autre demande sur mesure</option>
-                            </select>
-                        </div>
-
-                        <!-- Détails du projet -->
-                        <div>
-                            <label for="form-details" class="block text-[11px] font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-                                Détails du projet
-                            </label>
-                            <textarea 
-                                id="form-details" 
-                                rows="3"
-                                placeholder="Nombre d'invités, intérieur / extérieur, besoins techniques…"
-                                class="w-full resize-none rounded-xl border border-zinc-800 bg-zinc-900/80 px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-white placeholder-zinc-500 outline-none transition focus:border-[#F5C400] focus:ring-1 focus:ring-[#F5C400]"></textarea>
-                        </div>
-
-                        <!-- Bouton WhatsApp -->
-                        <button 
-                            type="button" 
-                            id="btn-whatsapp-send"
-                            class="w-full flex items-center justify-center gap-2.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] py-3 sm:py-3.5 px-6 font-bold text-black uppercase tracking-wider text-xs sm:text-sm transition duration-200 shadow-lg shadow-green-500/20 hover:shadow-green-500/40 hover:-translate-y-0.5 active:scale-[0.98]">
-                            <span>Envoyer via WhatsApp</span>
-                            <i class="fa-brands fa-whatsapp text-lg"></i>
-                        </button>
-
-                        <p class="text-center text-[11px] text-zinc-500">
-                            <i class="fa-solid fa-lock mr-1"></i> Réponse en général en moins d'une heure · Sans engagement
-                        </p>
-
-                    </form>
-                </div>
-
+                <div class="ph-shadow"></div>
             </div>
 
+            <!-- ============ FORMULAIRE ============ -->
+            <div>
+                <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#F5C400]">⚡ Démarrons votre projet</span>
+                <h2 class="mt-3 text-2xl font-black uppercase leading-tight tracking-tight text-white sm:text-3xl lg:text-4xl">
+                    Prêts à faire vibrer <span class="text-[#F5C400]">votre événement ?</span>
+                </h2>
+                <p class="mt-2 text-xs leading-relaxed text-zinc-400 sm:text-sm">
+                    Remplissez le formulaire : votre message s'écrit en direct sur le téléphone, puis part sur notre WhatsApp en un clic.
+                </p>
+
+                <form id="contact-form" class="mt-6 space-y-3.5" onsubmit="return false">
+
+                    <div class="grid gap-3.5 sm:grid-cols-2">
+                        <div class="fm-field">
+                            <i class="fa-solid fa-user fm-ico"></i>
+                            <input type="text" id="form-name" class="fm-input" placeholder="Votre nom ou entreprise" autocomplete="name" required aria-label="Nom ou entreprise">
+                        </div>
+                        <div class="fm-field">
+                            <i class="fa-brands fa-whatsapp fm-ico"></i>
+                            <input type="tel" id="form-phone" class="fm-input" placeholder="+216 -- --- ---" autocomplete="tel" required aria-label="Téléphone ou WhatsApp">
+                        </div>
+                        <div class="fm-field">
+                            <i class="fa-regular fa-calendar fm-ico"></i>
+                            <input type="date" id="form-date" class="fm-input [color-scheme:dark]" aria-label="Date de l'événement">
+                        </div>
+                        <div class="fm-field">
+                            <i class="fa-solid fa-location-dot fm-ico"></i>
+                            <input type="text" id="form-location" class="fm-input" placeholder="Lieu (ex. Hammamet)" aria-label="Lieu">
+                        </div>
+                    </div>
+
+                    <!-- Type de prestation : boutons visuels (le select reste pour le message) -->
+                    <div>
+                        <p class="mb-2 text-[11px] font-bold uppercase tracking-wider text-zinc-400">Type de prestation</p>
+                        <div class="fm-types" data-fm-types>
+                            <button type="button" class="fm-type on" data-value="Mariage & Fête privée"><span class="e">💍</span>Mariage & fête</button>
+                            <button type="button" class="fm-type" data-value="Concert & Festival Live"><span class="e">🎸</span>Concert & festival</button>
+                            <button type="button" class="fm-type" data-value="Séminaire & Conférence Corporate"><span class="e">🎤</span>Séminaire</button>
+                            <button type="button" class="fm-type" data-value="Soirée Club & DJ Set"><span class="e">🎧</span>Soirée DJ</button>
+                            <button type="button" class="fm-type" data-value="Éclairage architectural & Écran LED"><span class="e">💡</span>Lumière & LED</button>
+                            <button type="button" class="fm-type" data-value="Autre demande sur mesure"><span class="e">✨</span>Sur mesure</button>
+                        </div>
+                        <select id="form-type" class="hidden" aria-hidden="true" tabindex="-1">
+                            <option value="Mariage & Fête privée">Mariage & Fête privée</option>
+                            <option value="Concert & Festival Live">Concert & Festival Live</option>
+                            <option value="Séminaire & Conférence Corporate">Séminaire & Conférence Corporate</option>
+                            <option value="Soirée Club & DJ Set">Soirée Club & DJ Set</option>
+                            <option value="Éclairage architectural & Écran LED">Éclairage architectural & Écran LED</option>
+                            <option value="Autre demande sur mesure">Autre demande sur mesure</option>
+                        </select>
+                    </div>
+
+                    <div class="fm-field ta">
+                        <i class="fa-solid fa-pen fm-ico"></i>
+                        <textarea id="form-details" rows="3" class="fm-input" placeholder="Nombre d'invités, intérieur / extérieur, besoins techniques…" aria-label="Détails du projet"></textarea>
+                    </div>
+
+                    <button type="button" id="btn-whatsapp-send" class="fm-send">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                        <span>Envoyer sur WhatsApp</span>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                    <p class="text-center text-[11px] text-zinc-500">
+                        <i class="fa-solid fa-lock mr-1"></i> Réponse en général en moins d'une heure · Sans engagement
+                    </p>
+                </form>
+            </div>
         </div>
 
+        <!-- Coordonnées -->
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-2.5">
+            <span class="ct-pill"><i class="fa-solid fa-location-dot"></i> Tunis & Grand Tunis · Déplacement partout en Tunisie</span>
+            <a href="tel:+21653308760" class="ct-pill"><i class="fa-solid fa-phone"></i> +216 53 308 760</a>
+            <a href="https://www.instagram.com/sittymusik" target="_blank" rel="noopener noreferrer" class="ct-pill"><i class="fa-brands fa-instagram"></i> @sittymusik</a>
+            <a href="https://www.facebook.com/skandar.setti/" target="_blank" rel="noopener noreferrer" class="ct-pill"><i class="fa-brands fa-facebook-f"></i> Electro Setti</a>
+        </div>
     </div>
 </section>

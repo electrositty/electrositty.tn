@@ -17,9 +17,9 @@
         "#process [data-step]",
         "#packs .pk-toggle",
         "#packs .pk-nav",
-        "#materiels-container > *",
-        "#contact form > *",
-        "#contact .space-y-3 > *"
+        "#materiels [data-catalogue]",
+        "#contact .ph-stage",
+        "#contact form > *"
     ];
 
     function applyStagger() {
@@ -36,7 +36,6 @@
        2. CARTES 3D + BOUTONS MAGNÉTIQUES + PROJECTEURS
     ---------------------------------------------------------------- */
     const TILT = [
-        { sel: "#materiels-container > *",  max: 7, lift: 6 },
         { sel: "#about .group",             max: 12, lift: 3 }
     ];
     const MAGNETIC = "#btn-whatsapp-send, #packs a[data-pack]";
@@ -620,6 +619,271 @@
     }
 
     /* ---------------------------------------------------------------
+       7. CATALOGUE : onglets par catégorie + liste de devis
+    ---------------------------------------------------------------- */
+    const CATALOGUE_SHOW_PRICES = false;   // mettre true pour afficher les prix de materiels.json
+
+    function initCatalogue(root) {
+        if (root.dataset.ready) return;
+        root.dataset.ready = "1";
+
+        const CATS = [
+            { key: "Son",     label: "Son",          sub: "Enceintes, caissons, micros", icon: "fa-volume-high" },
+            { key: "Lumière", label: "Lumière",      sub: "Projecteurs, lyres, effets",  icon: "fa-lightbulb" },
+            { key: "LED",     label: "Écrans LED",   sub: "Indoor & outdoor",            icon: "fa-tv" },
+            { key: "DJ",      label: "Matériel DJ",  sub: "Régies Pioneer",              icon: "fa-headphones" },
+            { key: "Structure", label: "Structures", sub: "Ponts aluminium",             icon: "fa-archway" }
+        ];
+        const $ = sel => root.querySelector(sel);
+        const catsBox = $("[data-ct-cats]"), grid = $("[data-ct-grid]"), title = $("[data-ct-title]");
+        const subtitle = $("[data-ct-subtitle]"), count = $("[data-ct-count]"), search = $("[data-ct-search]");
+        const bar = $("[data-ct-bar]"), barCount = $("[data-ct-bar-count]"), barList = $("[data-ct-bar-list]");
+        const send = $("[data-ct-send]");
+        const envBtns = [...root.querySelectorAll("[data-ct-env-val]")];
+
+        const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        const norm = v => String(v ?? "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+        let items = [], cat = "Son", env = "Tous", query = "";
+        const picked = new Set();
+
+        fetch("src/data/materiels.json")
+            .then(r => r.json())
+            .then(data => {
+                items = data.filter(it => it.available !== false);
+                const used = CATS.filter(c => items.some(it => it.category === c.key));
+                cat = used.length ? used[0].key : "Son";
+                renderCats(used);
+                render();
+            })
+            .catch(() => { grid.innerHTML = '<p class="text-sm text-zinc-500">Le catalogue n\'a pas pu être chargé.</p>'; });
+
+        function envOk(it) { return env === "Tous" || it.environment === "Tous" || it.environment === env; }
+
+        function renderCats(used) {
+            catsBox.innerHTML = used.map(c => {
+                const n = items.filter(it => it.category === c.key && envOk(it)).length;
+                return `<button type="button" class="ct-cat${c.key === cat && !query ? " on" : ""}" data-cat="${esc(c.key)}">
+                    <span class="ct-cat-ico"><i class="fa-solid ${c.icon}"></i></span>
+                    <span class="min-w-0"><span class="block text-sm font-bold text-white">${esc(c.label)}</span>
+                    <span class="ct-cat-sub block truncate text-[10.5px] text-zinc-500">${esc(c.sub)}</span></span>
+                    <span class="ct-count">${n}</span></button>`;
+            }).join("");
+            catsBox.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => {
+                cat = b.dataset.cat; query = ""; search.value = "";
+                renderCats(used); render();
+            }));
+            catsBox._used = used;
+        }
+
+        function card(it, i) {
+            const id = esc(it.name), sel = picked.has(it.name);
+            const envLabel = it.environment === "Tous" ? "Indoor & outdoor" : it.environment;
+            return `<article class="ct-item${sel ? " picked" : ""}" style="--i:${i}" data-name="${id}">
+                <div class="ct-thumb">
+                    <span class="ct-fallback"><i class="fa-solid fa-box"></i></span>
+                    <img src="${esc(it.image)}" alt="${id}" loading="lazy" onerror="this.remove()">
+                </div>
+                <div class="flex min-w-0 flex-1 flex-col">
+                    ${it.badge ? `<span><span class="ct-badge">${esc(it.badge)}</span></span>` : ""}
+                    <h4 class="ct-name">${id}</h4>
+                    <p class="ct-desc">${esc(it.description)}</p>
+                    <div class="ct-meta">
+                        ${CATALOGUE_SHOW_PRICES && it.price ? `<span class="ct-price">${esc(it.price)}</span>` : `<span class="ct-envchip"><i class="fa-solid fa-location-dot"></i> ${esc(envLabel)}</span>`}
+                        <button type="button" class="ct-add" data-add="${id}">${sel ? '<i class="fa-solid fa-check"></i> Ajouté' : '<i class="fa-solid fa-plus"></i> Ajouter'}</button>
+                    </div>
+                </div>
+            </article>`;
+        }
+
+        function render() {
+            let list;
+            if (query) {
+                const q = norm(query);
+                list = items.filter(it => envOk(it) && norm(it.name + " " + it.description + " " + it.category).includes(q));
+                title.textContent = `Résultats pour « ${query} »`;
+                subtitle.textContent = "Dans toutes les catégories";
+            } else {
+                const c = CATS.find(x => x.key === cat) || CATS[0];
+                list = items.filter(it => it.category === cat && envOk(it));
+                title.textContent = c.label;
+                subtitle.textContent = c.sub;
+            }
+            count.textContent = `${list.length} équipement${list.length > 1 ? "s" : ""}`;
+            grid.innerHTML = list.length
+                ? list.map(card).join("")
+                : '<p class="col-span-2 py-10 text-center text-sm text-zinc-500"><i class="fa-solid fa-magnifying-glass mb-2 block text-2xl text-zinc-700"></i>Aucun équipement ne correspond. Essayez un autre mot ou contactez-nous.</p>';
+            grid.scrollLeft = 0;
+        }
+
+        function updateBar() {
+            const names = [...picked];
+            bar.classList.toggle("show", names.length > 0);
+            barCount.textContent = `${names.length} équipement${names.length > 1 ? "s" : ""} dans votre liste`;
+            barList.textContent = names.join(" · ");
+            send.dataset.summary = "Matériel souhaité :\n" + names.map(n => "- " + n).join("\n");
+        }
+
+        grid.addEventListener("click", e => {
+            const btn = e.target.closest("[data-add]");
+            if (!btn) return;
+            const name = btn.dataset.add, art = btn.closest(".ct-item");
+            if (picked.has(name)) picked.delete(name); else picked.add(name);
+            const on = picked.has(name);
+            art.classList.toggle("picked", on);
+            btn.innerHTML = on ? '<i class="fa-solid fa-check"></i> Ajouté' : '<i class="fa-solid fa-plus"></i> Ajouter';
+            updateBar();
+        });
+
+        $("[data-ct-clear]").addEventListener("click", () => {
+            picked.clear(); updateBar(); render();
+        });
+
+        let typing;
+        search.addEventListener("input", () => {
+            clearTimeout(typing);
+            typing = setTimeout(() => {
+                query = search.value.trim();
+                renderCats(catsBox._used || []); render();
+            }, 150);
+        });
+
+        envBtns.forEach(b => b.addEventListener("click", () => {
+            env = b.dataset.ctEnvVal;
+            envBtns.forEach(x => x.classList.toggle("on", x === b));
+            renderCats(catsBox._used || []); render();
+        }));
+    }
+
+    /* ---------------------------------------------------------------
+       8. CONTACT : téléphone 3D + message WhatsApp en direct
+    ---------------------------------------------------------------- */
+    function initContact(root) {
+        if (root.dataset.ready) return;
+        root.dataset.ready = "1";
+
+        const $ = id => document.getElementById(id);
+        const F = { name: $("form-name"), phone: $("form-phone"), date: $("form-date"), location: $("form-location"), type: $("form-type"), details: $("form-details") };
+        const stage = root.querySelector("[data-ph-stage]");
+        const phone = root.querySelector("[data-ph]");
+        const body  = root.querySelector("[data-ph-body]");
+        const msg   = root.querySelector("[data-ph-msg]");
+        const chat  = root.querySelector("[data-ph-chat]");
+        const sub   = root.querySelector("[data-ph-sub]");
+        const types = [...root.querySelectorAll(".fm-type")];
+        const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        let focused = null, replied = false;
+
+        // Heure réelle sur le téléphone
+        function clock() {
+            const now = new Date(), hm = now.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+            root.querySelector("[data-ph-clock]").textContent = hm;
+            root.querySelectorAll("[data-ph-t]").forEach(el => el.textContent = hm);
+        }
+        clock(); setInterval(clock, 30000);
+
+        function line(key, label, value, empty) {
+            const v = value ? esc(value) : `<span class="ph-empty">${empty}</span>`;
+            return `<span class="ln${focused === key ? " hl" : ""}">${label} <b>${v}</b>${focused === key ? '<span class="caret"></span>' : ""}</span>`;
+        }
+
+        function render() {
+            const date = F.date.value
+                ? new Date(F.date.value + "T12:00").toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" })
+                : "";
+            body.innerHTML =
+                `<span class="ln"><b>⚡ NOUVELLE DEMANDE DE PROJET</b></span>` +
+                line("name", "👤 Nom :", F.name.value.trim(), "votre nom…") +
+                line("phone", "📞 Tél :", F.phone.value.trim(), "votre numéro…") +
+                line("type", "🎯 Prestation :", F.type.value, "") +
+                line("date", "📅 Date :", date, "à préciser") +
+                line("location", "📍 Lieu :", F.location.value.trim(), "à préciser") +
+                line("details", "📝 Détails :", F.details.value.trim(), "…");
+            sub.textContent = focused ? "vous écrivez…" : "en ligne";
+            sub.classList.toggle("typing", !!focused);
+        }
+
+        Object.entries(F).forEach(([key, el]) => {
+            if (!el) return;
+            el.addEventListener("input", () => { msg.parentElement.classList.remove("sent"); render(); });
+            el.addEventListener("change", () => { syncTypes(); render(); });
+            el.addEventListener("focus", () => { focused = key; render(); });
+            el.addEventListener("blur", () => { focused = null; render(); });
+        });
+
+        // Boutons visuels "Type de prestation" ⇄ select caché
+        function syncTypes() { types.forEach(b => b.classList.toggle("on", b.dataset.value === F.type.value)); }
+        types.forEach(b => b.addEventListener("click", () => {
+            F.type.value = b.dataset.value;
+            syncTypes();
+            focused = "type"; render();
+            setTimeout(() => { if (focused === "type") { focused = null; render(); } }, 1200);
+        }));
+
+        // Le téléphone suit la souris
+        if (canHover) {
+            root.addEventListener("pointermove", e => {
+                const r = stage.getBoundingClientRect();
+                const px = (e.clientX - (r.left + r.width / 2)) / innerWidth;
+                const py = (e.clientY - (r.top + r.height / 2)) / innerHeight;
+                phone.style.setProperty("--py", (-16 + px * 30).toFixed(1) + "deg");
+                phone.style.setProperty("--px", (6 - py * 16).toFixed(1) + "deg");
+            });
+            root.addEventListener("mouseleave", () => { phone.style.removeProperty("--py"); phone.style.removeProperty("--px"); });
+        }
+
+        function confetti(x, y) {
+            if (reduceMotion) return;
+            const colors = ["#F5C400", "#25D366", "#ffffff", "#53bdeb", "#ff6b6b"];
+            for (let i = 0; i < 46; i++) {
+                const c = document.createElement("span");
+                c.className = "confetti";
+                c.style.left = x + "px"; c.style.top = y + "px";
+                c.style.background = colors[i % colors.length];
+                document.body.appendChild(c);
+                const a = Math.random() * Math.PI * 2, v = 120 + Math.random() * 260;
+                c.animate([
+                    { transform: "translate(0,0) rotate(0deg)", opacity: 1 },
+                    { transform: `translate(${Math.cos(a) * v}px, ${Math.sin(a) * v - 140}px) rotate(${Math.random() * 720}deg)`, opacity: 1, offset: .6 },
+                    { transform: `translate(${Math.cos(a) * v * 1.2}px, ${Math.sin(a) * v + 220}px) rotate(${Math.random() * 1080}deg)`, opacity: 0 }
+                ], { duration: 1400 + Math.random() * 600, easing: "cubic-bezier(.2,.7,.3,1)" }).onfinish = () => c.remove();
+            }
+        }
+
+        // Envoi : vérification + animation (index.html ouvre WhatsApp)
+        root.addEventListener("click", e => {
+            const btn = e.target.closest("#btn-whatsapp-send");
+            if (!btn) return;
+            const missing = [F.name, F.phone].filter(el => !el.value.trim());
+            if (missing.length) {
+                missing.forEach(el => { el.classList.remove("fm-missing"); void el.offsetWidth; el.classList.add("fm-missing"); });
+                phone.classList.remove("ph-shake"); void phone.offsetWidth; phone.classList.add("ph-shake");
+                return;
+            }
+            const r = btn.getBoundingClientRect();
+            confetti(r.left + r.width / 2, r.top + r.height / 2);
+            msg.parentElement.classList.add("sent");
+            msg.classList.remove("fly"); void msg.offsetWidth; msg.classList.add("fly");
+            if (!replied) {
+                replied = true;
+                setTimeout(() => { sub.textContent = "écrit…"; sub.classList.add("typing"); }, 700);
+                setTimeout(() => {
+                    const first = esc(F.name.value.trim().split(" ")[0]);
+                    const b = document.createElement("div");
+                    b.className = "bub in";
+                    b.innerHTML = `Merci ${first} ! 🙌 On regarde votre demande et on vous répond très vite.<span class="bub-time">${root.querySelector("[data-ph-clock]").textContent}</span>`;
+                    chat.appendChild(b);
+                    sub.textContent = "en ligne"; sub.classList.remove("typing");
+                }, 2000);
+            }
+        });
+        root.addEventListener("animationend", e => e.target.classList.remove("fm-missing", "ph-shake"));
+
+        syncTypes();
+        render();
+    }
+
+    /* ---------------------------------------------------------------
        DÉMARRAGE + SURVEILLANCE DES COMPOSANTS CHARGÉS PAR app.js
     ---------------------------------------------------------------- */
     function refresh() {
@@ -627,6 +891,8 @@
         document.querySelectorAll(".ring-stage").forEach(initRing);
         document.querySelectorAll("[data-process]").forEach(initProcess);
         document.querySelectorAll("[data-pk]").forEach(initPacks3D);
+        document.querySelectorAll("[data-catalogue]").forEach(initCatalogue);
+        document.querySelectorAll("[data-contact]").forEach(initContact);
     }
 
     let pending = false;
