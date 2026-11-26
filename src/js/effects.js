@@ -15,7 +15,8 @@
         "#about .group",
         "#process .cube-scene",
         "#process [data-step]",
-        "#packs .snap-center",
+        "#packs .pk-toggle",
+        "#packs .pk-nav",
         "#materiels-container > *",
         "#contact form > *",
         "#contact .space-y-3 > *"
@@ -35,7 +36,6 @@
        2. CARTES 3D + BOUTONS MAGNÉTIQUES + PROJECTEURS
     ---------------------------------------------------------------- */
     const TILT = [
-        { sel: "#packs .snap-center",       max: 9, lift: 8 },
         { sel: "#materiels-container > *",  max: 7, lift: 6 },
         { sel: "#about .group",             max: 12, lift: 3 }
     ];
@@ -407,6 +407,218 @@
         if (reduceMotion) { visible = true; go(0); draw(); visible = false; }
     }
 
+
+    /* ---------------------------------------------------------------
+       6. PACKS : CARROUSEL 3D + MODE ÉVÉNEMENT / MODE DJ
+    ---------------------------------------------------------------- */
+    function initPacks3D(root) {
+        if (root.dataset.ready) return;
+        root.dataset.ready = "1";
+
+        const section = root.closest("section");
+        const stage   = root.querySelector("[data-pk-stage]");
+        const track   = root.querySelector("[data-pk-track]");
+        const cards   = [...root.querySelectorAll("[data-pk-card]")];
+        const dotsBox = root.querySelector("[data-pk-dots]");
+        const modeBtns = [...root.querySelectorAll("[data-pk-toggle] button")];
+        const n = cards.length;
+        let mode = "event";
+        let active = Math.max(0, cards.findIndex(c => c.hasAttribute("data-event-pick")));
+        let visible = false, swiped = false;
+
+        dotsBox.innerHTML = cards.map((_, i) => `<button type="button" aria-label="Pack ${i + 1}"></button>`).join("");
+        const dots = [...dotsBox.children];
+
+        function layout() {
+            const mobile = innerWidth < 640;
+            const w = cards[0].offsetWidth;
+            const spacing = mobile ? w * 0.58 : Math.min(w * 0.86, stage.clientWidth * 0.23);
+            const angle = mode === "dj" ? 50 : 36;
+            cards.forEach((c, i) => {
+                const o = i - active, d = Math.abs(o);
+                const x = o * spacing;
+                const z = -d * (mobile ? 130 : 190);
+                const ry = o === 0 ? 0 : (o < 0 ? angle : -angle);
+                c.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${ry}deg)`;
+                c.style.zIndex = 10 - d;
+                c.style.opacity = d > 2 ? 0 : 1 - d * 0.12;
+                c.style.pointerEvents = d > 2 ? "none" : "";
+                c.classList.toggle("active", o === 0);
+                if (o !== 0) c.classList.remove("flipped");
+            });
+            dots.forEach((dt, i) => dt.classList.toggle("on", i === active));
+        }
+        function go(i) { active = (i + n) % n; layout(); }
+
+        cards.forEach((c, i) => c.addEventListener("click", () => { if (i !== active) go(i); }));
+        dots.forEach((dt, i) => dt.addEventListener("click", () => go(i)));
+        root.querySelector("[data-pk-prev]").addEventListener("click", () => go(active - 1));
+        root.querySelector("[data-pk-next]").addEventListener("click", () => go(active + 1));
+
+        root.querySelectorAll("[data-pk-flip]").forEach(btn => btn.addEventListener("click", (e) => {
+            const c = btn.closest("[data-pk-card]");
+            if (cards.indexOf(c) !== active) return;
+            e.stopPropagation();
+            c.classList.toggle("flipped");
+        }));
+
+        // Glisser pour changer de pack
+        let downX = null;
+        stage.addEventListener("pointerdown", e => { downX = e.clientX; });
+        stage.addEventListener("pointerup", e => {
+            if (downX === null) return;
+            const dx = e.clientX - downX;
+            downX = null;
+            if (Math.abs(dx) > 40) { swiped = true; go(active + (dx < 0 ? 1 : -1)); }
+        });
+        stage.addEventListener("click", e => {
+            if (swiped) { e.stopPropagation(); e.preventDefault(); swiped = false; }
+        }, true);
+
+        // Parallaxe souris
+        if (canHover) {
+            stage.addEventListener("pointermove", e => {
+                const r = stage.getBoundingClientRect();
+                track.style.setProperty("--ry", (((e.clientX - r.left) / r.width - 0.5) * 8).toFixed(2) + "deg");
+                track.style.setProperty("--rx", ((0.5 - (e.clientY - r.top) / r.height) * 6).toFixed(2) + "deg");
+            });
+            stage.addEventListener("mouseleave", () => {
+                track.style.removeProperty("--ry");
+                track.style.removeProperty("--rx");
+            });
+        }
+
+        // Flèches du clavier
+        document.addEventListener("keydown", e => {
+            if (!visible || /input|textarea|select/i.test(document.activeElement.tagName)) return;
+            if (e.key === "ArrowRight") go(active + 1);
+            if (e.key === "ArrowLeft") go(active - 1);
+        });
+
+        // Mode Événement / Mode DJ
+        function setMode(m) {
+            if (m === mode) return;
+            mode = m;
+            fx.target = m === "dj" ? 1 : 0;
+            section.classList.toggle("pk-dj", m === "dj");
+            modeBtns.forEach(b => b.classList.toggle("on", b.dataset.mode === m));
+            root.querySelectorAll("a[data-pack]").forEach(a => {
+                if (m === "dj") a.dataset.type = "Soirée Club & DJ Set"; else delete a.dataset.type;
+            });
+            const pick = cards.findIndex(c => c.hasAttribute(m === "dj" ? "data-dj-pick" : "data-event-pick"));
+            if (pick >= 0) active = pick;
+            layout();
+        }
+        modeBtns.forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
+
+        window.addEventListener("resize", layout);
+        layout();
+
+        /* ---------- Canvas : lumières dorées / lasers DJ ---------- */
+        const canvas = section.querySelector("[data-pk-fx]");
+        const ctx = canvas.getContext("2d");
+        const fx = { m: 0, target: 0 };
+        let W = 0, H = 0, t = 0;
+
+        function resize() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+            W = section.clientWidth; H = section.clientHeight;
+            canvas.width = W * dpr; canvas.height = H * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        const bokehSprite = (() => {
+            const c = document.createElement("canvas"); c.width = c.height = 64;
+            const x = c.getContext("2d"), g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+            g.addColorStop(0, "rgba(255,220,120,1)"); g.addColorStop(.45, "rgba(245,196,0,.45)"); g.addColorStop(1, "rgba(245,196,0,0)");
+            x.fillStyle = g; x.fillRect(0, 0, 64, 64); return c;
+        })();
+        const bokeh = Array.from({ length: 34 }, () => ({
+            x: Math.random(), y: Math.random(), r: 8 + Math.random() * 34,
+            vy: 0.00015 + Math.random() * 0.0004, a: 0.05 + Math.random() * 0.16, ph: Math.random() * 6.28
+        }));
+        const EQ = 56;
+        const eqSp = Array.from({ length: EQ }, () => 2 + Math.random() * 4);
+        const eqPh = Array.from({ length: EQ }, () => Math.random() * 6.28);
+        const BEAT = 60 / 128;
+
+        function draw() {
+            t += 0.016;
+            fx.m += (fx.target - fx.m) * 0.06;
+            const m = fx.m, ev = 1 - m;
+            ctx.clearRect(0, 0, W, H);
+            ctx.globalCompositeOperation = "lighter";
+
+            // ---- Mode Événement : bokeh doré + faisceaux chauds ----
+            if (ev > 0.02) {
+                bokeh.forEach(b => {
+                    b.y -= b.vy; if (b.y < -0.1) { b.y = 1.1; b.x = Math.random(); }
+                    const x = b.x * W + Math.sin(t * 0.4 + b.ph) * 20, y = b.y * H;
+                    ctx.globalAlpha = b.a * ev * (0.7 + 0.3 * Math.sin(t + b.ph));
+                    ctx.drawImage(bokehSprite, x - b.r, y - b.r, b.r * 2, b.r * 2);
+                });
+                ctx.globalAlpha = 1;
+                [0.25, 0.75].forEach((ox, k) => {
+                    const sway = Math.sin(t * 0.3 + k * 2) * 0.12;
+                    const g = ctx.createLinearGradient(0, 0, 0, H * 0.9);
+                    g.addColorStop(0, `rgba(255,214,102,${0.10 * ev})`);
+                    g.addColorStop(1, "rgba(255,214,102,0)");
+                    ctx.fillStyle = g;
+                    ctx.beginPath();
+                    ctx.moveTo(W * ox - 10, 0); ctx.lineTo(W * ox + 10, 0);
+                    ctx.lineTo(W * (ox + sway + 0.14), H * 0.9); ctx.lineTo(W * (ox + sway - 0.14), H * 0.9);
+                    ctx.fill();
+                });
+            }
+
+            // ---- Mode DJ : lasers + égaliseur + flash sur le temps ----
+            if (m > 0.02) {
+                const phase = (t % BEAT) / BEAT, flash = Math.exp(-phase * 5);
+                const origins = [[0.06, 0], [0.5, 0], [0.94, 0]];
+                let k = 0;
+                origins.forEach(([ox, oy], oi) => {
+                    for (let j = 0; j < 3; j++, k++) {
+                        const base = oi === 0 ? 0.35 : oi === 2 ? -0.35 : 0;
+                        const ang = Math.PI / 2 + base + Math.sin(t * (0.6 + j * 0.25) + k) * 0.55;
+                        const x0 = ox * W, y0 = oy * H, len = H * 1.5;
+                        const x1 = x0 + Math.cos(ang) * len, y1 = y0 + Math.sin(ang) * len;
+                        const hue = (t * 70 + k * 40) % 360;
+                        ctx.strokeStyle = `hsla(${hue},100%,60%,${0.10 * m})`; ctx.lineWidth = 9;
+                        ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+                        ctx.strokeStyle = `hsla(${hue},100%,70%,${(0.45 + 0.4 * flash) * m})`; ctx.lineWidth = 1.6;
+                        ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+                    }
+                });
+
+                const bw = W / EQ;
+                for (let i = 0; i < EQ; i++) {
+                    const h = (0.15 + 0.85 * Math.abs(Math.sin(t * eqSp[i] + eqPh[i]))) * (0.45 + 0.55 * flash) * H * 0.13;
+                    const hue = (280 + i * 2.5 + t * 30) % 360;
+                    ctx.fillStyle = `hsla(${hue},95%,60%,${0.45 * m})`;
+                    ctx.fillRect(i * bw + 2, H - h, bw - 4, h);
+                }
+
+                const g = ctx.createRadialGradient(W / 2, H * 0.35, 0, W / 2, H * 0.35, W * 0.6);
+                g.addColorStop(0, `rgba(217,70,239,${0.10 * flash * m})`);
+                g.addColorStop(1, "rgba(217,70,239,0)");
+                ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+            }
+            ctx.globalCompositeOperation = "source-over";
+        }
+
+        (function loop() {
+            if (visible && !reduceMotion) draw();
+            requestAnimationFrame(loop);
+        })();
+
+        new IntersectionObserver(([e]) => {
+            visible = e.isIntersecting;
+            if (visible) { resize(); layout(); if (reduceMotion) draw(); }
+        }, { threshold: 0.1 }).observe(section);
+    }
+
     /* ---------------------------------------------------------------
        DÉMARRAGE + SURVEILLANCE DES COMPOSANTS CHARGÉS PAR app.js
     ---------------------------------------------------------------- */
@@ -414,6 +626,7 @@
         if (!reduceMotion) applyStagger();
         document.querySelectorAll(".ring-stage").forEach(initRing);
         document.querySelectorAll("[data-process]").forEach(initProcess);
+        document.querySelectorAll("[data-pk]").forEach(initPacks3D);
     }
 
     let pending = false;

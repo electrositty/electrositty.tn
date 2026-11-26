@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <!-- Effets dynamiques & 3D -->
-    <link rel="stylesheet" href="src/css/effects.css?v=4">
+    <link rel="stylesheet" href="src/css/effects.css?v=7">
 
     <style>
         html { scroll-behavior: smooth; }
@@ -531,7 +531,7 @@
 
     <!-- ================= APPLICATION SCRIPTS ================= -->
     <script src="src/js/app.js"></script>
-    <script src="src/js/effects.js?v=4"></script>
+    <script src="src/js/effects.js?v=7"></script>
 
     <!-- ================= EFFETS & UX ================= -->
     <script>
@@ -655,10 +655,15 @@
             if (!btn) return;
             selectedPack = btn.dataset.pack;
 
+            const summary = btn.dataset.summary, type = btn.dataset.type;
             setTimeout(() => {
                 const form = document.getElementById("contact-form");
                 const details = document.getElementById("form-details");
-                if (details && !details.value.includes("Pack choisi")) {
+                const typeSel = document.getElementById("form-type");
+                if (type && typeSel) typeSel.value = type;
+                if (summary && details) {
+                    details.value = summary;
+                } else if (details && !details.value.includes("Pack choisi")) {
                     details.value = `Pack choisi : ${selectedPack}\n` + details.value;
                 } else if (details) {
                     details.value = details.value.replace(/Pack choisi : .*/, `Pack choisi : ${selectedPack}`);

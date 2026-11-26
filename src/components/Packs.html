@@ -1,226 +1,349 @@
-<section id="packs" class="bg-black py-12 md:py-20 lg:py-24 border-t border-zinc-900">
+<style>
+    /* ================= THÈME (change avec le mode) ================= */
+    #packs-3d {
+        --pk-a: #F5C400;
+        --pk-a-soft: rgba(245, 196, 0, .15);
+        --pk-glow: rgba(245, 196, 0, .35);
+        transition: background-color .8s;
+    }
+    #packs-3d.pk-dj {
+        --pk-a: #e879f9;
+        --pk-a-soft: rgba(232, 121, 249, .15);
+        --pk-glow: rgba(217, 70, 239, .5);
+    }
+    .pk-bg-dj {
+        position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .8s;
+        background:
+            radial-gradient(ellipse at 20% 0%, rgba(168, 85, 247, .25), transparent 55%),
+            radial-gradient(ellipse at 80% 0%, rgba(34, 211, 238, .18), transparent 55%),
+            radial-gradient(ellipse at 50% 100%, rgba(236, 72, 153, .18), transparent 60%),
+            #07030c;
+    }
+    .pk-dj .pk-bg-dj { opacity: 1; }
+    .pk-fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    /* ================= INTERRUPTEUR DE MODE ================= */
+    .pk-toggle {
+        position: relative; display: inline-grid; grid-template-columns: 1fr 1fr;
+        padding: 5px; border-radius: 999px;
+        background: rgba(24, 24, 27, .8); border: 1px solid rgba(255, 255, 255, .08);
+        backdrop-filter: blur(10px);
+    }
+    .pk-knob {
+        position: absolute; top: 5px; bottom: 5px; left: 5px; width: calc(50% - 5px);
+        border-radius: 999px; background: var(--pk-a-soft); border: 1px solid var(--pk-a);
+        box-shadow: 0 0 25px var(--pk-glow);
+        transition: transform .5s cubic-bezier(.65, 0, .25, 1), background .5s, border-color .5s, box-shadow .5s;
+    }
+    .pk-dj .pk-knob { transform: translateX(100%); }
+    .pk-toggle button {
+        position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+        padding: 10px 18px; border-radius: 999px; font-size: 13px; font-weight: 700; color: #a1a1aa;
+        transition: color .4s; white-space: nowrap;
+    }
+    .pk-toggle button.on { color: var(--pk-a); }
+    .pk-vinyl { display: inline-block; }
+    .pk-dj .pk-vinyl { animation: vinyl 1.2s linear infinite; }
+    @keyframes vinyl { to { transform: rotate(360deg); } }
 
-        <!-- Header -->
-        <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-            <span class="inline-flex rounded-full border border-[#F5C400]/30 bg-[#F5C400]/10 px-4 py-1.5 text-xs font-semibold text-[#F5C400] uppercase tracking-wider">
+    .pk-mode-text { transition: opacity .4s; }
+    .pk-mode-text[data-for="dj"] { display: none; }
+    .pk-dj .pk-mode-text[data-for="dj"] { display: inline; }
+    .pk-dj .pk-mode-text[data-for="event"] { display: none; }
+
+    /* ================= SCÈNE 3D ================= */
+    .pk-stage { position: relative; height: 520px; perspective: 1400px; touch-action: pan-y; user-select: none; }
+    .pk-track {
+        position: absolute; inset: 0; transform-style: preserve-3d;
+        transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+        transition: transform .6s ease-out;
+    }
+    .pk-card {
+        --w: 300px; --h: 450px;
+        position: absolute; left: 50%; top: 50%;
+        width: var(--w); height: var(--h);
+        margin: calc(var(--h) / -2) 0 0 calc(var(--w) / -2);
+        transform-style: preserve-3d;
+        transition: transform .85s cubic-bezier(.2, .8, .2, 1), opacity .6s, filter .6s;
+        cursor: pointer;
+    }
+    .pk-card:not(.active) { filter: brightness(.5) saturate(.6); }
+    .pk-card:not(.active):hover { filter: brightness(.75) saturate(.8); }
+    .pk-inner {
+        position: relative; width: 100%; height: 100%;
+        transform-style: preserve-3d;
+        transition: transform .9s cubic-bezier(.2, .8, .2, 1);
+    }
+    .pk-card.flipped .pk-inner { transform: rotateY(180deg); }
+
+    .pk-face {
+        position: absolute; inset: 0; display: flex; flex-direction: column;
+        border-radius: 22px; overflow: hidden;
+        background: linear-gradient(165deg, #1d1d21 0%, #0b0b0c 100%);
+        border: 1px solid rgba(255, 255, 255, .08);
+        backface-visibility: hidden; -webkit-backface-visibility: hidden;
+        transition: border-color .6s, box-shadow .6s;
+    }
+    .pk-back { transform: rotateY(180deg); padding: 26px 24px; }
+    .pk-card.active .pk-face {
+        border-color: var(--pk-a);
+        box-shadow: 0 0 0 1px var(--pk-a-soft), 0 35px 80px -25px var(--pk-glow);
+    }
+    .pk-dj .pk-card.active .pk-face { animation: beatGlow .469s ease-out infinite; }  /* 128 BPM */
+    @keyframes beatGlow {
+        0%   { box-shadow: 0 0 0 2px var(--pk-a), 0 0 60px 5px var(--pk-glow); }
+        100% { box-shadow: 0 0 0 1px var(--pk-a-soft), 0 35px 80px -25px var(--pk-glow); }
+    }
+
+    .pk-img { position: relative; height: 50%; flex: none; overflow: hidden; }
+    .pk-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease; }
+    .pk-card.active .pk-img img { transform: scale(1.06); }
+    .pk-img::after {
+        content: ""; position: absolute; inset: 0;
+        background: linear-gradient(to top, #141416 2%, transparent 55%, rgba(0, 0, 0, .35));
+    }
+    .pk-num {
+        position: absolute; left: 20px; bottom: -6px; z-index: 2;
+        font-size: 74px; font-weight: 900; line-height: 1;
+        color: transparent; -webkit-text-stroke: 1.5px var(--pk-a);
+        opacity: .8; transition: -webkit-text-stroke-color .6s;
+    }
+    .pk-badge {
+        position: absolute; top: 14px; right: 14px; z-index: 3;
+        padding: 4px 11px; border-radius: 999px; font-size: 10px; font-weight: 800;
+        text-transform: uppercase; letter-spacing: .06em;
+        color: var(--pk-a); background: rgba(0, 0, 0, .7); border: 1px solid var(--pk-a);
+        backdrop-filter: blur(6px);
+    }
+    .pk-body { display: flex; flex: 1; flex-direction: column; padding: 18px 22px 22px; }
+    .pk-title { font-size: 24px; font-weight: 900; color: #fff; }
+    .pk-sub { margin-top: 4px; font-size: 12.5px; line-height: 1.5; color: #a1a1aa; }
+    .pk-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .pk-tags span {
+        padding: 3px 9px; border-radius: 999px; font-size: 10px; color: #d4d4d8;
+        background: rgba(39, 39, 42, .8); border: 1px solid rgba(255, 255, 255, .06);
+    }
+    .pk-btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        width: 100%; margin-top: auto; padding: 11px; border-radius: 14px;
+        font-size: 12px; font-weight: 800; color: var(--pk-a);
+        background: var(--pk-a-soft); border: 1px solid var(--pk-a);
+        backdrop-filter: blur(8px);
+        transition: background .3s, color .5s, border-color .5s;
+    }
+    .pk-btn:hover { background: color-mix(in srgb, var(--pk-a) 30%, transparent); }
+    .pk-ghost { margin-top: 10px; width: 100%; font-size: 11px; color: #71717a; transition: color .3s; }
+    .pk-ghost:hover { color: #fff; }
+
+    .pk-back h3 { font-size: 22px; font-weight: 900; color: #fff; }
+    .pk-back .pk-label {
+        margin-top: 2px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .14em; color: var(--pk-a);
+    }
+    .pk-list { margin: 20px 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .pk-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #e4e4e7; }
+    .pk-list i {
+        flex: none; display: flex; align-items: center; justify-content: center;
+        width: 24px; height: 24px; border-radius: 8px; font-size: 11px;
+        color: var(--pk-a); background: var(--pk-a-soft); border: 1px solid color-mix(in srgb, var(--pk-a) 40%, transparent);
+    }
+
+    /* Bordure tournante du pack populaire (sur les 2 faces) */
+    .pk-pop::before {
+        content: ""; position: absolute; inset: 0; z-index: 4; padding: 2px; border-radius: inherit; pointer-events: none;
+        background: conic-gradient(from var(--angle), var(--pk-a), transparent 25%, #fff 50%, transparent 75%, var(--pk-a));
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor; mask-composite: exclude;
+        animation: spinBorder 4s linear infinite;
+    }
+
+    /* Navigation */
+    .pk-nav { display: flex; align-items: center; justify-content: center; gap: 16px; }
+    .pk-arrow {
+        display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%;
+        color: #fff; background: rgba(24, 24, 27, .8); border: 1px solid rgba(255, 255, 255, .1);
+        transition: border-color .3s, color .3s, transform .2s;
+    }
+    .pk-arrow:hover { border-color: var(--pk-a); color: var(--pk-a); }
+    .pk-arrow:active { transform: scale(.92); }
+    .pk-dots { display: flex; gap: 8px; }
+    .pk-dots button { width: 8px; height: 8px; border-radius: 999px; background: #3f3f46; transition: width .4s, background .4s; }
+    .pk-dots button.on { width: 26px; background: var(--pk-a); box-shadow: 0 0 12px var(--pk-glow); }
+
+    @media (max-width: 640px) {
+        .pk-stage { height: 450px; }
+        .pk-card { --w: 255px; --h: 405px; }
+        .pk-title { font-size: 21px; }
+        .pk-num { font-size: 60px; }
+        .pk-toggle button { padding: 9px 13px; font-size: 12px; }
+        .pk-back { padding: 20px 18px; }
+        .pk-back h3 { font-size: 19px; }
+        .pk-list { margin: 14px 0; gap: 9px; padding: 0; }
+        .pk-list li { font-size: 12px; line-height: 1.35; }
+        .pk-list i { width: 22px; height: 22px; font-size: 10px; }
+        .pk-ghost { margin-top: 6px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .pk-card, .pk-inner, .pk-track { transition-duration: .01ms !important; }
+        .pk-dj .pk-card.active .pk-face, .pk-dj .pk-vinyl, .pk-pop::before { animation: none; }
+    }
+</style>
+
+<section id="packs-3d" class="relative overflow-hidden border-t border-zinc-900 bg-black py-12 md:py-20 lg:py-24">
+
+    <canvas class="pk-fx" data-pk-fx></canvas>
+
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" data-pk>
+
+        <!-- En-tête -->
+        <div class="mx-auto mb-6 max-w-2xl text-center sm:mb-8">
+            <span class="inline-flex rounded-full border border-[#F5C400]/30 bg-[#F5C400]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[#F5C400]">
                 Nos Packs Événements
             </span>
-
-            <h2 class="mt-3 sm:mt-5 text-2xl sm:text-4xl font-black text-white">
+            <h2 class="mt-3 text-2xl font-black text-white sm:mt-5 sm:text-4xl">
                 Des solutions complètes, <span class="text-[#F5C400]">sans mauvaise surprise</span>
             </h2>
-
-            <p class="mt-2.5 sm:mt-4 text-xs sm:text-base text-zinc-400">
-                Du simple renfort acoustique jusqu'à la production scénique clé en main.
-            </p>
         </div>
 
-        <!-- Slider Mobile (Swipe) / Grille Desktop 4 colonnes -->
-        <div class="flex gap-4 overflow-x-auto pb-4 pt-2 snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:pb-0">
+        <p class="mx-auto -mt-2 max-w-xl text-center text-xs text-zinc-400 sm:text-sm">
+            Élégance et sérénité pour vos mariages, conférences et galas.
+        </p>
 
-            <!-- PACK 1 : SONO PRO -->
-            <div class="min-w-[270px] sm:min-w-[300px] lg:min-w-0 flex-1 flex flex-col justify-between snap-center rounded-2xl border border-zinc-800 bg-zinc-900/60 overflow-hidden backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-[#F5C400]/60 hover:shadow-[0_20px_45px_-15px_rgba(245,196,0,.25)] group">
-                <div>
-                    <!-- Image Pack -->
-                    <div class="relative h-40 w-full overflow-hidden">
-                        <img src="src/images/gallery/dj.png" alt="Pack Sono Pro" loading="lazy" class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-black/40"></div>
-                        <span class="absolute top-3 left-3 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-zinc-300 backdrop-blur-sm">
-                            Pack 01
-                        </span>
-                    </div>
+        <!-- ============ CARROUSEL 3D ============ -->
+        <div class="pk-stage mt-4" data-pk-stage>
+            <div class="pk-track" data-pk-track>
 
-                    <!-- Contenu -->
-                    <div class="p-5">
-                        <h3 class="text-lg font-bold text-white">Sono Pro</h3>
-                        <p class="mt-1 text-xs text-zinc-400">Conférences, réceptions & musique d'ambiance.</p>
-
-                        <div class="my-4 h-px bg-zinc-800"></div>
-
-                        <ul class="space-y-2 text-xs text-zinc-300">
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                2 à 4 Enceintes actives RCF/FBT
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Micros sans fil HF (Shure)
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Table de mixage numérique + Bluetooth
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Câblage & pieds ajustables
-                            </li>
-                        </ul>
+                <!-- PACK 01 -->
+                <div class="pk-card" data-pk-card>
+                    <div class="pk-inner">
+                        <div class="pk-face pk-front">
+                            <div class="pk-img">
+                                <img src="src/images/gallery/dj.png" alt="Pack Sono Pro" loading="lazy" draggable="false">
+                                <span class="pk-num">01</span>
+                            </div>
+                            <div class="pk-body">
+                                <h3 class="pk-title">Sono Pro</h3>
+                                <p class="pk-sub">Conférences, réceptions & musique d'ambiance.</p>
+                                <div class="pk-tags"><span>Conférences</span><span>Réceptions</span><span>Diplômes</span></div>
+                                <button type="button" class="pk-btn" data-pk-flip>Voir le contenu <i class="fa-solid fa-rotate"></i></button>
+                            </div>
+                        </div>
+                        <div class="pk-face pk-back">
+                            <h3>Sono Pro</h3>
+                            <p class="pk-label">Ce qui est inclus</p>
+                            <ul class="pk-list">
+                                <li><i class="fa-solid fa-volume-high"></i>2 à 4 enceintes actives RCF/FBT</li>
+                                <li><i class="fa-solid fa-microphone"></i>Micros sans fil HF (Shure)</li>
+                                <li><i class="fa-solid fa-sliders"></i>Table de mixage numérique + Bluetooth</li>
+                                <li><i class="fa-solid fa-plug"></i>Câblage & pieds ajustables</li>
+                            </ul>
+                            <a href="#contact" data-pack="Sono Pro" class="pk-btn">Demander ce pack <i class="fa-solid fa-arrow-right"></i></a>
+                            <button type="button" class="pk-ghost" data-pk-flip><i class="fa-solid fa-arrow-rotate-left"></i> Retour</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="p-5 pt-0">
-                    <a href="#contact" data-pack="Sono Pro" class="block w-full rounded-xl border border-zinc-700 bg-zinc-800/80 py-2.5 text-center text-xs font-semibold text-white transition hover:bg-zinc-700">
-                        Demander ce pack <i class="fa-solid fa-arrow-right ml-1 text-[10px] transition group-hover:translate-x-1"></i>
-                    </a>
+                <!-- PACK 02 -->
+                <div class="pk-card" data-pk-card>
+                    <div class="pk-inner">
+                        <div class="pk-face pk-front">
+                            <div class="pk-img">
+                                <img src="src/images/gallery/eclairage.png" alt="Pack Light Show" loading="lazy" draggable="false">
+                                <span class="pk-num">02</span>
+                            </div>
+                            <div class="pk-body">
+                                <h3 class="pk-title">Light Show</h3>
+                                <p class="pk-sub">Mise en lumière architecturale et fête de nuit.</p>
+                                <div class="pk-tags"><span>Soirées</span><span>Fêtes de nuit</span><span>Ambiance</span></div>
+                                <button type="button" class="pk-btn" data-pk-flip>Voir le contenu <i class="fa-solid fa-rotate"></i></button>
+                            </div>
+                        </div>
+                        <div class="pk-face pk-back">
+                            <h3>Light Show</h3>
+                            <p class="pk-label">Ce qui est inclus</p>
+                            <ul class="pk-list">
+                                <li><i class="fa-solid fa-lightbulb"></i>Projecteurs PAR LED RGBW (ambiance)</li>
+                                <li><i class="fa-solid fa-robot"></i>Lyres Beam/Spot robotisées</li>
+                                <li><i class="fa-solid fa-smog"></i>Machine à brouillard / étincelles</li>
+                                <li><i class="fa-solid fa-gamepad"></i>Pupitre DMX synchronisé</li>
+                            </ul>
+                            <a href="#contact" data-pack="Light Show" class="pk-btn">Demander ce pack <i class="fa-solid fa-arrow-right"></i></a>
+                            <button type="button" class="pk-ghost" data-pk-flip><i class="fa-solid fa-arrow-rotate-left"></i> Retour</button>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- PACK 03 (Populaire) -->
+                <div class="pk-card" data-pk-card data-event-pick>
+                    <div class="pk-inner">
+                        <div class="pk-face pk-front pk-pop">
+                            <div class="pk-img">
+                                <img src="src/images/gallery/mariage1.png" alt="Pack Sono et Lumière" loading="lazy" draggable="false">
+                                <span class="pk-badge"><i class="fa-solid fa-fire"></i> Populaire</span>
+                                <span class="pk-num">03</span>
+                            </div>
+                            <div class="pk-body">
+                                <h3 class="pk-title">Sono & Light</h3>
+                                <p class="pk-sub">Mariages, soirées privées, DJ sets & galas.</p>
+                                <div class="pk-tags"><span>Mariages</span><span>Soirées privées</span><span>DJ sets</span></div>
+                                <button type="button" class="pk-btn" data-pk-flip>Voir le contenu <i class="fa-solid fa-rotate"></i></button>
+                            </div>
+                        </div>
+                        <div class="pk-face pk-back pk-pop">
+                            <h3>Sono & Light</h3>
+                            <p class="pk-label">Ce qui est inclus</p>
+                            <ul class="pk-list">
+                                <li><i class="fa-solid fa-volume-high"></i>Système son 3000 W avec caissons</li>
+                                <li><i class="fa-solid fa-lightbulb"></i>Kit 8 projecteurs + 4 lyres asservies</li>
+                                <li><i class="fa-solid fa-microphone"></i>Micros HF pro + effets visuels & fumée</li>
+                                <li><i class="fa-solid fa-screwdriver-wrench"></i>Installation & régie complète</li>
+                            </ul>
+                            <a href="#contact" data-pack="Sono & Light" class="pk-btn">Choisir ce pack <i class="fa-solid fa-arrow-right"></i></a>
+                            <button type="button" class="pk-ghost" data-pk-flip><i class="fa-solid fa-arrow-rotate-left"></i> Retour</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PACK 04 -->
+                <div class="pk-card" data-pk-card>
+                    <div class="pk-inner">
+                        <div class="pk-face pk-front">
+                            <div class="pk-img">
+                                <img src="src/images/gallery/ecran.png" alt="Pack Signature 360" loading="lazy" draggable="false">
+                                <span class="pk-num">04</span>
+                            </div>
+                            <div class="pk-body">
+                                <h3 class="pk-title">Signature 360°</h3>
+                                <p class="pk-sub">Grands concerts, festivals & séminaires corporate.</p>
+                                <div class="pk-tags"><span>Concerts</span><span>Festivals</span><span>Corporate</span></div>
+                                <button type="button" class="pk-btn" data-pk-flip>Voir le contenu <i class="fa-solid fa-rotate"></i></button>
+                            </div>
+                        </div>
+                        <div class="pk-face pk-back">
+                            <h3>Signature 360°</h3>
+                            <p class="pk-label">Ce qui est inclus</p>
+                            <ul class="pk-list">
+                                <li><i class="fa-solid fa-tower-broadcast"></i>Sonorisation line-array grande portée</li>
+                                <li><i class="fa-solid fa-tv"></i>Écrans géants LED indoor / outdoor</li>
+                                <li><i class="fa-solid fa-archway"></i>Ponts & structures aluminium scéniques</li>
+                                <li><i class="fa-solid fa-user-gear"></i>Ingénieurs son / lumière dédiés</li>
+                            </ul>
+                            <a href="#contact" data-pack="Signature 360°" class="pk-btn">Demander ce pack <i class="fa-solid fa-arrow-right"></i></a>
+                            <button type="button" class="pk-ghost" data-pk-flip><i class="fa-solid fa-arrow-rotate-left"></i> Retour</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-
-            <!-- PACK 2 : LIGHT SHOW -->
-            <div class="min-w-[270px] sm:min-w-[300px] lg:min-w-0 flex-1 flex flex-col justify-between snap-center rounded-2xl border border-zinc-800 bg-zinc-900/60 overflow-hidden backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-[#F5C400]/60 hover:shadow-[0_20px_45px_-15px_rgba(245,196,0,.25)] group">
-                <div>
-                    <!-- Image Pack -->
-                    <div class="relative h-40 w-full overflow-hidden">
-                        <img src="src/images/gallery/eclairage.png" alt="Pack Light Show" loading="lazy" class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-black/40"></div>
-                        <span class="absolute top-3 left-3 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-zinc-300 backdrop-blur-sm">
-                            Pack 02
-                        </span>
-                    </div>
-
-                    <!-- Contenu -->
-                    <div class="p-5">
-                        <h3 class="text-lg font-bold text-white">Light Show</h3>
-                        <p class="mt-1 text-xs text-zinc-400">Mise en lumière architecturale et fête de nuit.</p>
-
-                        <div class="my-4 h-px bg-zinc-800"></div>
-
-                        <ul class="space-y-2 text-xs text-zinc-300">
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Projecteurs PAR LED RGBW (ambiance)
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Lyres Beam/Spot robotisées
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Machine à brouillard / étincelles
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Pupitre DMX synchronisé
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="p-5 pt-0">
-                    <a href="#contact" data-pack="Light Show" class="block w-full rounded-xl border border-zinc-700 bg-zinc-800/80 py-2.5 text-center text-xs font-semibold text-white transition hover:bg-zinc-700">
-                        Demander ce pack <i class="fa-solid fa-arrow-right ml-1 text-[10px] transition group-hover:translate-x-1"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- PACK 3 : SONO & LIGHT (Populaire) -->
-            <div class="relative min-w-[270px] sm:min-w-[300px] lg:min-w-0 flex-1 flex flex-col justify-between snap-center pack-popular rounded-2xl border-2 border-[#F5C400]/20 bg-zinc-900/90 overflow-hidden shadow-[0_0_45px_-10px_rgba(245,196,0,.45)] transition-all duration-300 hover:-translate-y-1.5 lg:scale-[1.03] group">
-                <!-- Badge Populaire -->
-                <span class="absolute top-3 right-3 z-10 rounded-full bg-[#F5C400] px-3 py-0.5 text-[10px] font-black uppercase tracking-wider text-black shadow-md">
-                    <i class="fa-solid fa-fire mr-0.5"></i> Populaire
-                </span>
-
-                <div>
-                    <!-- Image Pack -->
-                    <div class="relative h-40 w-full overflow-hidden">
-                        <img src="src/images/gallery/mariage1.png" alt="Pack Sono et Lumière" loading="lazy" class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-black/40"></div>
-                        <span class="absolute top-3 left-3 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#F5C400] backdrop-blur-sm">
-                            Pack 03
-                        </span>
-                    </div>
-
-                    <!-- Contenu -->
-                    <div class="p-5">
-                        <h3 class="text-lg font-bold text-white">Sono & Light</h3>
-                        <p class="mt-1 text-xs text-zinc-400">Mariages, soirées privées, DJ sets & galas.</p>
-
-                        <div class="my-4 h-px bg-zinc-800"></div>
-
-                        <ul class="space-y-2 text-xs text-zinc-300">
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Système Son 3000W avec Caissons
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Kit 8 Projecteurs + 4 Lyres asservies
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Micros HF pro + Effets visuels & fumée
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Installation & régie complète
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="p-5 pt-0">
-                    <a href="#contact" data-pack="Sono & Light" class="block w-full rounded-xl border border-[#F5C400]/40 bg-[#F5C400]/15 text-[#F5C400] backdrop-blur-md transition hover:bg-[#F5C400]/30 hover:border-[#F5C400]/70 py-2.5 text-center text-xs font-black">
-                        Choisir ce pack
-                    </a>
-                </div>
-            </div>
-
-            <!-- PACK 4 : SIGNATURE 360° -->
-            <div class="min-w-[270px] sm:min-w-[300px] lg:min-w-0 flex-1 flex flex-col justify-between snap-center rounded-2xl border border-zinc-800 bg-zinc-900/60 overflow-hidden backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-[#F5C400]/60 hover:shadow-[0_20px_45px_-15px_rgba(245,196,0,.25)] group">
-                <div>
-                    <!-- Image Pack -->
-                    <div class="relative h-40 w-full overflow-hidden">
-                        <img src="src/images/gallery/ecran.png" alt="Pack Signature 360" loading="lazy" class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-black/40"></div>
-                        <span class="absolute top-3 left-3 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-zinc-300 backdrop-blur-sm">
-                            Pack 04
-                        </span>
-                    </div>
-
-                    <!-- Contenu -->
-                    <div class="p-5">
-                        <h3 class="text-lg font-bold text-white">Signature 360°</h3>
-                        <p class="mt-1 text-xs text-zinc-400">Grands concerts, festivals & séminaires corporate.</p>
-
-                        <div class="my-4 h-px bg-zinc-800"></div>
-
-                        <ul class="space-y-2 text-xs text-zinc-300">
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Sonorisation Line-Array grande portée
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Écrans géants LED Indoor / Outdoor
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Ponts & structures aluminium scéniques
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-1.5 w-1.5 rounded-full bg-[#F5C400]"></span>
-                                Ingénieurs son/lumière dédiés
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="p-5 pt-0">
-                    <a href="#contact" data-pack="Signature 360°" class="block w-full rounded-xl border border-zinc-700 bg-zinc-800/80 py-2.5 text-center text-xs font-semibold text-white transition hover:bg-zinc-700">
-                        Demander ce pack <i class="fa-solid fa-arrow-right ml-1 text-[10px] transition group-hover:translate-x-1"></i>
-                    </a>
-                </div>
-            </div>
-
         </div>
 
-        <!-- Indicateur mobile swipe -->
-        <div class="mt-3 flex items-center justify-center gap-1.5 lg:hidden text-zinc-500 text-[11px]">
-            <span>Glissez pour voir tous les packs</span>
-            <span class="inline-block animate-pulse text-[#F5C400]">→</span>
+        <!-- Navigation -->
+        <div class="pk-nav">
+            <button type="button" class="pk-arrow" data-pk-prev aria-label="Pack précédent"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="pk-dots" data-pk-dots></div>
+            <button type="button" class="pk-arrow" data-pk-next aria-label="Pack suivant"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
-
+        <p class="mt-3 text-center text-[11px] text-zinc-500">
+            <i class="fa-solid fa-hand-pointer mr-1"></i> Glissez, cliquez sur un pack, puis « Voir le contenu » pour le retourner
+        </p>
     </div>
-
 </section>
