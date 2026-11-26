@@ -1,189 +1,303 @@
 <style>
-  .process-line { transform: scaleX(0); transition: transform 1.6s cubic-bezier(.2,.7,.2,1) .3s; }
-  .is-visible .process-line { transform: scaleX(1); }
+    /* ================= SCÈNE 3D ================= */
+    .cube-scene {
+        --s: 250px;
+        position: relative;
+        height: 460px;
+        perspective: 1200px;
+        touch-action: pan-y;
+        user-select: none;
+        cursor: grab;
+    }
+    .cube-scene canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+    .cube-wrap {
+        position: absolute;
+        left: 50%;
+        top: 44%;
+        width: var(--s);
+        height: var(--s);
+        margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+        transform-style: preserve-3d;
+        transform: rotateX(var(--tx, -14deg)) rotateY(var(--ty, 24deg));
+        transition: transform .5s ease-out;
+        animation: cubeFloat 5s ease-in-out infinite;
+    }
+    @keyframes cubeFloat { 50% { translate: 0 -14px; } }
+
+    .cube {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 1s cubic-bezier(.65, 0, .25, 1);
+    }
+    .cube-face {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 22px;
+        border-radius: 12px;
+        background:
+            radial-gradient(circle at 85% 10%, rgba(245, 196, 0, .14), transparent 45%),
+            linear-gradient(150deg, rgba(32, 32, 36, .97), rgba(8, 8, 9, .98));
+        border: 1px solid rgba(245, 196, 0, .22);
+        box-shadow: inset 0 0 40px rgba(245, 196, 0, .05);
+        backface-visibility: hidden;
+        transition: border-color .6s, box-shadow .6s;
+    }
+    .cube-face.on {
+        border-color: rgba(245, 196, 0, .75);
+        box-shadow: inset 0 0 55px rgba(245, 196, 0, .16), 0 0 45px rgba(245, 196, 0, .22);
+    }
+    .cube-face:nth-child(1) { transform: rotateY(0deg)   translateZ(calc(var(--s) / 2)); }
+    .cube-face:nth-child(2) { transform: rotateY(90deg)  translateZ(calc(var(--s) / 2)); }
+    .cube-face:nth-child(3) { transform: rotateY(180deg) translateZ(calc(var(--s) / 2)); }
+    .cube-face:nth-child(4) { transform: rotateY(-90deg) translateZ(calc(var(--s) / 2)); }
+    .cube-face:nth-child(5) { transform: rotateX(90deg)  translateZ(calc(var(--s) / 2)); }
+    .cube-face:nth-child(6) { transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); }
+
+    .face-num {
+        font-size: 64px;
+        font-weight: 900;
+        line-height: .9;
+        color: transparent;
+        -webkit-text-stroke: 1.5px rgba(245, 196, 0, .55);
+    }
+    .face-icon {
+        position: absolute;
+        top: 22px;
+        right: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        font-size: 20px;
+        color: #F5C400;
+        background: rgba(245, 196, 0, .12);
+        border: 1px solid rgba(245, 196, 0, .35);
+    }
+    .face-title { font-size: 21px; font-weight: 800; color: #fff; }
+    .face-desc  { margin-top: 4px; font-size: 12px; line-height: 1.5; color: #a1a1aa; }
+    .face-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 10px;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        color: #F5C400;
+        background: rgba(245, 196, 0, .1);
+        border: 1px solid rgba(245, 196, 0, .3);
+    }
+
+    /* ================= LISTE DES ÉTAPES ================= */
+    .step-btn {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        width: 100%;
+        padding: 12px 14px;
+        overflow: hidden;
+        text-align: left;
+        border-radius: 16px;
+        background: rgba(24, 24, 27, .55);
+        border: 1px solid rgba(255, 255, 255, .06);
+        transition: background .2s, border-color .2s, transform .25s;
+    }
+    .step-btn:hover { border-color: rgba(245, 196, 0, .3); transform: translateX(4px); }
+    .step-btn.active {
+        background: rgba(245, 196, 0, .1);
+        border-color: rgba(245, 196, 0, .45);
+        transform: translateX(8px);
+    }
+    .step-dot {
+        flex: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        font-size: 15px;
+        color: #a1a1aa;
+        background: #18181b;
+        border: 1px solid #27272a;
+        transition: all .4s;
+    }
+    .step-btn.active .step-dot {
+        color: #F5C400;
+        background: rgba(245, 196, 0, .15);
+        border-color: rgba(245, 196, 0, .5);
+        box-shadow: 0 0 20px rgba(245, 196, 0, .25);
+    }
+    .step-bar {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 2px;
+        width: 100%;
+        background: transparent;
+    }
+    .step-bar i {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, #F5C400, #FFE680);
+        box-shadow: 0 0 10px rgba(245, 196, 0, .7);
+    }
+    .step-btn.active.running .step-bar i { animation: stepFill var(--dur, 4.5s) linear forwards; }
+    .steps-paused .step-btn .step-bar i { animation-play-state: paused !important; }
+    @keyframes stepFill { to { width: 100%; } }
+
+    @media (max-width: 640px) {
+        .cube-scene { --s: 214px; height: 370px; }
+        .cube-face { padding: 15px; }
+        .face-num { font-size: 40px; }
+        .face-chip { margin-top: 7px; }
+        .face-icon { top: 16px; right: 16px; width: 38px; height: 38px; font-size: 16px; }
+        .face-title { font-size: 17px; }
+        .face-desc { font-size: 10.5px; line-height: 1.45; }
+        .step-btn { padding: 9px 10px; gap: 10px; }
+        .step-btn.active, .step-btn:hover { transform: none; }
+        .step-dot { width: 34px; height: 34px; font-size: 13px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .cube-wrap { animation: none; }
+        .cube { transition-duration: .01ms; }
+    }
 </style>
-<section id="process" class="bg-zinc-950 py-12 md:py-20 lg:py-24 overflow-hidden">
 
-    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+<section class="relative overflow-hidden bg-zinc-950 py-12 md:py-20 lg:py-24">
 
-        <!-- Header -->
+    <!-- Halo de fond -->
+    <div class="pointer-events-none absolute left-1/4 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#F5C400]/5 blur-3xl"></div>
+
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
+
+        <!-- En-tête -->
         <div class="mx-auto max-w-3xl text-center">
-
-            <span class="inline-flex rounded-full border border-yellow-500/20 bg-yellow-500/10 px-4 py-1.5 text-xs sm:text-sm font-semibold text-[#F5C400]">
+            <span class="inline-flex rounded-full border border-yellow-500/20 bg-yellow-500/10 px-4 py-1.5 text-xs font-semibold text-[#F5C400] sm:text-sm">
                 COMMENT ÇA MARCHE
             </span>
-
-            <h2 class="mt-3 sm:mt-6 text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-white">
+            <h2 class="mt-3 text-2xl font-black leading-tight text-white sm:mt-6 sm:text-4xl md:text-5xl lg:text-6xl">
                 Votre réservation en <span class="text-[#F5C400]">6 étapes</span>
             </h2>
-
-            <p class="mx-auto mt-3 sm:mt-6 max-w-2xl text-xs sm:text-base md:text-lg leading-relaxed text-zinc-400">
+            <p class="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-zinc-400 sm:mt-6 sm:text-base md:text-lg">
                 Un parcours simple, rapide et sécurisé pour réserver votre matériel événementiel partout en Tunisie.
             </p>
-
         </div>
 
-        <!-- Timeline Desktop (Inchangée) -->
-        <div class="relative mt-20 hidden lg:block">
+        <div data-process class="mt-6 grid items-center gap-6 sm:mt-10 lg:grid-cols-[1.15fr_1fr] lg:gap-12">
 
-            <div class="absolute left-0 top-8 h-[3px] w-full rounded-full bg-zinc-800"></div>
-            <div class="process-line absolute left-0 top-8 h-[3px] w-full origin-left rounded-full bg-gradient-to-r from-[#F5C400] via-[#FFD84D] to-[#F5C400] shadow-[0_0_14px_rgba(245,196,0,.6)]"></div>
+            <!-- ============ CUBE 3D ============ -->
+            <div class="cube-scene" data-cube-scene>
+                <canvas data-process-canvas></canvas>
 
-            <div class="grid grid-cols-6 gap-6">
+                <div class="cube-wrap">
+                    <div class="cube" data-cube>
 
-                <!-- STEP 1 -->
-                <div class="group relative text-center">
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20 transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,196,0,.6)]">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </div>
-                    <h3 class="mt-6 text-lg font-bold text-white">Contact</h3>
-                    <p class="mt-2 text-sm text-zinc-500 transition group-hover:text-[#F5C400]">≈ 2 min</p>
-                </div>
+                        <div class="cube-face">
+                            <span class="face-num">01</span>
+                            <span class="face-icon"><i class="fa-brands fa-whatsapp"></i></span>
+                            <div>
+                                <h3 class="face-title">Contact</h3>
+                                <p class="face-desc">Écrivez-nous sur WhatsApp ou via le formulaire et parlez-nous de votre événement.</p>
+                                <span class="face-chip"><i class="fa-regular fa-clock"></i> ≈ 2 min</span>
+                            </div>
+                        </div>
 
-                <!-- STEP 2 -->
-                <div class="group relative text-center">
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20 transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,196,0,.6)]">
-                        <i class="fa-solid fa-clipboard-list"></i>
-                    </div>
-                    <h3 class="mt-6 text-lg font-bold text-white">Analyse</h3>
-                    <p class="mt-2 text-sm text-zinc-500 transition group-hover:text-[#F5C400]">≈ 10 min</p>
-                </div>
+                        <div class="cube-face">
+                            <span class="face-num">02</span>
+                            <span class="face-icon"><i class="fa-solid fa-clipboard-list"></i></span>
+                            <div>
+                                <h3 class="face-title">Analyse</h3>
+                                <p class="face-desc">Lieu, nombre d'invités, ambiance : on définit ensemble la configuration idéale.</p>
+                                <span class="face-chip"><i class="fa-regular fa-clock"></i> ≈ 10 min</span>
+                            </div>
+                        </div>
 
-                <!-- STEP 3 -->
-                <div class="group relative text-center">
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20 transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,196,0,.6)]">
-                        <i class="fa-solid fa-file-invoice-dollar"></i>
-                    </div>
-                    <h3 class="mt-6 text-lg font-bold text-white">Devis</h3>
-                    <p class="mt-2 text-sm text-zinc-500 transition group-hover:text-[#F5C400]">Sous 24 h</p>
-                </div>
+                        <div class="cube-face">
+                            <span class="face-num">03</span>
+                            <span class="face-icon"><i class="fa-solid fa-file-invoice-dollar"></i></span>
+                            <div>
+                                <h3 class="face-title">Devis</h3>
+                                <p class="face-desc">Un devis clair et détaillé, sans frais cachés ni mauvaise surprise.</p>
+                                <span class="face-chip"><i class="fa-solid fa-bolt"></i> Sous 24 h</span>
+                            </div>
+                        </div>
 
-                <!-- STEP 4 -->
-                <div class="group relative text-center">
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20 transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,196,0,.6)]">
-                        <i class="fa-solid fa-file-signature"></i>
-                    </div>
-                    <h3 class="mt-6 text-lg font-bold text-white">Signature</h3>
-                    <p class="mt-2 text-sm text-zinc-500 transition group-hover:text-[#F5C400]">En ligne</p>
-                </div>
+                        <div class="cube-face">
+                            <span class="face-num">04</span>
+                            <span class="face-icon"><i class="fa-solid fa-file-signature"></i></span>
+                            <div>
+                                <h3 class="face-title">Signature</h3>
+                                <p class="face-desc">Vous validez le devis en ligne, en quelques clics, où que vous soyez.</p>
+                                <span class="face-chip"><i class="fa-solid fa-globe"></i> En ligne</span>
+                            </div>
+                        </div>
 
-                <!-- STEP 5 -->
-                <div class="group relative text-center">
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20 transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,196,0,.6)]">
-                        <i class="fa-solid fa-credit-card"></i>
-                    </div>
-                    <h3 class="mt-6 text-lg font-bold text-white">Acompte</h3>
-                    <p class="mt-2 text-sm text-zinc-500 transition group-hover:text-[#F5C400]">Paiement sécurisé</p>
-                </div>
+                        <div class="cube-face">
+                            <span class="face-num">05</span>
+                            <span class="face-icon"><i class="fa-solid fa-credit-card"></i></span>
+                            <div>
+                                <h3 class="face-title">Acompte</h3>
+                                <p class="face-desc">Un acompte sécurisé pour bloquer votre date et le matériel.</p>
+                                <span class="face-chip"><i class="fa-solid fa-lock"></i> Sécurisé</span>
+                            </div>
+                        </div>
 
-                <!-- STEP 6 -->
-                <div class="group relative text-center">
-                    <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-zinc-950 bg-[#F5C400] text-2xl text-black shadow-lg shadow-yellow-500/20 transition duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,196,0,.6)]">
-                        <i class="fa-solid fa-truck-fast"></i>
-                    </div>
-                    <h3 class="mt-6 text-lg font-bold text-white">Installation</h3>
-                    <p class="mt-2 text-sm text-zinc-500 transition group-hover:text-[#F5C400]">Jour J</p>
-                </div>
+                        <div class="cube-face">
+                            <span class="face-num">06</span>
+                            <span class="face-icon"><i class="fa-solid fa-truck-fast"></i></span>
+                            <div>
+                                <h3 class="face-title">Installation</h3>
+                                <p class="face-desc">Livraison, montage et tests complets avant l'arrivée de vos invités.</p>
+                                <span class="face-chip"><i class="fa-solid fa-star"></i> Jour J</span>
+                            </div>
+                        </div>
 
-            </div>
-
-        </div>
-
-        <!-- Mobile Timeline : 2 Colonnes avec Flèches Extérieures -->
-        <div class="mt-8 flex flex-col gap-2 lg:hidden">
-
-            <!-- LIGNE 1 : Étape 01 -> Étape 02 -->
-            <div class="flex items-center gap-2">
-                <!-- STEP 1 -->
-                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3 transition active:border-[#F5C400]/60">
-                    <div class="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#F5C400] text-black">
-                        <i class="fa-brands fa-whatsapp text-sm"></i>
-                    </div>
-                    <div class="min-w-0">
-                        <h3 class="text-xs font-bold text-white leading-tight truncate">01 · Contact</h3>
-                        <p class="text-[10px] text-zinc-400">≈ 2 min</p>
-                    </div>
-                </div>
-
-                <!-- Flèche extérieure droite -->
-                <span class="flex-none text-xs font-bold text-[#F5C400]">→</span>
-
-                <!-- STEP 2 -->
-                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3 transition active:border-[#F5C400]/60">
-                    <div class="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#F5C400] text-black">
-                        <i class="fa-solid fa-clipboard-list text-sm"></i>
-                    </div>
-                    <div class="min-w-0">
-                        <h3 class="text-xs font-bold text-white leading-tight truncate">02 · Analyse</h3>
-                        <p class="text-[10px] text-zinc-400">≈ 10 min</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Flèche de transition vers la rangée suivante -->
-            
-
-            <!-- LIGNE 2 : Étape 03 -> Étape 04 -->
-            <div class="flex items-center gap-2">
-                <!-- STEP 3 -->
-                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3 transition active:border-[#F5C400]/60">
-                    <div class="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#F5C400] text-black">
-                        <i class="fa-solid fa-file-invoice-dollar text-sm"></i>
-                    </div>
-                    <div class="min-w-0">
-                        <h3 class="text-xs font-bold text-white leading-tight truncate">03 · Devis</h3>
-                        <p class="text-[10px] text-zinc-400">Sous 24 h</p>
-                    </div>
+            <!-- ============ LISTE DES ÉTAPES ============ -->
+            <div>
+                <div data-steps class="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-1">
+                    <button type="button" data-step="0" class="step-btn"><span class="step-dot"><i class="fa-brands fa-whatsapp"></i></span><span class="min-w-0"><span class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Étape 01</span><span class="block truncate text-sm font-bold text-white sm:text-base">Contact</span></span><span class="ml-auto hidden text-xs text-zinc-500 sm:block">≈ 2 min</span><span class="step-bar"><i></i></span></button>
+                    <button type="button" data-step="1" class="step-btn"><span class="step-dot"><i class="fa-solid fa-clipboard-list"></i></span><span class="min-w-0"><span class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Étape 02</span><span class="block truncate text-sm font-bold text-white sm:text-base">Analyse</span></span><span class="ml-auto hidden text-xs text-zinc-500 sm:block">≈ 10 min</span><span class="step-bar"><i></i></span></button>
+                    <button type="button" data-step="2" class="step-btn"><span class="step-dot"><i class="fa-solid fa-file-invoice-dollar"></i></span><span class="min-w-0"><span class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Étape 03</span><span class="block truncate text-sm font-bold text-white sm:text-base">Devis</span></span><span class="ml-auto hidden text-xs text-zinc-500 sm:block">Sous 24 h</span><span class="step-bar"><i></i></span></button>
+                    <button type="button" data-step="3" class="step-btn"><span class="step-dot"><i class="fa-solid fa-file-signature"></i></span><span class="min-w-0"><span class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Étape 04</span><span class="block truncate text-sm font-bold text-white sm:text-base">Signature</span></span><span class="ml-auto hidden text-xs text-zinc-500 sm:block">En ligne</span><span class="step-bar"><i></i></span></button>
+                    <button type="button" data-step="4" class="step-btn"><span class="step-dot"><i class="fa-solid fa-credit-card"></i></span><span class="min-w-0"><span class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Étape 05</span><span class="block truncate text-sm font-bold text-white sm:text-base">Acompte</span></span><span class="ml-auto hidden text-xs text-zinc-500 sm:block">Sécurisé</span><span class="step-bar"><i></i></span></button>
+                    <button type="button" data-step="5" class="step-btn"><span class="step-dot"><i class="fa-solid fa-truck-fast"></i></span><span class="min-w-0"><span class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Étape 06</span><span class="block truncate text-sm font-bold text-white sm:text-base">Installation</span></span><span class="ml-auto hidden text-xs text-zinc-500 sm:block">Jour J</span><span class="step-bar"><i></i></span></button>
                 </div>
 
-                <!-- Flèche extérieure droite -->
-                <span class="flex-none text-xs font-bold text-[#F5C400]">→</span>
-
-                <!-- STEP 4 -->
-                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3 transition active:border-[#F5C400]/60">
-                    <div class="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#F5C400] text-black">
-                        <i class="fa-solid fa-file-signature text-sm"></i>
-                    </div>
-                    <div class="min-w-0">
-                        <h3 class="text-xs font-bold text-white leading-tight truncate">04 · Signature</h3>
-                        <p class="text-[10px] text-zinc-400">En ligne</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Flèche de transition vers la rangée suivante -->
-         
-
-            <!-- LIGNE 3 : Étape 05 -> Étape 06 -->
-            <div class="flex items-center gap-2">
-                <!-- STEP 5 -->
-                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3 transition active:border-[#F5C400]/60">
-                    <div class="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#F5C400] text-black">
-                        <i class="fa-solid fa-credit-card text-sm"></i>
-                    </div>
-                    <div class="min-w-0">
-                        <h3 class="text-xs font-bold text-white leading-tight truncate">05 · Acompte</h3>
-                        <p class="text-[10px] text-zinc-400">Sécurisé</p>
-                    </div>
-                </div>
-
-                <!-- Flèche extérieure droite -->
-                <span class="flex-none text-xs font-bold text-[#F5C400]">→</span>
-
-                <!-- STEP 6 -->
-                <div class="flex-1 flex items-center gap-2.5 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-2.5 sm:p-3 transition active:border-[#F5C400]/60">
-                    <div class="flex h-9 w-9 flex-none items-center justify-center rounded-lg bg-[#F5C400] text-black">
-                        <i class="fa-solid fa-truck-fast text-sm"></i>
-                    </div>
-                    <div class="min-w-0">
-                        <h3 class="text-xs font-bold text-white leading-tight truncate">06 · Montage</h3>
-                        <p class="text-[10px] text-zinc-400">Jour J</p>
-                    </div>
+                <div class="mt-5 flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
+                    <p class="text-[11px] text-zinc-500">
+                        <i class="fa-solid fa-hand-pointer mr-1 text-[#F5C400]"></i>
+                        Cliquez sur une étape ou faites glisser le cube
+                    </p>
+                    <a href="#contact"
+                       class="inline-flex items-center gap-2 rounded-full border border-[#F5C400]/40 bg-[#F5C400]/15 px-5 py-2.5 text-xs font-bold text-[#F5C400] backdrop-blur-md transition hover:border-[#F5C400]/70 hover:bg-[#F5C400]/30">
+                        Commencer maintenant <i class="fa-solid fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
 
         </div>
-
     </div>
-
 </section>

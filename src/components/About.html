@@ -24,32 +24,20 @@
           Tout le matériel pour réussir <span class="text-[#F5C400]">vos événements</span>
         </h2>
 
-        <!-- Carrousel d'images hauteur réduite sur mobile -->
-        <div class="relative mt-4 sm:mt-6 w-full overflow-hidden rounded-xl">
-          <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-black/80 to-transparent"></div>
-          <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-black/80 to-transparent"></div>
-          <div class="flex animate-marquee gap-3 sm:gap-4">
-
-            <img loading="lazy" src="src/images/gallery/mariage1.png" alt="Mariage"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
-            <img loading="lazy" src="src/images/gallery/dj.png" alt="DJ"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
-            <img loading="lazy" src="src/images/gallery/ecran.png" alt="Écran LED"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
-            <img loading="lazy" src="src/images/gallery/eclairage.png" alt="Éclairage"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
-
-            <!-- Duplicata pour boucle infinie -->
-            <img loading="lazy" src="src/images/gallery/mariage1.png" alt="" aria-hidden="true"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
-            <img loading="lazy" src="src/images/gallery/dj.png" alt="" aria-hidden="true"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
-            <img loading="lazy" src="src/images/gallery/ecran.png" alt="" aria-hidden="true"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
-            <img loading="lazy" src="src/images/gallery/eclairage.png" alt="" aria-hidden="true"
-                 class="h-36 sm:h-52 w-[220px] sm:w-[280px] rounded-lg sm:rounded-xl object-cover flex-none transition duration-500 hover:scale-[1.04] hover:brightness-110">
-
+        <!-- Galerie 3D en anneau (glisser pour faire tourner) -->
+        <div class="ring-stage mt-4 sm:mt-6" role="img" aria-label="Galerie de nos événements">
+          <div class="ring-floor"></div>
+          <div class="ring" data-ring>
+            <img class="ring-item" style="--i:0" src="src/images/gallery/mariage1.png" alt="Mariage" loading="lazy" draggable="false">
+            <img class="ring-item" style="--i:1" src="src/images/gallery/dj.png" alt="DJ" loading="lazy" draggable="false">
+            <img class="ring-item" style="--i:2" src="src/images/gallery/ecran.png" alt="Écran LED" loading="lazy" draggable="false">
+            <img class="ring-item" style="--i:3" src="src/images/gallery/eclairage.png" alt="Éclairage" loading="lazy" draggable="false">
+            <img class="ring-item" style="--i:4" src="src/images/gallery/mariage.png" alt="Mariage" loading="lazy" draggable="false">
+            <img class="ring-item" style="--i:5" src="src/images/gallery/sam1.jpg" alt="Tournage" loading="lazy" draggable="false">
+            <img class="ring-item" style="--i:6" src="src/images/gallery/samara.png" alt="Clip Samara" loading="lazy" draggable="false">
+            <img class="ring-item" style="--i:7" src="src/images/gallery/sam2.jpg" alt="Production vidéo" loading="lazy" draggable="false">
           </div>
+          <span class="ring-hint"><i class="fa-solid fa-hand-pointer mr-1"></i> Glissez pour faire tourner</span>
         </div>
 
         <!-- Badge 40+ Ans d'expérience (Visible sur tablettes/desktop) -->
